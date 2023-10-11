@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja do DETI</title>
+    <link rel="stylesheet" href="css/estilo.css">
+   
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo à Loja do DETI</h1>
+        <p>Produtos exclusivos para estudantes e ex-alunos da DETI.</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="produtos.html" class="ativo">Produtos</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+        </ul>
+    </nav>
+
+
+
+    <div class="product-container">
+
+        <div class="filter-bar">
+            <h2>Filter</h2>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" name="filter" value="tshirt"> T-shirt
+                </label>
+            </div>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" name="filter" value="caneca"> Caneca
+                </label>
+            </div>
+            <div class="filter-item">
+                <label>
+                    <input type="checkbox" name="filter" value="pin"> Pin
+                </label>
+            </div>
+        <!-- JavaScript will dynamically populate this section -->
+    </div>
+    <div>
+        <footer>
+            <p>&copy; 2023 Loja do DETI, Universidade de Aveiro</p>
+        </footer>
+    </div>
+    
+    
+<script>
+    fetch('http://localhost:5000/get_products')
+    .then(response => response.json())
+    .then(data => {
+        const productContainer = document.querySelector('.product-container');
+        data.forEach(product => {
+            const productCard = document.createElement('div');
+            // console log product.imglink
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="img/${product.imglink}" alt="${product.name}" />
+                </div>
+                <div class="product-details">
+                    <h3>${product.name}</h3>
+                    <p>Price: ${product.price.toFixed(2)}€</p>
+                    <p>${product.description}</p>
+                </div>
+            `;
+            productContainer.appendChild(productCard);
+        });
+    })
+    .catch(error => console.error(error));
+</script>
+</body>
+</html>
