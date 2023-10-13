@@ -5,7 +5,7 @@ import threading
 import random
 import time
 import sqlite3
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, make_response
 
 app = Flask(__name__)
 CORS(app)
@@ -58,33 +58,44 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)})
     
+@app.route("/login", methods=["OPTIONS"])
+def preflight():
+    response = make_response()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    print("preflight")
+    return response
+    
 @app.route("/login", methods=["POST"])
 def login():
-    try:
+    try:        
+        print("recebi request")
         data = request.get_json()
         username = data["username"]
         password = data["password"]
+        print("consegui ler o json")
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
 
         # Debugging: Print the SQL query and its parameters
-        print("SQL Query:", "SELECT * FROM Users WHERE username = ? AND password = ?", (username, password))
+        print("SQL Query:", "SELECT * FROM Users WHERE username = ? AND pass = ?", (username, password))
 
-        cursor.execute("SELECT * FROM Users WHERE username = ? AND password = ?", (username, password))
+        cursor.execute("SELECT * FROM Users WHERE username = ? AND pass = ?", (username, password))
         user = cursor.fetchone()
-
-        print("User:", user)  # Debugging: Print the user variable
-
         conn.close()
 
-        if user is None:
-            return Response(status=401, response=json.dumps({"error": "Invalid credentials"}))
-        else:
-            print ("Login successful")
+        if user:
+            print("User found")
             return Response(status=200, response=json.dumps({"message": "Login successful"}))
+        else:
+            print("User not found")
+            return Response(status=401, response=json.dumps({"error": "Invalid credentials"}))
+        
     except Exception as e:
-        return jsonify({"error": str(e)})
+        print("Deu merda")
+        return Response(status=404,response = json.dumps({"error": str(e)}))
 
 
 

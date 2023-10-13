@@ -132,10 +132,12 @@
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="contact.html" class="nav-item nav-link">Contacts</a>
                         </div>
+                         
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="login.html" class="nav-item nav-link">Login</a>
-                            <a href="register.html" class="nav-item nav-link">Register</a>
+                            <a href="login.html" class="nav-item nav-link" id="logintext">Login</a>
+                            <a href="register.html" class="nav-item nav-link" id="registertext">Register</a>
                         </div>
+                    
                     </div>
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
@@ -281,15 +283,19 @@
             <div class="col-md-6 px-xl-0 text-center text-md-right">
                 <img class="img-fluid" src="img/payments.png" alt="">
             </div>
-        </div>
+        </div> 
     </div>
     <!-- Footer End -->
 
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    
 
-
+    <script src="js/userLogged.js" > </script>
+    <script>
+        window.addEventListener("load", userLogged);
+    </script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -299,6 +305,8 @@
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
+
+    <script src = "js/logout.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>  

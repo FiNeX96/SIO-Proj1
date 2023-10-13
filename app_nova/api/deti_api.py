@@ -1,11 +1,12 @@
 import json
-from flask_cors import CORS
 import os
-import threading
 import random
-import time
 import sqlite3
-from flask import Flask, jsonify, request, Response
+import threading
+import time
+
+from flask import Flask, Response, jsonify, make_response, request
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -58,33 +59,47 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)})
     
+@app.route("/login", methods=["OPTIONS"])
+def preflight():
+    response = make_response()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    #print("preflight") tá a funcionar 
+    return response
+    
 @app.route("/login", methods=["POST"])
 def login():
-    try:
+    try:        
+        #print("recebi request")
         data = request.get_json()
         username = data["username"]
         password = data["password"]
+        #print("consegui ler o json")
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
 
         # Debugging: Print the SQL query and its parameters
-        print("SQL Query:", "SELECT * FROM Users WHERE username = ? AND password = ?", (username, password))
+        #print("SELECT * FROM Users WHERE username = " + username  "AND pass = " + password)
+        query = "SELECT * FROM Users WHERE username ='" + username + "' AND pass ='" + password+"'"
+        print(query)
 
-        cursor.execute("SELECT * FROM Users WHERE username = ? AND password = ?", (username, password))
+        cursor.execute(query)
+        # execute so deixa executar 1, é seguro contra sql injection
         user = cursor.fetchone()
-
-        print("User:", user)  # Debugging: Print the user variable
-
         conn.close()
 
-        if user is None:
-            return Response(status=401, response=json.dumps({"error": "Invalid credentials"}))
-        else:
-            print ("Login successful")
+        if user:
+            print("User found")
             return Response(status=200, response=json.dumps({"message": "Login successful"}))
+        else:
+            print("User not found")
+            return Response(status=401, response=json.dumps({"error": "Invalid credentials"}))
+        
     except Exception as e:
-        return jsonify({"error": str(e)})
+        print(e)
+        return Response(status=404,response = json.dumps({"error": str(e)}))
     
 @app.route("/get_product/<product_name>", methods=["GET"])
 def get_product(product_name):
@@ -122,4 +137,4 @@ if __name__ == "__main__":
 
     conn.commit()
     conn.close()
-    app.run(debug=True, port=5000)
+    app.run( port=5000 )

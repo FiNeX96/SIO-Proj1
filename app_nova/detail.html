@@ -179,8 +179,10 @@
                 <a href="contact.html" class="nav-item nav-link">Contactos</a>
               </div>
               <div class="navbar-nav ml-auto py-0">
-                <a href="login.html" class="nav-item nav-link">Entrar</a>
-                <a href="" class="nav-item nav-link">Registar</a>
+                <div class="navbar-nav ml-auto py-0">
+                  <a href="login.html" class="nav-item nav-link" id="logintext">Login</a>
+                  <a href="register.html" class="nav-item nav-link" id="registertext">Register</a>
+              </div>
               </div>
             </div>
           </nav>
@@ -618,5 +620,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/userLogged.js" > </script>
+    <script>
+        window.addEventListener("load", userLogged);
+    </script>
   </body>
 </html>

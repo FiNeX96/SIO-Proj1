@@ -54,33 +54,41 @@
             </div>
         </div>
         -->
-        <div class="row align-items-center py-3 px-xl-5">
-          <div class="col-lg-3 d-none d-lg-block">
-              <a href="" class="text-decoration-none">
-                  <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">D</span>DETI SHOP</h1>
-              </a>
-          </div>
-          <div class="col-lg-6 col-6 text-left">
-              <form action="search.html">
-                  <div class="input-group">
-                      <input id="input_search" name="product" type="text" class="form-control" placeholder="Search for products">
-                      <div class="input-group-append">
-                          <span class="input-group-text bg-transparent text-primary">
-                              <i class="fa fa-search"></i>
-                          </span>
-                      </div>
-                  </div>
-              </form>
-          </div>
-          <div class="col-lg-3 col-6 text-right">
-              <a href="" class="btn border">
-                  <i class="fas fa-shopping-cart text-primary"></i>
-                  <span class="badge">0</span>
-              </a>
-          </div>
+    <div class="row align-items-center py-3 px-xl-5">
+      <div class="col-lg-3 d-none d-lg-block">
+        <a href="" class="text-decoration-none">
+          <h1 class="m-0 display-5 font-weight-semi-bold">
+            <span class="text-primary font-weight-bold border px-3 mr-1">D</span
+            >DETI SHOP
+          </h1>
+        </a>
       </div>
-  </div>
-  <!-- Topbar End -->
+      <div class="col-lg-6 col-6 text-left">
+        <form action="search.html">
+          <div class="input-group">
+            <input
+              id="input_search"
+              name="product"
+              type="text"
+              class="form-control"
+              placeholder="Search for products"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text bg-transparent text-primary">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3 col-6 text-right">
+        <a href="" class="btn border">
+          <i class="fas fa-shopping-cart text-primary"></i>
+          <span class="badge">0</span>
+        </a>
+      </div>
+    </div>
+    <!-- Topbar End -->
 
     <!-- Navbar Start -->
     <div class="container-fluid">
@@ -108,24 +116,39 @@
               class="collapse navbar-collapse justify-content-between"
               id="navbarCollapse"
             >
-              <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+              <div
+                class="collapse navbar-collapse justify-content-between"
+                id="navbarCollapse"
+              >
                 <div class="navbar-nav mr-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="shop.html" class="nav-item nav-link active">Shop</a>
-                    <!-- <div class="nav-item dropdown">
+                  <a href="index.html" class="nav-item nav-link">Home</a>
+                  <a href="shop.html" class="nav-item nav-link active">Shop</a>
+                  <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                             <a href="checkout.html" class="dropdown-item">Checkout</a>
                         </div>
                     </div> -->
-                    <a href="contact.html" class="nav-item nav-link">Contacts</a>
+                  <a href="contact.html" class="nav-item nav-link">Contacts</a>
                 </div>
                 <div class="navbar-nav ml-auto py-0">
-                    <a href="login.html" class="nav-item nav-link">Login</a>
-                    <a href="register.html" class="nav-item nav-link">Register</a>
+                  <div class="navbar-nav ml-auto py-0">
+                    <a
+                      href="login.html"
+                      class="nav-item nav-link"
+                      id="logintext"
+                      >Login</a
+                    >
+                    <a
+                      href="register.html"
+                      class="nav-item nav-link"
+                      id="registertext"
+                      >Register</a
+                    >
+                  </div>
                 </div>
-            </div>
+              </div>
             </div>
           </nav>
         </div>
@@ -368,85 +391,88 @@
             </div>
 
             <div class="product-container row">
-                <!-- JavaScript will populate this with product cards -->
+              <!-- JavaScript will populate this with product cards -->
             </div>
-            
+
             <style>
-                .product-card {
-                    max-width: 100%;
-                    height: 100%; /* Set a fixed height for all cards */
-                }
-            
-                .product-img {
-                    height: 350px; /* Adjust the height as needed */
-                    overflow: hidden;
-                }
-            
-                .popup {
-                    display: none;
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: #fff;
-                    padding: 20px;
-                    border: 1px solid #ccc;
-                    z-index: 999;
-                }
+              .product-card {
+                max-width: 100%;
+                height: 100%; /* Set a fixed height for all cards */
+              }
+
+              .product-img {
+                height: 350px; /* Adjust the height as needed */
+                overflow: hidden;
+              }
+
+              .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+                z-index: 999;
+              }
             </style>
-            
-            <div class="popup" id="popup">
-                Product added to the cart!
-            </div>
-            
+
+            <div class="popup" id="popup">Product added to the cart!</div>
+
             <script>
-                function showMessage(productName) {
-                    const popup = document.getElementById('popup');
-                    popup.style.display = 'block';
-                    popup.innerText = `${productName} added to the cart!`;
-            
-                    setTimeout(() => {
-                        popup.style.display = 'none';
-                    }, 2000); // Hide the popup after 3 seconds (adjust as needed)
-                }
-            
-                fetch('http://localhost:5000/get_products')
-                .then(response => response.json())
-                .then(data => {
-                    const productContainer = document.querySelector('.product-container');
-            
-                    data.forEach(product => {
-                        const productCard = document.createElement('div');
-                        productCard.className = 'col-lg-4 col-md-6 col-sm-12 pb-1';
-                        productCard.innerHTML = `
+              fetch("http://localhost:5000/get_products")
+                .then((response) => response.json())
+                .then((data) => {
+                  const productContainer =
+                    document.querySelector(".product-container");
+
+                  data.forEach((product) => {
+                    const productCard = document.createElement("div");
+                    productCard.className = "col-lg-4 col-md-6 col-sm-12 pb-1";
+                    productCard.innerHTML = `
                             <div class="card product-item border-0 mb-4">
                                 <div class="card-header product-img position-relative bg-transparent border p-0">
-                                    <img class="img-fluid w-100" src="img/${product.imglink}" alt="${product.name}" />
+                                    <img class="img-fluid w-100" src="img/${
+                                      product.imglink
+                                    }" alt="${product.name}" />
                                 </div>
                                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                    <h6 class="text-truncate mb-3">${product.name}</h6>
+                                    <h6 class="text-truncate mb-3">${
+                                      product.name
+                                    }</h6>
                                     <div class="d-flex justify-content-center">
-                                        <h6>Price: ${product.price.toFixed(2)}€</h6>
+                                        <h6>Price: ${product.price.toFixed(
+                                          2
+                                        )}€</h6>
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                    <button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
+                                    <a href="detail.html?product=${
+                                      product.name
+                                    }" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                    <button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${
+                                      product.name
+                                    }"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
                                 </div>
                             </div>
                         `;
-                        productContainer.appendChild(productCard);
+                    productContainer.appendChild(productCard);
+
+                    const addToCartButtons =
+                      document.querySelectorAll(".addToCartBtn");
+                    addToCartButtons.forEach((button) => {
+                      button.addEventListener("click", (event) => {
+                        const productName =
+                          event.target.getAttribute("data-product");
+                        if (showMessage(productName) != null) {
+                          addProductToCart(productName);
+                        }
+                      });
                     });
-            
-                    const addToCartButtons = document.querySelectorAll('.addToCartBtn');
-                    addToCartButtons.forEach(button => {
-                        button.addEventListener('click', (event) => {
-                            const productName = event.target.getAttribute('data-product');
-                            showMessage(productName);
-                        });
-                    });
+                  });
                 })
-                .catch(error => console.error(error));
+                .catch((error) => console.error(error));
             </script>
 
             <!-- Produtos start -->
@@ -639,55 +665,90 @@
     <!-- Footer Start -->
     <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
       <div class="row px-xl-5 pt-5">
-          <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-              <a href="" class="text-decoration-none">
-                  <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">D</span>DETI SHOP</h1>
-              </a>
-              <p>Best department store</p>
-              <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA, Aveiro, Portugal</p>
-              <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt</p>
-              <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355</p>
-          </div>
-          <div class="col-lg-8 col-md-12">
-              <div class="row">
-                  <div class="col-md-4 mb-5">
-                      <h5 class="font-weight-bold text-dark mb-4">Links</h5>
-                      <div class="d-flex flex-column justify-content-start">
-                          <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                          <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                          <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                          <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contacts</a>
-                      </div>
-                  </div>
-                  <div class="col-md-6 mb-5">
-                      <h5 class="font-weight-bold text-dark mb-4">News</h5>
-                      <form action="">
-                          <div class="form-group">
-                              <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
-                                  required="required" />
-                          </div>
-                          <div>
-                              <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe</button>
-                          </div>
-                      </form>
-                  </div>
+        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+          <a href="" class="text-decoration-none">
+            <h1 class="mb-4 display-5 font-weight-semi-bold">
+              <span
+                class="text-primary font-weight-bold border border-white px-3 mr-1"
+                >D</span
+              >DETI SHOP
+            </h1>
+          </a>
+          <p>Best department store</p>
+          <p class="mb-2">
+            <i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA,
+            Aveiro, Portugal
+          </p>
+          <p class="mb-2">
+            <i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt
+          </p>
+          <p class="mb-0">
+            <i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355
+          </p>
+        </div>
+        <div class="col-lg-8 col-md-12">
+          <div class="row">
+            <div class="col-md-4 mb-5">
+              <h5 class="font-weight-bold text-dark mb-4">Links</h5>
+              <div class="d-flex flex-column justify-content-start">
+                <a class="text-dark mb-2" href="index.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Home</a
+                >
+                <a class="text-dark mb-2" href="shop.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Our Shop</a
+                >
+                <a class="text-dark mb-2" href="cart.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a
+                >
+                <a class="text-dark" href="contact.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Contacts</a
+                >
               </div>
+            </div>
+            <div class="col-md-6 mb-5">
+              <h5 class="font-weight-bold text-dark mb-4">News</h5>
+              <form action="">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control border-0 py-4"
+                    placeholder="Your Email"
+                    required="required"
+                  />
+                </div>
+                <div>
+                  <button
+                    class="btn btn-primary btn-block border-0 py-3"
+                    type="submit"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
+        </div>
       </div>
       <div class="row border-top border-light mx-xl-5 py-4">
-          <div class="col-md-6 px-xl-0">
-              <p class="mb-md-0 text-center text-md-left text-dark">
-                  &copy; <a class="text-dark font-weight-semi-bold" href="index.html">DETI SHOP</a>. All Rights Reserved. Designed
-                  by
-                  <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">DETI Programmers</a><br>
-              </p>
-          </div>
-          <div class="col-md-6 px-xl-0 text-center text-md-right">
-              <img class="img-fluid" src="img/payments.png" alt="">
-          </div>
+        <div class="col-md-6 px-xl-0">
+          <p class="mb-md-0 text-center text-md-left text-dark">
+            &copy;
+            <a class="text-dark font-weight-semi-bold" href="index.html"
+              >DETI SHOP</a
+            >. All Rights Reserved. Designed by
+            <a
+              class="text-dark font-weight-semi-bold"
+              href="https://htmlcodex.com"
+              >DETI Programmers</a
+            ><br />
+          </p>
+        </div>
+        <div class="col-md-6 px-xl-0 text-center text-md-right">
+          <img class="img-fluid" src="img/payments.png" alt="" />
+        </div>
       </div>
-  </div>
-  <!-- Footer End -->
+    </div>
+    <!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"
@@ -695,15 +756,15 @@
     ></a>
 
     <!-- JavaScript Libraries -->
+
+    <script src="js/userLogged.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
-
+    <script src="js/cartPopup.js"></script>
+    <!-- Add to cart -->
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
   </body>
