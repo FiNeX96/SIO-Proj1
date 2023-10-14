@@ -59,6 +59,17 @@ def register():
     except Exception as e:
         return jsonify({"error": str(e)})
     
+    
+@app.route("/getinfo/<product_name>", methods=["GET"])
+def getCart(product_name):
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+    #price and
+    cursor.execute("SELECT price,imglink FROM Products WHERE name = '" + product_name +"'")
+    product = cursor.fetchone()    
+    conn.close() 
+    return Response(status=200, response=json.dumps({"price": product[0],"imglink": product[1]}))
+    
 @app.route("/login", methods=["OPTIONS"])
 def preflight():
     response = make_response()

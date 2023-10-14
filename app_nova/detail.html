@@ -91,7 +91,7 @@
             <i class="fas fa-heart text-primary"></i>
             <span class="badge">0</span>
           </a>
-          <a href="" class="btn border">
+          <a href="cart.html" class="btn border" >
             <i class="fas fa-shopping-cart text-primary"></i>
             <span class="badge">0</span>
           </a>
@@ -597,7 +597,8 @@
       function getProduct(product_name) {
         var url = "http://localhost:5000/get_product/" + product_name;
         var xhttp = new XMLHttpRequest();
-        document.getElementById("nome_produto").innerHTML = product_name;
+        //document.getElementById("nome_produto").innerHTML = product_name;
+        $("#nome_produto").replaceWith('<h3 class="font-weight-semi-bold" id="nome_produto" >' + product_name + '</h3>')
         xhttp.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
             var produto = JSON.parse(this.responseText);

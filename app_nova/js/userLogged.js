@@ -12,7 +12,7 @@ function userLogged() {
 
 
 
-    $("#logintext").replaceWith('<a href="#" class="nav-item nav-link"> '+username+'</a>');
+    $("#logintext").replaceWith('<a href="user_detail.html" class="nav-item nav-link"> '+username+'</a>');
     $("#registertext").replaceWith('<a href="#" class="nav-item nav-link" onclick="logout()" >Logout</a>');
 
 }
