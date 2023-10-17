@@ -25,3 +25,13 @@ function showPopup(productName) {
   return "success"
 
 }
+
+function incrementCart(){
+  // get value of id cartIcon and convert to int
+  var cartIcon = document.getElementById("cartIcon").innerHTML;
+  var cartIconInt = parseInt(cartIcon);
+  // increment value
+  cartIconInt++;
+  // update value
+  document.getElementById("cartIcon").innerHTML = cartIconInt;
+}

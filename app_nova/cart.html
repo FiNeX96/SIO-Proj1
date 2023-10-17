@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
+    <title>DETI Shop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -47,7 +47,7 @@
         <div class="col-lg-3 col-6 text-right">
             <a href="cart.html" class="btn border">
                 <i class="fas fa-shopping-cart text-primary"></i>
-                <span class="badge">0</span>
+                <span class="badge" id="cartIcon">0</span>
             </a>
         </div>
     </div>
@@ -189,7 +189,7 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold" id = "total" ></h5>
                         </div>
-                        <a class="btn btn-block btn-primary my-3 py-3" href="checkout.html">Proceed To Checkout</a>
+                        <a class="btn btn-block btn-primary my-3 py-3" href="checkout.html" id="checkoutbutton">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>
@@ -276,19 +276,11 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
     <script src="js/userLogged.js"></script>
     <script src="js/logout.js"></script>
     <script src="js/getCart.js"></script>
     <script>window.addEventListener("load", getCart);</script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
 </body>
 
 </html>

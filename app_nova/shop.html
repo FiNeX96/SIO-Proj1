@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>DETI SHOP</title>
+    <title>DETI Shop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
     <!-- Favicon -->
@@ -79,7 +79,7 @@
       <div class="col-lg-3 col-6 text-right">
         <a href="cart.html" class="btn border">
           <i class="fas fa-shopping-cart text-primary"></i>
-          <span class="badge">0</span>
+          <span class="badge" id="cartIcon">0</span>
         </a>
       </div>
     </div>
@@ -416,45 +416,52 @@
             <div class="popup" id="popup">Product added to the cart!</div>
 
             <script>
-              fetch("http://localhost:5000/get_products")
-                  .then((response) => response.json())
-                  .then((data) => {
-                      const productContainer = document.querySelector(".product-container");         
-                      data.forEach((product) => {
-                          const productCard = document.createElement("div");
-                          productCard.className = "col-lg-4 col-md-6 col-sm-12 pb-1";
-                          productCard.innerHTML = `
-                              <div class="card product-item border-0 mb-4">
-                                  <div class="card-header product-img position-relative bg-transparent border p-0">
-                                      <img class="img-fluid w-100" src="img/${product.imglink}" alt="${product.name}" />
-                                  </div>
-                                  <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                      <h6 class="text-truncate mb-3">${product.name}</h6>
-                                      <div class="d-flex justify-content-center">
-                                          <h6>Price: ${product.price.toFixed(2)}€</h6>
-                                      </div>
-                                  </div>
-                                  <div class="card-footer d-flex justify-content-between bg-light border">
-                                      <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                      <button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
+                        fetch("http://localhost:5000/get_products")
+              .then((response) => response.json())
+              .then((data) => {
+                  const productContainer = document.querySelector(".product-container");
+                  data.forEach((product) => {
+                      const productCard = document.createElement("div");
+                      productCard.className = "col-lg-4 col-md-6 col-sm-12 pb-1";
+
+                      // Check if the product is out of stock
+                      const isOutOfStock = product.stock === 0;
+
+                      // Define the CSS classes for out of stock and in stock products
+                      const productCardClass = isOutOfStock ? "card product-item border-0 mb-4 out-of-stock" : "card product-item border-0 mb-4";
+
+                      productCard.innerHTML = `
+                          <div class="${productCardClass}">
+                              <div class="card-header product-img position-relative bg-transparent border p-0">
+                                  <img class="img-fluid w-100" src="img/${product.imglink}" alt="${product.name}" />
+                              </div>
+                              <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                  <h6 class="text-truncate mb-3">${product.name}</h6>
+                                  <div class="d-flex justify-content-center">
+                                      <h6>Price: ${product.price.toFixed(2)}€</h6>
                                   </div>
                               </div>
-                          `;
-                          productContainer.appendChild(productCard);
-                      });
-          
-                      const addToCartButtons = document.querySelectorAll(".addToCartBtn");
-                      addToCartButtons.forEach((button) => {
-                          button.addEventListener("click", (event) => {
-                              const productName = event.target.getAttribute("data-product");
-                              addToCart(productName);
-                              showPopup(productName);
-                          });
-                      });
-                  })
-                  .catch((error) => console.error(error));
-          </script>
-          
+                              <div class="card-footer d-flex justify-content-between bg-light border">
+                                  <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                  ${isOutOfStock ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled><i class="fas fa-shopping-cart text-primary mr-1" onclick="incrementCart()"></i>Out of Stock</button>' : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>`}
+                              </div>
+                          </div>
+                      `;
+                      productContainer.appendChild(productCard);
+                  });
+
+
+                                const addToCartButtons = document.querySelectorAll(".addToCartBtn");
+                                addToCartButtons.forEach((button) => {
+                                    button.addEventListener("click", (event) => {
+                                        const productName = event.target.getAttribute("data-product");
+                                        addToCart(productName);
+                                        showPopup(productName);
+                                    });
+                                });
+                            })
+                            .catch((error) => console.error(error));
+            </script>
 
             <!-- Produtos start -->
 
@@ -750,6 +757,6 @@
     <script src="js/search_product.js"></script>
     <!-- Add to cart -->
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="js/logout.js"></script>
   </body>
 </html>

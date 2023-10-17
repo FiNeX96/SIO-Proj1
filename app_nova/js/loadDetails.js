@@ -6,11 +6,11 @@ function loadDetails() {
     console.log(id);
 
     var reviews = JSON.parse(localStorage.getItem("reviews_" + id));
-    
+
     if (reviews == null) {
         return;
     }
-    
+
 
     console.log(reviews);
 
@@ -22,13 +22,14 @@ function loadDetails() {
     $(reviewContainer).empty();
 
     for (var i = 0; i < reviews.length; i++) {
-        var review = reviews[i];
+        var review = reviews[i]
+        //review = review.replace(/(?:\r\n|\r|\n)/g, '<br>');
         var reviewCard = `
             <div>
-                <h6>
+                <h5>
                     ${review.user}<small> - <i>${review.date}</i></small>
-                </h6>
-                <p>
+                </h5>
+                <p >
                     ${review.review}
                 </p>
             </div>
@@ -36,7 +37,7 @@ function loadDetails() {
         $(reviewContainer).append(reviewCard);
     }
 
-    $("#product_name").replaceWith('<h4 class="mb-4" id = "product_name" >' + review_count + ' reviews for ' + id + '</h4>')
+    $("#product_name").replaceWith('<h3 class="mb-4" id = "product_name" >' + review_count + ' reviews for ' + id + '</h3>')
 
 }
 

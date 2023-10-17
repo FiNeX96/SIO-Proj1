@@ -4,7 +4,7 @@ function addToCart(productName) {
     let username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
 
     // Check if the cart for the user already exists in the local storage
-    let cart = JSON.parse(localStorage.getItem(username));
+    let cart = JSON.parse(localStorage.getItem("cart_"+username));
 
     // If the cart does not exist, create a new empty array
     if (!cart) {
@@ -23,6 +23,6 @@ function addToCart(productName) {
     }
 
     // Save the updated cart back to the local storage
-    localStorage.setItem(username, JSON.stringify(cart));
+    localStorage.setItem("cart_"+username, JSON.stringify(cart));
     console.log(localStorage);
 }

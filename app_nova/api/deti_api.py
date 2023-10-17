@@ -15,7 +15,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 def get_products():
     conn = sqlite3.connect(
         "LojaDeti.db"
-    )  # Change 'your_database.db' to your database file name
+    )  
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM Products")
@@ -30,7 +30,8 @@ def get_products():
             "name": product[0],
             "price": product[1],
             "description": product[2],
-            "imglink": product[3]
+            "imglink": product[3],
+            "stock" : product[4]
         }
         #print("imglink -> " + product[3])
         
@@ -82,11 +83,11 @@ def preflight():
 @app.route("/login", methods=["POST"])
 def login():
     try:        
-        #print("recebi request")
+
         data = request.get_json()
         username = data["username"]
         password = data["password"]
-        #print("consegui ler o json")
+
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
@@ -137,9 +138,10 @@ def get_product(product_name):
 if __name__ == "__main__":
     conn = sqlite3.connect(
         "LojaDeti.db"
-    )  # Change 'your_database.db' to your database file name
+    ) 
     cursor = conn.cursor()
 
+    # load database
     with open("api/db_data.sql", "r") as sql_file:
         sql_commands = sql_file.read().split(";")
 
@@ -148,4 +150,4 @@ if __name__ == "__main__":
 
     conn.commit()
     conn.close()
-    app.run( port=5000 )
+    app.run(debug = True, port = 5000)

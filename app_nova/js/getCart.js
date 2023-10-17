@@ -11,6 +11,9 @@ function getCart() {
         document.getElementById("shipping").innerHTML = "0€";
         document.getElementById("subtotal").innerHTML = "0€";
         document.getElementById("total").innerHTML = "0€";
+        $("#checkoutbutton").prop("disabled", true);
+        $("#checkoutbutton").addClass("disabled-button");
+        $("#checkoutbutton").innerHTML = "Cart is empty"
         return 1;
     }
 
@@ -18,7 +21,7 @@ function getCart() {
 
     //console.log(localStorage.getItem(username));
 
-    var cart = JSON.parse(localStorage.getItem(username));
+    var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
 
 
@@ -27,6 +30,12 @@ function getCart() {
         document.getElementById("shipping").innerHTML = "0€";
         document.getElementById("subtotal").innerHTML = "0€";
         document.getElementById("total").innerHTML = "0€";
+        $("#checkoutbutton").prop("disabled", true);
+
+        // Optionally, you can also change its appearance to make it appear "greyed out"
+        $("#checkoutbutton").addClass("disabled-button");
+        $("#checkoutbutton").innerHTML = "Cart is empty"
+
         return 1;
     }
     fetchData(cart);
@@ -77,8 +86,8 @@ async function fetchData(cart) {
     //console.log(subtotal);
     // <h6 class='font-weight-medium' id = >
     let total = subtotal + 10;
-    $("#subtotal").replaceWith('<h6 class="font-weight-medium" id = "subtotal">'+ subtotal +'€</h6>')
-    $("#total").replaceWith('<h5 class="font-weight-bold" id = "total" >' + total +'€</h5>')
+    $("#subtotal").replaceWith('<h6 class="font-weight-medium" id = "subtotal">' + subtotal + '€</h6>')
+    $("#total").replaceWith('<h5 class="font-weight-bold" id = "total" >' + total + '€</h5>')
 }
 
 fetchData().catch((error) => console.error(error));
@@ -90,7 +99,7 @@ function removeCart(productName) {
 
     //console.log(localStorage.getItem(username));
 
-    var cart = JSON.parse(localStorage.getItem(username));
+    var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
     // remove productName entry from cart
 
@@ -98,7 +107,7 @@ function removeCart(productName) {
 
     // Save the updated cart back to the local storage
 
-    localStorage.setItem(username, JSON.stringify(cart));
+    localStorage.setItem("cart_" + username, JSON.stringify(cart));
 
     // refresh page
 
