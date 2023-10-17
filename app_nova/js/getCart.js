@@ -4,7 +4,7 @@ function getCart() {
 
     // check if document.cookie with username is empty
 
-    var cookie = document.cookie;
+    var cookie = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
 
     if (cookie == "") {
         document.querySelector(".cart-container").innerHTML = '<h2 style="text-align:center" >No products in cart</h1>';
