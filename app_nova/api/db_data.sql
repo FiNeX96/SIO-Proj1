@@ -6,10 +6,6 @@ DROP TABLE IF EXISTS Orders;
 
 DROP TABLE IF EXISTS Payments;
 
-DROP TABLE IF EXISTS paypal_Payments;
-
-DROP TABLE IF EXISTS cc_Payments;
-
 CREATE TABLE Products (
     name TEXT PRIMARY KEY,
     price INTEGER NOT NULL,
@@ -84,7 +80,7 @@ values
     ('dev', '12345');
 
 Create table Orders(
-    ORDER_id INTEGER PRIMARY KEY,
+    ORDER_id TEXT PRIMARY KEY,
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
     email TEXT NOT NULL,
@@ -92,10 +88,10 @@ Create table Orders(
     ship_address TEXT NOT NULL,
     country TEXT NOT NULL,
     city TEXT NOT NULL,
-    zip_code TEXT NOT NULL,
+    zipcode TEXT NOT NULL,
     username TEXT NOT NULL,
-    products_info TEXT NOT NULL,
-    -- json tipo o do cart
+    products_info TEXT NOT NULL,     -- json tipo o do cart
+    total_price INTEGER NOT NULL,
     FOREIGN KEY (username) REFERENCES Users(username)
     
 );
