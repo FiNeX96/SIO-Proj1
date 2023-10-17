@@ -1,7 +1,7 @@
 
 function showPopup(productName) {
 
-  var cookie = document.cookie;
+  let cookie = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
 
   if (cookie == "") {
     const popup = document.getElementById('popup');

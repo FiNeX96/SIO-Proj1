@@ -51,15 +51,8 @@ function postReview() {
     var produto = url.split('=')[1];
 
     // Get the value of the cookie
-    var cookies = document.cookie.split("; ");
-    var username = null;
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].split("=");
-        if (cookie[0] === "username") {
-            username = cookie[1];
-            break;
-        }
-    }
+    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+
 
     if (username == null) {
         alert("You must be logged in to post a review!");
