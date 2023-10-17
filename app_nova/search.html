@@ -135,41 +135,28 @@
     <div class="container-fluid border-sucess" >
         <h1 style="margin-top: 1cm;" class="m-0 display-5 font-weight-semi-bold">Looking for:
             <span class="text-primary font-weight-bold px-3 mr-1"><p id="product_name"></p> </span>
-            <button id="viewDetailsButton" class="btn btn-primary">View Details</button>
+            <h1 id="notfound">Not Found</h1>  
         </h1>
         
         
      
-        <!-- <table class="table table-striped" style="margin-top: 1cm;">
+        <table id="viewDetails" class="table table-striped" style="margin-top: 1cm;">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Name</th>
+                <th scope="col" > Name</th>
+                <th scope="col" >Price</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td id="name"></td>
+                <td id="price"></td>
+                <td><button class="btn btn-primary" id="viewDetailsButton">View Details</button></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              
             </tbody>
-          </table> -->
+          </table>
     </div>
 
     <!-- Footer Start -->
@@ -251,7 +238,25 @@
         const productName = urlParams.get("product");
         document.getElementById("product_name").innerHTML = productName;
 
-        document.addEventListener("DOMContentLoaded", function() {
+        
+            fetch("http://localhost:5000//getinfo/"+ productName)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                document.getElementById("notfound").style.display = "none";
+                document.getElementById("name").textContent = productName;
+               
+                document.getElementById("price").textContent = data.price;
+
+                
+            })
+            .catch((error) => {
+                console.error("Error fetching product data:", error);
+                document.getElementById("viewDetails").style.display = "none";
+                document.getElementById("notfound").style.display = "block";
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
             const viewDetailsButton = document.getElementById("viewDetailsButton");
 
             viewDetailsButton.addEventListener("click", function() {
@@ -260,8 +265,15 @@
 
                 // Navigate to the product details page with the selected product name
                 window.location.href = "detail.html?product=" + productName;
+            }); 
+
             });
-        });
+        
+        
+     
+        
+
+        
     </script>
 
     <!-- JavaScript Libraries -->
