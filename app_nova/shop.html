@@ -65,22 +65,17 @@
       </div>
       <div class="col-lg-6 col-6 text-left">
         <form action="search.html">
-          <div class="input-group">
-            <input
-              id="input_search"
-              name="product"
-              type="text"
-              class="form-control"
-              placeholder="Search for products"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text bg-transparent text-primary">
-                <i class="fa fa-search"></i>
-              </span>
+            <div class="input-group">
+                <input oninput="updateSuggestions()" id="input_search" name="product" type="text" class="form-control" placeholder="Search for products">
+                <div class="input-group-append" id="autocomplete">
+                    <span class="input-group-text bg-transparent text-primary">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
             </div>
-          </div>
+            <div id="suggestions" class="autocomplete-suggestions"></div>
         </form>
-      </div>
+    </div>
       <div class="col-lg-3 col-6 text-right">
         <a href="cart.html" class="btn border">
           <i class="fas fa-shopping-cart text-primary"></i>
@@ -751,6 +746,8 @@
 
     <script src="js/cartPopup.js"></script>
     <script src="js/addCart.js"></script>
+
+    <script src="js/search_product.js"></script>
     <!-- Add to cart -->
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

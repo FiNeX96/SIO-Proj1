@@ -66,15 +66,16 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form action="search.html">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
+                        <input oninput="updateSuggestions()" id="input_search" name="product" type="text" class="form-control" placeholder="Search for products">
+                        <div class="input-group-append" id="autocomplete">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
                             </span>
                         </div>
                     </div>
+                    <div id="suggestions" class="autocomplete-suggestions"></div>
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
@@ -128,11 +129,18 @@
     </div>
     <!-- Navbar End -->
 
-    <div class="container-fluid border-sucess">
+
+
+
+    <div class="container-fluid border-sucess" >
         <h1 style="margin-top: 1cm;" class="m-0 display-5 font-weight-semi-bold">Looking for:
-            <span class="text-primary font-weight-bold px-3 mr-1">Product Name</span>
+            <span class="text-primary font-weight-bold px-3 mr-1"><p id="product_name"></p> </span>
+            <button id="viewDetailsButton" class="btn btn-primary">View Details</button>
         </h1>
-        <table class="table table-striped" style="margin-top: 1cm;">
+        
+        
+     
+        <!-- <table class="table table-striped" style="margin-top: 1cm;">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -161,7 +169,7 @@
                 <td>@twitter</td>
               </tr>
             </tbody>
-          </table>
+          </table> -->
     </div>
 
     <!-- Footer Start -->
@@ -238,6 +246,23 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);  
+        const productName = urlParams.get("product");
+        document.getElementById("product_name").innerHTML = productName;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const viewDetailsButton = document.getElementById("viewDetailsButton");
+
+            viewDetailsButton.addEventListener("click", function() {
+                // Get the product name from the span element
+                const productName = document.getElementById("product_name").textContent;
+
+                // Navigate to the product details page with the selected product name
+                window.location.href = "detail.html?product=" + productName;
+            });
+        });
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -248,6 +273,7 @@
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
+    <script src="js/search_product.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
