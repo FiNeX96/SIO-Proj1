@@ -133,6 +133,32 @@ def get_product(product_name):
         }
         return jsonify(product_dict)
 
+@app.route("/get_all_orders", methods=["GET"])
+def get_all_orders():
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Orders")
+    orders = cursor.fetchall()
+    conn.close()
+    
+    order_list = []
+    for order in orders:
+        order_dict = {
+            "ORDER_id": order[0],
+            "firstname": order[1],
+            "lastname": order[2],
+            "email": order[3],
+            "phonenumber": order[4],
+            "ship_address": order[5],
+            "country": order[6],
+            "city": order[7],
+            "zip_code": order[8],
+            "username": order[9],
+            "products_info": order[10],
+        }
+        order_list.append(order_dict)
+    
+    return jsonify(order_list)
 
 
 if __name__ == "__main__":
