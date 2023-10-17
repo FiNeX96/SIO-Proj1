@@ -90,7 +90,7 @@ Create table Orders(
     city TEXT NOT NULL,
     zipcode TEXT NOT NULL,
     username TEXT NOT NULL,
-    products_info TEXT NOT NULL,     -- json tipo o do cart
+    products_info TEXT NOT NULL, -- cart json
     total_price INTEGER NOT NULL,
     FOREIGN KEY (username) REFERENCES Users(username)
     
@@ -103,10 +103,3 @@ Create table Payments(
     FOREIGN KEY (ORDER_id) REFERENCES Orders(ORDER_id)
 );
 
-INSERT INTO Orders (firstname, lastname, email, phonenumber, ship_address, country, city, zip_code, username, products_info)
-VALUES
-    ('John', 'Doe', 'john@example.com', '555-123-4567', '123 Main St', 'USA', 'New York', '10001', 'johndoe', '["Product A", "Product B"]'),
-    ('Alice', 'Smith', 'alice@example.com', '555-987-6543', '456 Elm St', 'USA', 'Los Angeles', '90001', 'alicesmith', '["Product C", "Product D"]'),
-    ('Bob', 'Johnson', 'bob@example.com', '555-789-1234', '789 Oak St', 'Canada', 'Toronto', 'M1M 1M1', 'bobjohnson', '["Product E", "Product F"]'),
-    ('Eva', 'Williams', 'eva@example.com', '555-234-5678', '567 Birch St', 'UK', 'London', 'SW1A 1AA', 'evawilliams', '["Product G", "Product H"]'),
-    ('Mike', 'Brown', 'mike@example.com', '555-345-6789', '890 Pine St', 'Australia', 'Sydney', '2000', 'mikebrown', '["Product I", "Product J"]');

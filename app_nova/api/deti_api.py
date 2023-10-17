@@ -176,7 +176,6 @@ def get_all_orders():
 def checkout():
     try:
         data = request.get_json()
-        print(data)
         username = data["username"]
         firstname = data["firstname"]
         lastname = data["lastname"]
