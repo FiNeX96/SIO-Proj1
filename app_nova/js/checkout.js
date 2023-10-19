@@ -29,8 +29,7 @@ async function checkoutData() {
 
 function checkout()
 {
-    console.log("checkout");
-
+    
     const popup = document.createElement("div");
     popup.id = "popup";
     popup.style.position = "fixed";
@@ -43,7 +42,6 @@ function checkout()
     popup.style.borderRadius = "5px";
     popup.style.border = "1px solid black";
     popup.style.display = 'block';
-
 
     var firstname = document.getElementById("firstname").value;
     var lastname = document.getElementById("lastname").value;
@@ -130,9 +128,6 @@ function checkout()
         }
     };
 
-    setTimeout(() => {
-        popup.style.display = 'none';
-    }, 3000); // Hide the popup after 3 seconds (adjust as needed)
 
 }
 
