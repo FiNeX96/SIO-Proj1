@@ -1,20 +1,22 @@
 function userLogged() {
 
 
-    if (document.cookie == "") {
-        return;
-    }
-
-
-    if (document.cookie != null && document.cookie != "") {
+    if (checkCookie("username")) {
         var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     }
 
     //console.log(cookie)
     // get "username " from the cookie
 
+    console.log(username)
 
+    if (username.trim() == "admin"){
+        $("#logintext").html( "Admin Panel" );
+        $("#logintext").attr("href", "admin.html");
+    }
+    else{
     $("#logintext").replaceWith('<a href="user_detail.html" class="nav-item nav-link"> ' + username + '</a>');
+}
     $("#registertext").replaceWith('<a href="#" class="nav-item nav-link" onclick="logout()" >Logout</a>');
 
     // get cart for this user
@@ -33,3 +35,15 @@ function userLogged() {
 
 }
 window.addEventListener("load", userLogged);
+
+
+function checkCookie(name) {
+    var cookieArr = document.cookie.split(";");
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if(name == cookiePair[0].trim()) {
+            return true;
+        }
+    }
+    return false;
+}

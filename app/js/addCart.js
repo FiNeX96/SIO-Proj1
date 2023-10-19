@@ -1,7 +1,7 @@
 function addToCart(productName) {
 
     // Retrieve the username from the document's cookies
-    if (document.cookie != null && document.cookie != "") {
+    if (checkCookie("username")) {
         var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     }
     // Check if the cart for the user already exists in the local storage
@@ -25,5 +25,16 @@ function addToCart(productName) {
 
     // Save the updated cart back to the local storage
     localStorage.setItem("cart_"+username, JSON.stringify(cart));
-    console.log(localStorage);
+    //console.log(localStorage);
+}
+
+function checkCookie(name) {
+    var cookieArr = document.cookie.split(";");
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if(name == cookiePair[0].trim()) {
+            return true;
+        }
+    }
+    return false;
 }

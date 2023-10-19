@@ -3,9 +3,6 @@
         const suggestions = document.getElementById("suggestions");
         suggestions.style.display = "block";
         if( inputSearch != "" ){
-        
-
-        console.log(inputSearch);
         fetch("http://localhost:5000/get_products")
             .then((response) => response.json())
             .then((data) => {

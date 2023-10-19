@@ -4,11 +4,10 @@ function getCart() {
 
     // check if document.cookie with username is empty
 
-    if (document.cookie != null && document.cookie != "") {
-        var cookie = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    if (checkCookie("username")) {
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     }
-
-    if (cookie == "") {
+    else{
         document.querySelector(".cart-container").innerHTML = '<h2 style="text-align:center" >No products in cart</h1>';
         document.getElementById("shipping").innerHTML = "0€";
         document.getElementById("subtotal").innerHTML = "0€";
@@ -19,9 +18,7 @@ function getCart() {
         return 1;
     }
 
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
 
-    //console.log(localStorage.getItem(username));
 
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
@@ -116,4 +113,15 @@ function removeCart(productName) {
     location.reload();
 
 
+}
+
+function checkCookie(name) {
+    var cookieArr = document.cookie.split(";");
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if(name == cookiePair[0].trim()) {
+            return true;
+        }
+    }
+    return false;
 }

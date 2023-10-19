@@ -1,6 +1,9 @@
 async function checkoutData() {
-    if (document.cookie != null && document.cookie != "") {
+    if (checkCookie("username")) {
         var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
+    else {
+        return;
     }
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
@@ -152,6 +155,17 @@ function checkout() {
     };
 
 
+}
+
+function checkCookie(name) {
+    var cookieArr = document.cookie.split(";");
+    for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        if (name == cookiePair[0].trim()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 

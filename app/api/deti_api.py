@@ -70,8 +70,30 @@ def getCart(product_name):
     )
     product = cursor.fetchone()
     conn.close()
+    if product is None:
+        return Response(status=404, response=json.dumps({"error": "Product not found"}))
     return Response(
         status=200, response=json.dumps({"price": product[0], "imglink": product[1]})
+    )
+    
+@app.route("/search/<product_name>", methods=["GET"])
+def search(product_name):
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+    
+    cursor.execute(
+    "SELECT name,price FROM Products WHERE name LIKE '%" + product_name + "%'"
+)
+    product = cursor.fetchmany(5)
+    # put this in dictionary format
+    product_list = []
+    for i in product:
+        product_list.append({"name": i[0], "price": i[1]})     
+    conn.close()
+    if product is None:
+        return Response(status=404, response=json.dumps({"error": "Product not found"}))
+    return Response(
+        status=200, response=json.dumps(product_list)
     )
 
 
@@ -283,6 +305,16 @@ def checkout():
                          }
                      ),
                  )
+        for product in cart_dict_single:
+            # remove stock from db
+            conn = sqlite3.connect("LojaDeti.db")
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE Products SET stock = stock - ? WHERE name = ? ;",
+                (cart_dict_single[product]['quantity'], product),
+            )
+            conn.commit()
+            conn.close()
         total = data["total"]
         order_id = "".join(random.choice("0123456789ABCDEF") for i in range(16))
         conn = sqlite3.connect("LojaDeti.db")
