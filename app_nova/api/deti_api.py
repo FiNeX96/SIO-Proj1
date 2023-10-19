@@ -262,6 +262,27 @@ def checkout():
         city = data["city"]
         zipcode = data["zipcode"]
         cart = json.dumps(data["cart"])
+        cart_dict = json.loads(cart)
+        cart_dict_single = {product['product']: product for product in cart_dict}
+        for product in cart_dict_single:
+             conn = sqlite3.connect("LojaDeti.db")
+             cursor = conn.cursor()
+             cursor.execute(
+                 "SELECT stock FROM Products WHERE name = '" + product + "' ;"
+             )
+             stock = cursor.fetchone()
+             #print("wanted = ", cart_dict[product] )
+             if stock[0] < cart_dict_single[product]['quantity']:
+                 return Response(
+                     status=409,
+                     response=json.dumps(
+                         {
+                             "message": "Not enough stock for product "
+                            + product
+                            + " to fullfill this order!"
+                         }
+                     ),
+                 )
         total = data["total"]
         order_id = "".join(random.choice("0123456789ABCDEF") for i in range(16))
         conn = sqlite3.connect("LojaDeti.db")

@@ -29,9 +29,8 @@ async function checkoutData() {
 
 }
 
-function checkout()
-{
-    
+function checkout() {
+
     const popup = document.createElement("div");
     popup.id = "popup";
     popup.style.position = "fixed";
@@ -55,66 +54,66 @@ function checkout()
     var zipcode = document.getElementById("zipcode").value;
 
 
-        // Validation for First Name and Last Name - Ensure they are not empty
-        if (!firstname.trim() || !lastname.trim()) {
-            popup.innerText = "First Name and Last Name are required.";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
-    
-        // Validation for Email - Ensure it's a valid email address
-        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (!email.match(emailPattern)) {
-            popup.innerText = "Input a valid email!";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
-    
-        // Validation for Phone Number - You can add more specific phone number validation if needed
-        if (!phonenumber.trim()) {
-            popup.innerText = "Put a valid phone number!";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
-    
-        // Validation for Shipping Address - Ensure it's not empty
-        if (!shippingaddress.trim()) {
-            popup.innerText = "Shipping address is required";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
-    
-        // Validation for City - Ensure it's not empty
-        if (!city.trim()) {
-            popup.innerText = "Put a valid city!";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
-    
-        // Validation for ZIP Code - You can add more specific ZIP code validation if needed
-        if (!zipcode.trim()) {
-            popup.innerText = "Put a valid zip code!";
-            document.body.appendChild(popup);
-            setTimeout(function(){
-                document.getElementById("popup").style.display = "none";
-            }, 2000)
-            return;
-        }
+    // Validation for First Name and Last Name - Ensure they are not empty
+    if (!firstname.trim() || !lastname.trim()) {
+        popup.innerText = "First Name and Last Name are required.";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
+
+    // Validation for Email - Ensure it's a valid email address
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!email.match(emailPattern)) {
+        popup.innerText = "Input a valid email!";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
+
+    // Validation for Phone Number - You can add more specific phone number validation if needed
+    if (!phonenumber.trim()) {
+        popup.innerText = "Put a valid phone number!";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
+
+    // Validation for Shipping Address - Ensure it's not empty
+    if (!shippingaddress.trim()) {
+        popup.innerText = "Shipping address is required";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
+
+    // Validation for City - Ensure it's not empty
+    if (!city.trim()) {
+        popup.innerText = "Put a valid city!";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
+
+    // Validation for ZIP Code - You can add more specific ZIP code validation if needed
+    if (!zipcode.trim()) {
+        popup.innerText = "Put a valid zip code!";
+        document.body.appendChild(popup);
+        setTimeout(function () {
+            document.getElementById("popup").style.display = "none";
+        }, 2000)
+        return;
+    }
 
 
     var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
@@ -140,11 +139,15 @@ function checkout()
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(data));
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
+        if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
-                // create a popup saying sucess checkout
-                popup.innerText = "Checkout successful!";
-                document.body.appendChild(popup);
+            // create a popup saying sucess checkout
+            popup.innerText = response.message;
+            document.body.appendChild(popup);
+
+            setTimeout(function () {
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
         }
     };
 
