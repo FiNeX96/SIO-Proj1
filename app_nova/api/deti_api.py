@@ -108,6 +108,31 @@ def updatePassword():
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)})
+    
+@app.route("/resetPassword", methods=["PUT"])
+def resetPassword():
+    try:
+        data = request.get_json()
+        username = data["username"]
+        new_password = data["newPassword"]  # Assuming a field called "newPassword" for the new password
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+        print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
+        try:
+            cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
+            conn.commit()
+            conn.close()
+            return jsonify({"message": "Password updated successfully"})
+        except sqlite3.IntegrityError as e:
+            print(e)
+            return Response(status=409, response=json.dumps({"error": str(e)}))
+        except Exception as e:
+            print(e)
+            return jsonify({"error": str(e)})
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)})
 
 @app.route("/login", methods=["POST"])
 def login():
