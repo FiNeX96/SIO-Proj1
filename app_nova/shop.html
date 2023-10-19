@@ -490,69 +490,78 @@
 
                 if (price_all.checked){
                   info.forEach(element => {
-                      
-                      document.getElementById(element.name).style.display = "block";
-                      
-                    });
-                } else {
-                  const price50 = document.getElementById("price-1");
+                       
+                    document.getElementById(element.name).style.display = "block";
+                       
+                  });
+                } 
 
-                  if (price50.checked){
-                    info.forEach(element => {
-                      if (element.price > 10){
-                        document.getElementById(element.name).style.display = "none";
-                      } else {
+                const price10 = document.getElementById("price-1");
+                console.log(price10.checked);
+                if (price10.checked){
+                  info.forEach(element => {
+                    if (element.price <= 10){
+                      document.getElementById(element.name).style.display = "block";
+                    } else {
+                      document.getElementById(element.name).style.display = "none";
+                    }
+                    });
+                }  
+                  
+                const price20 = document.getElementById("price-2");
+                console.log(price20.checked);
+                if (price20.checked){
+                  info.forEach(element => {
+                    console.log(element.price); 
+                    if (element.price >= 10 && element.price <= 20 ){
+                      console.log(element.price + " -- "); 
+                      document.getElementById(element.name).style.display = "block";
+                    } else {
+                      console.log(element.price + " xx");
+                      document.getElementById(element.name).style.display = "none";
+                    }
+                    });
+                } 
+
+                const price30 = document.getElementById("price-3");
+                console.log(price30.checked);
+                if (price30.checked){
+                  info.forEach(element => {
+                    if (20 <= element.price && element.price <= 30){
+                      document.getElementById(element.name).style.display = "block";
+                    } else {
+                      document.getElementById(element.name).style.display = "none";
+                    }
+                   });
+                }
+                     
+                const price40 = document.getElementById("price-4");
+                console.log(price40.checked);
+                if (price40.checked){
+                  info.forEach(element => {
+                    if (30 <= element.price && element.price <= 40 ){
                         document.getElementById(element.name).style.display = "block";
+                    } else {
+                      document.getElementById(element.name).style.display = "none";
+                    }
+                  });
+                } 
+                const price50 = document.getElementById("price-5");
+                console.log(price50.checked);
+                if (price50.checked){
+                  info.forEach(element => {
+                      if (40 <= element.price && element.price <= 50){
+                        document.getElementById(element.name).style.display = "block";
+                      } else {
+                        document.getElementById(element.name).style.display = "none";
                       }
                     });
-                  } else {
-                    const price40 = document.getElementById("price-2");
-                    if (price40.checked){
-                      info.forEach(element => {
-                        if (element.price > 20){
-                          document.getElementById(element.name).style.display = "none";
-                        } else {
-                          document.getElementById(element.name).style.display = "block";
-                        }
-                      });
-                    } else {
-                      const price30 = document.getElementById("price-3");
-                      if (price30.checked){
-                        info.forEach(element => {
-                          if (element.price > 30){
-                            document.getElementById(element.name).style.display = "none";
-                          } else {
-                            document.getElementById(element.name).style.display = "block";
-                          }
-                        });
-                      } else {
-                        const price20 = document.getElementById("price-4");
-                        if (price20.checked){
-                          info.forEach(element => {
-                            if (element.price > 40){
-                              document.getElementById(element.name).style.display = "none";
-                            } else {
-                              document.getElementById(element.name).style.display = "block";
-                            }
-                          });
-                        } else {
-                          const price10 = document.getElementById("price-5");
-                          if (price10.checked){
-                            info.forEach(element => {
-                              if (element.price > 50){
-                                document.getElementById(element.name).style.display = "none";
-                              } else {
-                                document.getElementById(element.name).style.display = "block";
-                              }
-                            });
-                          }
-                        }
-                      }
-                    }
-                  }
-          
                 }
+                        
               }
+              
+          
+                
                             
             </script> 
 
