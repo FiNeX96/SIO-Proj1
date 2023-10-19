@@ -27,7 +27,24 @@ async function checkoutData() {
 
 }
 
-function checkout(){
+function checkout()
+{
+    console.log("checkout");
+
+    const popup = document.createElement("div");
+    popup.id = "popup";
+    popup.style.position = "fixed";
+    popup.style.left = "50%";
+    popup.style.top = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.zIndex = "1";
+    popup.style.backgroundColor = "white";
+    popup.style.padding = "20px";
+    popup.style.borderRadius = "5px";
+    popup.style.border = "1px solid black";
+    popup.style.display = 'block';
+
+
     var firstname = document.getElementById("firstname").value;
     var lastname = document.getElementById("lastname").value;
     var email = document.getElementById("email").value;
@@ -37,10 +54,50 @@ function checkout(){
     var city = document.getElementById("city").value;
     var zipcode = document.getElementById("zipcode").value;
 
-    // if any of them are empty return
-    if (!firstname || !lastname || !email || !phonenumber || !shippingaddress || !country || !city || !zipcode) {
-        return;
-    }
+
+        // Validation for First Name and Last Name - Ensure they are not empty
+        if (!firstname.trim() || !lastname.trim()) {
+            popup.innerText = "First Name and Last Name are required.";
+            document.body.appendChild(popup);
+            return;
+        }
+    
+        // Validation for Email - Ensure it's a valid email address
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!email.match(emailPattern)) {
+            popup.innerText = "Input a valid email!";
+            document.body.appendChild(popup);
+            return;
+        }
+    
+        // Validation for Phone Number - You can add more specific phone number validation if needed
+        if (!phonenumber.trim()) {
+            popup.innerText = "Put a valid phone number!";
+            document.body.appendChild(popup);
+            return;
+        }
+    
+        // Validation for Shipping Address - Ensure it's not empty
+        if (!shippingaddress.trim()) {
+            popup.innerText = "Shipping address is required";
+            document.body.appendChild(popup);
+            return;
+        }
+    
+        // Validation for City - Ensure it's not empty
+        if (!city.trim()) {
+            popup.innerText = "Put a valid city!";
+            document.body.appendChild(popup);
+            return;
+        }
+    
+        // Validation for ZIP Code - You can add more specific ZIP code validation if needed
+        if (!zipcode.trim()) {
+            popup.innerText = "Put a valid zip code!";
+            document.body.appendChild(popup);
+            return;
+        }
+
 
     var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
@@ -68,30 +125,14 @@ function checkout(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
                 // create a popup saying sucess checkout
-                const popup = document.createElement("div");
-                popup.id = "popup";
-                // put popup in middle of page
-                popup.style.position = "fixed";
-                popup.style.left = "50%";
-                popup.style.top = "50%";
-                popup.style.transform = "translate(-50%, -50%)";
-                popup.style.zIndex = "1";
-                popup.style.backgroundColor = "white";
-                popup.style.padding = "20px";
-                popup.style.borderRadius = "5px";
-                popup.style.border = "1px solid black";
-                popup.style.display = 'block';
                 popup.innerText = "Checkout successful!";
                 document.body.appendChild(popup);
-                setTimeout(() => {
-                    popup.style.display = 'none';
-                }, 3000); // Hide the popup after 3 seconds (adjust as needed)
         }
     };
 
-
-
-
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000); // Hide the popup after 3 seconds (adjust as needed)
 
 }
 

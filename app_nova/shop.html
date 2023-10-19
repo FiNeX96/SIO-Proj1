@@ -433,7 +433,8 @@
                               </div>
                               <div class="card-footer d-flex justify-content-between bg-light border">
                                   <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                  ${isOutOfStock ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled><i class="fas fa-shopping-cart text-primary mr-1" onclick="incrementCart()"></i>Out of Stock</button>' : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>`}
+                                  ${isOutOfStock ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled>Out of Stock</button>' 
+                                  : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}">Add To Cart</button>`}
                               </div>
                           </div>
                       `;
@@ -850,8 +851,6 @@
     <script src="js/userLogged.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <script src="js/cartPopup.js"></script>
     <script src="js/addCart.js"></script>
