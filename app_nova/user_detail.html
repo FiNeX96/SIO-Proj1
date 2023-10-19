@@ -204,7 +204,7 @@
       />
       </div>
       <div style="padding-left: 48%; padding-top: 10px;">
-        <button style="display: none;" type="button" class="btn btn-primary" id="enter">Enter</button>  
+        <button style="display: none;" type="button" class="btn btn-primary" id="enter" onclick="sendNewPass()">Enter</button>  
       </div>
     </div>
 
@@ -317,6 +317,53 @@
         enterButton.style.display = "block";
         newPasswordInputs.style.display = "block";
         newPasswordConfirmInputs.style.display = "block";
+      }
+      function sendNewPass() {
+          var newPassword = document.getElementById("new_password").value.trim();
+          var confirmPassword = document.getElementById("new_password_confirm").value.trim();
+
+          if (newPassword !== "" && confirmPassword !== "" && newPassword === confirmPassword) {
+              // Passwords match; proceed to update password
+              var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+              
+              var data = {
+                  username: username,
+                  newPassword: newPassword // Assuming "newPassword" is the field for the new password
+              };
+
+              var xhr = new XMLHttpRequest();
+              var url = "http://localhost:5000/updatePassword"; // Replace with your server endpoint
+
+              xhr.open("PUT", url, true);
+              xhr.setRequestHeader("Content-Type", "application/json");
+
+              xhr.onreadystatechange = function () {
+                  if (xhr.readyState === 4) {
+                      if (xhr.status === 200) {
+                          alert("Password Updated!");
+                          var newPasswordInputs = document.getElementById("new_password");
+                          var newPasswordConfirmInputs = document.getElementById("new_password_confirm");
+                          var enterButton = document.getElementById("enter");
+
+                          enterButton.style.display = "none";
+                          newPasswordInputs.style.display = "none";
+                          newPasswordConfirmInputs.style.display = "none";
+                      } else {
+                          alert("Error updating password. Please try again.");
+                      }
+                  }
+              };
+
+              xhr.send(JSON.stringify(data));
+          } else {
+              if (newPassword === "") {
+                  alert("New Password cannot be empty.");
+              } else if (confirmPassword === "") {
+                  alert("Confirm New Password cannot be empty.");
+              } else {
+                  alert("Passwords do not match. Please try again.");
+              }
+          }
       }
     </script>
 
