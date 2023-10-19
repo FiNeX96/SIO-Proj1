@@ -1,5 +1,7 @@
 async function checkoutData() {
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    if (document.cookie != null && document.cookie != "") {
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
     var subtotal = 0;

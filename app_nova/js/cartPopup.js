@@ -1,7 +1,9 @@
 
 function showPopup(productName) {
 
-  let cookie = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+  if (document.cookie != null && document.cookie != "") {
+    var cookie = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+}
 
   if (cookie == "") {
     const popup = document.getElementById('popup');
@@ -27,6 +29,7 @@ function showPopup(productName) {
 }
 
 function incrementCart(){
+  console.log("incrementCart() called");
   // get value of id cartIcon and convert to int
   var cartIcon = document.getElementById("cartIcon").innerHTML;
   var cartIconInt = parseInt(cartIcon);

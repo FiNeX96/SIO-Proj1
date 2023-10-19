@@ -1,8 +1,9 @@
 function addToCart(productName) {
 
     // Retrieve the username from the document's cookies
-    let username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
-
+    if (document.cookie != null && document.cookie != "") {
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
     // Check if the cart for the user already exists in the local storage
     let cart = JSON.parse(localStorage.getItem("cart_"+username));
 

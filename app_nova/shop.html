@@ -434,7 +434,7 @@
                               <div class="card-footer d-flex justify-content-between bg-light border">
                                   <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                                   ${isOutOfStock ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled>Out of Stock</button>' 
-                                  : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}">Add To Cart</button>`}
+                                  : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" onclick = "incrementCart()">Add To Cart</button>`}
                               </div>
                           </div>
                       `;
