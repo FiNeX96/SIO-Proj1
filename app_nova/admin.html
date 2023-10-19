@@ -238,86 +238,159 @@
     </style>
     
     <script>
-        const tableBody = document.querySelector("#viewDetails tbody");
-        const notfoundElement = document.getElementById("notfound");
+const tableBody = document.querySelector("#viewDetails tbody");
+const notfoundElement = document.getElementById("notfound");
+
+function createAccordion(order) {
+    const row = tableBody.insertRow();
+
+    const orderIDCell = row.insertCell();
+    orderIDCell.textContent = order.ORDER_id;
+
+    const usernameCell = row.insertCell();
+    usernameCell.textContent = order.username;
+
+    const detailsCell = row.insertCell();
+    detailsCell.className = "accordion-container";
+
+    const viewDetailsButton = document.createElement("button");
+    viewDetailsButton.textContent = "View Details";
+    viewDetailsButton.className = "btn btn-primary";
+
+    const updateButton = document.createElement("button");
+    updateButton.textContent = "Update";
+    updateButton.className = "btn btn-primary mx-2";
+
+    let updateForm = createUpdateForm(order);
+    let detailsContent = createDetailsContent(order);
+
+    viewDetailsButton.addEventListener("click", () => {
+        updateForm.style.display = "none";
+        detailsContent.style.display = "block";
+    });
+
+    updateButton.addEventListener("click", () => {
+        updateForm.style.display = "block";
+        detailsContent.style.display = "none";
+    });
+
+    detailsCell.appendChild(viewDetailsButton);
+    detailsCell.appendChild(updateButton);
+    detailsCell.appendChild(updateForm);
+    detailsCell.appendChild(detailsContent);
+}
+
+function createUpdateForm(order) {
+    const updateForm = document.createElement("form");
+    updateForm.className = "update-form";
+    updateForm.style.display = "none"; // Initially hide the update form
+    console.log(order)
+    updateForm.innerHTML = `
     
-        function createAccordion(order) {
-            const row = tableBody.insertRow();
-    
-            const orderIDCell = row.insertCell();
-            orderIDCell.textContent = order.ORDER_id;
-    
-            const usernameCell = row.insertCell();
-            usernameCell.textContent = order.username;
-    
-            const detailsCell = row.insertCell();
-            detailsCell.className = "accordion-container";
-    
-            const viewDetailsButton = document.createElement("button");
-            viewDetailsButton.textContent = "View Details";
-            viewDetailsButton.className = "btn btn-primary";
-    
-            const detailsContent = document.createElement("div");
-            detailsContent.className = "accordion-content";
-    
-            viewDetailsButton.addEventListener("click", () => {
-                if (detailsContent.style.display === "none") {
-                    detailsContent.style.display = "block";
-                } else {
-                    detailsContent.style.display = "none";
-                }
+        <input type="text" name="firstname" value="${order.firstname}" placeholder="First Name">
+        <input type="text" name="lastname" value="${order.lastname}" placeholder="Last Name">
+        <input type="email" name="email" value="${order.email}" placeholder="Email">
+        <input type="tel" name="phonenumber" value="${order.phonenumber}" placeholder="Phone Number">
+        <input type="text" name="ship_address" value="${order.ship_address}" placeholder="Shipping Address">
+        <input type="text" name="country" value="${order.country}" placeholder="Country">
+        <input type="text" name="city" value="${order.city}" placeholder="City">
+        <input type="text" name="zip_code" value="${order.zip_code}" placeholder="Zip Code">
+        <textarea name="products_info" placeholder="Products Info">${order.products_info}</textarea>
+        <button type="submit">Update</button>
+    `;
+
+    // Add a submit event handler for the update form
+    updateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const updatedData = {
+            order_id: order.ORDER_id,
+            firstname: updateForm.elements.firstname.value,
+            lastname: updateForm.elements.lastname.value,
+            email: updateForm.elements.email.value,
+            phonenumber: updateForm.elements.phonenumber.value,
+            ship_address: updateForm.elements.ship_address.value,
+            country: updateForm.elements.country.value,
+            city: updateForm.elements.city.value,
+            zip_code: updateForm.elements.zip_code.value,
+            products_info: updateForm.elements.products_info.value,
+        };
+        
+        fetch("http://127.0.0.1:5000/change_order", {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedData),
+})
+.then((response) => {
+    if (response.ok) {
+        // Handle success
+    } else {
+        // Handle errors
+    }
+})
+.catch((error) => {
+    // Handle network errors
+});
+    });
+
+    return updateForm;
+}
+
+function createDetailsContent(order) {
+    const detailsContent = document.createElement("div");
+    detailsContent.className = "accordion-content";
+
+    detailsContent.innerHTML = `
+        <div class="order-details">
+            <p><strong>Order ID:</strong> ${order.ORDER_id}</p>
+            <p><strong>Username:</strong> ${order.username}</p>
+            <p><strong>First Name:</strong> ${order.firstname}</p>
+            <p><strong>Last Name:</strong> ${order.lastname}</p>
+            <p><strong>Email:</strong> ${order.email}</p>
+            <p><strong>Phone Number:</strong> ${order.phonenumber}</p>
+            <p><strong>Shipping Address:</strong> ${order.ship_address}</p>
+            <p><strong>Country:</strong> ${order.country}</p>
+            <p><strong>City:</strong> ${order.city}</p>
+            <p><strong>Zip Code:</strong> ${order.zip_code}</p>
+            <p><strong>Products Info:</strong> ${order.products_info}</p>
+        </div>
+    `;
+
+    detailsContent.style.display = "block"; // Initially show the details content
+    detailsContent.style.backgroundColor = "#f0f0f0";
+    detailsContent.style.border = "1px solid #ddd";
+    detailsContent.style.padding = "10px";
+    detailsContent.style.marginTop = "10px";
+
+    const orderDetails = detailsContent.querySelector(".order-details");
+    orderDetails.style.fontFamily = "Arial, sans-serif";
+    orderDetails.style.fontSize = "16px";
+    orderDetails.style.color = "#333";
+
+    return detailsContent;
+}
+
+fetch("http://localhost:5000/get_all_orders")
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+
+        if (data.length === 0) {
+            notfoundElement.style.display = "block";
+        } else {
+            notfoundElement.style.display = "none";
+
+            data.forEach((order) => {
+                createAccordion(order);
             });
-    
-            detailsContent.innerHTML = `
-    <div class="order-details">
-        <p><strong>Order ID:</strong> ${order.ORDER_id}</p>
-        <p><strong>Username:</strong> ${order.username}</p>
-        <p><strong>First Name:</strong> ${order.firstname}</p>
-        <p><strong>Last Name:</strong> ${order.lastname}</p>
-        <p><strong>Email:</strong> ${order.email}</p>
-        <p><strong>Phone Number:</strong> ${order.phonenumber}</p>
-        <p><strong>Shipping Address:</strong> ${order.ship_address}</p>
-        <p><strong>Country:</strong> ${order.country}</p>
-        <p><strong>City:</strong> ${order.city}</p>
-        <p><strong>Zip Code:</strong> ${order.zip_code}</p>
-        <p><strong>Products Info:</strong> ${order.products_info}</p>
-        <!-- Add more order details here -->
-    </div>
-`;
-detailsContent.style.backgroundColor = "#f0f0f0";
-detailsContent.style.border = "1px solid #ddd";
-detailsContent.style.padding = "10px";
-detailsContent.style.marginTop = "10px";
-
-// Apply styles to individual details elements
-const orderDetails = detailsContent.querySelector(".order-details");
-orderDetails.style.fontFamily = "Arial, sans-serif";
-orderDetails.style.fontSize = "16px";
-orderDetails.style.color = "#333";
-
-            detailsCell.appendChild(viewDetailsButton);
-            detailsCell.appendChild(detailsContent);
         }
-    
-        fetch("http://localhost:5000/get_all_orders")
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-    
-                if (data.length === 0) {
-                    notfoundElement.style.display = "block";
-                } else {
-                    notfoundElement.style.display = "none";
-    
-                    data.forEach((order) => {
-                        createAccordion(order);
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching order data:", error);
-                notfoundElement.style.display = "block";
-            });
+    })
+    .catch((error) => {
+        console.error("Error fetching order data:", error);
+        notfoundElement.style.display = "block";
+    });
     </script>
     
     
