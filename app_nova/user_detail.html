@@ -172,12 +172,39 @@
       <div class="row" style="padding-top: 10px">
         <div class="col">
           <div class="nav nav-tabs justify-content-center mb-4">
-            <h2>User: Nome</h2>
-          </div>
-          <div class="nav nav-tabs justify-content-center mb-4">
-            <h2>Email: email@email.com</h2>
+            <h2 id="user">User: Nome</h2>
           </div>
         </div>
+      </div>
+      <div>
+        <div style="padding-left: 46%;">
+          <h6>Change password:</h6>
+        </div>
+      <div style="padding-left: 47.5%;">
+        <button type="button" class="btn btn-primary" id="change" onclick="toggleElements()">Change</button>  
+      </div>
+      <div style="padding-left: 35%; width: 1200px; padding-top: 20px; display: none;">
+        <input
+        type="password"
+        class="form-control"
+        id="new_password"
+        placeholder="New Password"
+        required="required"
+        data-validation-required-message="New Password"
+      />
+      </div>
+      <div style="padding-left: 35%; width: 1200px; padding-top: 20px; display: none;">
+        <input
+        type="password"
+        class="form-control"
+        id="new_password_confirm"
+        placeholder="Confirm New Password"
+        required="required"
+        data-validation-required-message="New Password"
+      />
+      </div>
+      <div style="padding-left: 48%; padding-top: 10px; display: none;">
+        <button type="button" class="btn btn-primary" id="enter">Enter</button>  
       </div>
     </div>
 
@@ -277,6 +304,21 @@
     <a href="#" class="btn btn-primary back-to-top"
       ><i class="fa fa-angle-double-up"></i
     ></a>
+
+    <script>
+      var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+      var user_div = document.getElementById("user");
+      user_div.innerHTML = "User: " + username;
+      function toggleElements() {
+        var newPasswordInputs = document.getElementById("new_password");
+        var newPasswordConfirmInputs = document.getElementById("new_password_confirm");
+        var enterButton = document.getElementById("enter");
+
+        enterButton.style.display = "block";
+        newPasswordInputs.style.display = "block";
+        newPasswordConfirmInputs.style.display = "block";
+      }
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
