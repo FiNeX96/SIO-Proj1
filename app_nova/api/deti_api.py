@@ -216,10 +216,12 @@ def get_all_orders():
             "zip_code": order[8],
             "username": order[9],
             "products_info": order[10],
+            "total_price": order[11],
         }
         order_list.append(order_dict)
     
     return jsonify(order_list)
+
 
 @app.route('/change_order', methods=['PUT'])
 def change_order():

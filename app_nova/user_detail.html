@@ -25,6 +25,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/modal_orders.css ">
   </head>
 
   <body>
@@ -217,6 +218,36 @@
       <h6 id="new_random" style="display: none;"></h6>
     </div>
     </div>
+
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Order Information</h2>
+        <div id="orderDetails">
+          <!-- Order details will be displayed here -->
+        </div>
+      </div>
+    </div>
+    
+    
+    <table id="viewOrder" class="table table-striped" style="margin-top: 1cm;">
+      <thead>
+        <tr>
+          <th scope="col" >Firstname</th>
+          <th scope="col" >Lastname</th>
+          <th scope="col">Email</th>
+          <th scope="col">Ship Address</th>
+          <th scope="col">Country</th>
+          <th scope="col">City</th>
+          <th scope="col">ZipCode</th>
+          <th scope="col">Username</th>
+          <th scope="col">Products Info</th>
+          <th scope="col">Total Price</th>
+        </tr>
+      </thead>
+      <tbody id="table_body">
+      </tbody>
+    </table>
 
     <!-- Shop Detail End -->
 
@@ -423,6 +454,113 @@
               }
           }
       }
+
+      fetch("http://localhost:5000/get_all_orders")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if (data.length > 0) {
+              const tableBody = document.getElementById("table_body");
+
+              data.forEach(order => {
+                  const row = document.createElement("tr");
+
+                  const tdFirstname = document.createElement("td");
+                  tdFirstname.textContent = order.firstname;
+                  
+                  row.appendChild(tdFirstname);
+
+                  const tdLastname = document.createElement("td");
+                  tdLastname.textContent = order.lastname;
+                  row.appendChild(tdLastname);
+
+                  const tdEmail = document.createElement("td");
+                  tdEmail.textContent = order.email;
+                  row.appendChild(tdEmail);
+
+                  const tdShipAddress = document.createElement("td");
+                  tdShipAddress.textContent = order.ship_address;
+                  row.appendChild(tdShipAddress);
+
+                  const tdCountry = document.createElement("td");
+                  tdCountry.textContent = order.country;
+                  row.appendChild(tdCountry);
+
+                  const tdCity = document.createElement("td");
+                  tdCity.textContent = order.city;
+                  row.appendChild(tdCity);
+
+                  const tdZipCode = document.createElement("td");
+                  tdZipCode.textContent = order.zip_code;
+                  row.appendChild(tdZipCode);
+
+                  const tdUsername = document.createElement("td");
+                  tdUsername.textContent = username;
+                  row.appendChild(tdUsername);
+
+                  const tdProductsInfo = document.createElement("td");
+                  const viewDetailsButton = document.createElement("button");
+                  viewDetailsButton.textContent = "View Details";
+                  viewDetailsButton.addEventListener("click", () => {
+                      openModal(order.products_info); // Pass the order data to the openModal function
+                  });
+                  tdProductsInfo.appendChild(viewDetailsButton);
+                  row.appendChild(tdProductsInfo);
+
+                  const tdTotalPrice = document.createElement("td");
+                  tdTotalPrice.textContent = order.total_price;
+                  row.appendChild(tdTotalPrice);
+
+                  tableBody.appendChild(row);
+              });
+          } else {
+              console.error("No data to display in the table.");
+          }
+        })
+        .catch((error) => {
+            console.error("Error fetching product data:", error);
+        });
+
+
+        function openModal(order) {
+          const modal = document.getElementById("orderModal");
+          const closeModalButton = document.getElementById("closeModal");
+          const orderDetails = document.getElementById("orderDetails");
+
+          // Populate the modal content with order details
+          // You can format the order details as needed
+          const productsInfo = JSON.parse(order);
+          
+          const productInfoHTML = productsInfo.map(product => {
+              return `<p>Product: ${product.product}, Quantity: ${product.quantity}</p>`;
+          }).join('');
+          orderDetails.innerHTML = `
+            ${productInfoHTML}
+          `;
+
+          modal.style.display = "block";
+
+          // Close the modal when the close button is clicked
+          closeModalButton.addEventListener("click", () => {
+              modal.style.display = "none";
+          });
+
+          // Close the modal when clicking outside the modal content
+          window.addEventListener("click", event => {
+              if (event.target === modal) {
+                  modal.style.display = "none";
+              }
+          });
+      }
+
+      // Close the modal when the user presses the Escape key
+      document.addEventListener("keydown", event => {
+          if (event.key === "Escape") {
+              const modal = document.getElementById("orderModal");
+              modal.style.display = "none";
+          }
+      });
+        
     </script>
 
     <!-- JavaScript Libraries -->
