@@ -129,9 +129,12 @@
     </div>
     <!-- Navbar End -->
 
-
-
-
+    <div class="container mt-4">
+        <h1>Order List</h1>
+        <div id="productCards" class="row">
+        </div>
+    </div>
+    
     <div class="d-flex justify-content-center align-items-center min-vh-100">
         <span class="text-primary font-weight-bold px-3 mr-1">
             <p id="product_name"></p>
@@ -278,6 +281,55 @@ function createAccordion(order) {
     detailsCell.appendChild(updateButton);
     detailsCell.appendChild(updateForm);
     detailsCell.appendChild(detailsContent);
+
+    const productCardsContainer = document.getElementById("productCards");
+
+fetch("http://localhost:5000/get_products")
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.length === 0) {
+            // Handle case when no products are available
+            productCardsContainer.innerHTML = "<p>No products available.</p>";
+        } else {
+            // Clear any existing content in the product cards container
+            productCardsContainer.innerHTML = "";
+
+            data.forEach((product) => {
+                createProductCard(product);
+            });
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching product data:", error);
+        productCardsContainer.innerHTML = "<p>Error loading products.</p>";
+    });
+
+    function createProductCard(product) {
+    const card = document.createElement("div");
+    card.classList.add("col-12", "col-md-6", "col-lg-4");
+
+    card.innerHTML = `
+        <div class="card mb-4">
+            <img src="${product.imglink}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">Price: $${product.price}</p>
+                <p class="card-text">${product.description}</p>
+                <p class="card-text">Stock: ${product.stock} units</p>
+                <button class="btn btn-primary" onclick="changeStock(${product.stock}, ${product.id})">Change Stock</button>
+            </div>
+        </div>
+    `;
+
+    productCardsContainer.appendChild(card);
+}
+
+// Function to handle the "Change Stock" button click
+function changeStock(currentStock, productId) {
+    // You can implement your stock change logic here, e.g., show a modal, open a form, etc.
+    // You can use productId to identify which product you want to update.
+    console.log(`Change stock for product ${productId}`);
+}
 }
 
 function createUpdateForm(order) {
@@ -391,6 +443,8 @@ fetch("http://localhost:5000/get_all_orders")
         console.error("Error fetching order data:", error);
         notfoundElement.style.display = "block";
     });
+
+    
     </script>
     
     

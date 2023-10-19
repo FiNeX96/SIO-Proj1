@@ -102,7 +102,6 @@ Create table Payments(
     payment_amount INTEGER NOT NULL,
     FOREIGN KEY (ORDER_id) REFERENCES Orders(ORDER_id)
 );
-
 INSERT INTO Orders (
     ORDER_id, 
     firstname, 
@@ -130,5 +129,3 @@ INSERT INTO Orders (
     '{"product1": 2, "product2": 1}', 
     150
 );
-
-
