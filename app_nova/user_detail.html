@@ -377,10 +377,14 @@
           xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        alert("Password Updated!");
+                        //alert("Password Updated!");
                         var newRandomPassword = document.getElementById("new_random");
-                        newRandomPassword.innerHTML = "New Password: " + randomPassword;
+                        newRandomPassword.innerHTML = "New Password: " + randomPassword + " . Logging out in 10 seconds";
                         newRandomPassword.style.display = "block";
+                        setTimeout(function () {
+                        window.location.href = "index.html";
+                        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        }, 10000);
                     } else {
                         alert("Error updating password. Please try again.");
                     }

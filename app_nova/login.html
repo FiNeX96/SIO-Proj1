@@ -346,6 +346,7 @@
           username,
           password,
         };
+        console.log(username)
 
         const url = "http://localhost:5000/login";
 
@@ -370,7 +371,12 @@
                 "; path=/";
 
               setTimeout(function () {
+                if (username === "admin"){
+                  window.location.href = "admin.html";
+                }
+                else{
                 window.location.href = "index.html";
+                }
               }, 2000);
             } else {
               $("#login-success").html("Wrong username or password. Try again");
