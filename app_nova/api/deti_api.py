@@ -172,6 +172,31 @@ def get_all_orders():
     
     return jsonify(order_list)
 
+@app.route('/change_order', methods=['PUT'])
+def change_order():
+    data = request.get_json()
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+
+    print(data)
+    order_id = data['order_id']
+    firstname = data['firstname']
+    lastname = data['lastname']
+    email = data['email']
+    phonenumber = data['phonenumber']
+    ship_address = data['ship_address']
+    country = data['country']
+    city = data['city']
+    zip_code = data['zip_code']
+    products_info = data['products_info']
+
+    cursor.execute("UPDATE Orders SET firstname=?, lastname=?, email=?, phonenumber=?, ship_address=?, country=?, city=?, zipcode=?, products_info=? WHERE ORDER_id=?", (firstname, lastname, email, phonenumber, ship_address, country, city, zip_code, products_info, order_id))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Order updated successfully"})
+
 @app.route("/checkout", methods=["POST"])
 def checkout():
     try:

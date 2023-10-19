@@ -103,3 +103,32 @@ Create table Payments(
     FOREIGN KEY (ORDER_id) REFERENCES Orders(ORDER_id)
 );
 
+INSERT INTO Orders (
+    ORDER_id, 
+    firstname, 
+    lastname, 
+    email, 
+    phonenumber, 
+    ship_address, 
+    country, 
+    city, 
+    zipcode, 
+    username, 
+    products_info, 
+    total_price
+) VALUES (
+    '123456789', 
+    'John', 
+    'Doe', 
+    'johndoe@example.com', 
+    '555-555-5555', 
+    '123 Main St', 
+    'United States', 
+    'New York', 
+    '10001', 
+    'johndoe123', 
+    '{"product1": 2, "product2": 1}', 
+    150
+);
+
+
