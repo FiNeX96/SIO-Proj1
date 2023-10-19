@@ -57,6 +57,9 @@ function checkout()
         if (!firstname.trim() || !lastname.trim()) {
             popup.innerText = "First Name and Last Name are required.";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
     
@@ -65,6 +68,9 @@ function checkout()
         if (!email.match(emailPattern)) {
             popup.innerText = "Input a valid email!";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
     
@@ -72,6 +78,9 @@ function checkout()
         if (!phonenumber.trim()) {
             popup.innerText = "Put a valid phone number!";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
     
@@ -79,6 +88,9 @@ function checkout()
         if (!shippingaddress.trim()) {
             popup.innerText = "Shipping address is required";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
     
@@ -86,6 +98,9 @@ function checkout()
         if (!city.trim()) {
             popup.innerText = "Put a valid city!";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
     
@@ -93,6 +108,9 @@ function checkout()
         if (!zipcode.trim()) {
             popup.innerText = "Put a valid zip code!";
             document.body.appendChild(popup);
+            setTimeout(function(){
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
             return;
         }
 
@@ -130,4 +148,6 @@ function checkout()
 
 
 }
+
+
 
