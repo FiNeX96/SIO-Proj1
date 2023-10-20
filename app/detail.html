@@ -175,26 +175,27 @@
 
           <div class="d-flex align-items-center mb-4 pt-2">
             <div class="input-group quantity mr-3" style="width: 130px">
-              <div class="input-group-btn">
-                <button class="btn btn-primary btn-minus">
-                  <i class="fa fa-minus"></i>
-                </button>
-              </div>
-              <input
-                type="text"
-                class="form-control bg-secondary text-center"
-                value="1"
-              />
-              <div class="input-group-btn">
-                <button class="btn btn-primary btn-plus">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-minus" onclick="reduceQuantity()">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+                <input
+                    type="text"
+                    class="form-control bg-secondary text-center"
+                    value="1"
+                    id = "quantity"
+                />
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-plus" onclick="increaseQuantity()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
             </div>
-            <button class="btn btn-primary px-3">
-              <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
+            <button class="btn btn-primary px-3" onclick="addToCartQuantity();incrementCart()">
+                <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
             </button>
-          </div>
+        </div>
           <!--
           <div class="d-flex pt-2">
             <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
@@ -429,7 +430,7 @@
         var url = "http://localhost:5000/get_product/" + product_name;
         var xhttp = new XMLHttpRequest();
         //document.getElementById("nome_produto").innerHTML = product_name;
-        $("#nome_produto").replaceWith('<h3 class="font-weight-semi-bold" id="nome_produto" >' + product_name + '</h3>')
+        $("#nome_produto").html(product_name)
         xhttp.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
             var produto = JSON.parse(this.responseText);
@@ -454,6 +455,7 @@
     <script src="js/userLogged.js" > </script>
     <script src="js/loadDetails.js"></script>
     <script src="js/search_product.js"></script>
+    <script src="js/addCartQuantity.js"></script>
     <script>
         window.addEventListener("load", userLogged);
         window.addEventListener("load", loadDetails());
