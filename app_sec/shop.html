@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>DETI Shop</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Topbar Start -->
+
+    <div class="row align-items-center py-3 px-xl-5">
+      <div class="col-lg-3 d-none d-lg-block">
+        <a href="" class="text-decoration-none">
+          <h1 class="m-0 display-5 font-weight-semi-bold">
+            <span class="text-primary font-weight-bold border px-3 mr-1">D</span
+            >DETI SHOP
+          </h1>
+        </a>
+      </div>
+      <div class="col-lg-6 col-6 text-left">
+        <form action="search.html">
+          <div class="input-group">
+            <input
+              oninput="updateSuggestions()"
+              id="input_search"
+              name="product"
+              type="text"
+              class="form-control"
+              placeholder="Search for products"
+            />
+            <div class="input-group-append" id="autocomplete">
+              <span class="input-group-text bg-transparent text-primary">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+          </div>
+          <div id="suggestions" class="autocomplete-suggestions"></div>
+        </form>
+      </div>
+      <div class="col-lg-3 col-6 text-right">
+        <a href="cart.html" class="btn border">
+          <i class="fas fa-shopping-cart text-primary"></i>
+          <span class="badge" id="cartIcon">0</span>
+        </a>
+      </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid">
+      <div class="row border-top px-xl-5">
+        <div class="col-lg-12">
+          <nav
+            class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0"
+          >
+            <a href="" class="text-decoration-none d-block d-lg-none">
+              <h1 class="m-0 display-5 font-weight-semi-bold">
+                <span class="text-primary font-weight-bold border px-3 mr-1"
+                  >D</span
+                >DETI SHOP
+              </h1>
+            </a>
+            <button
+              type="button"
+              class="navbar-toggler"
+              data-toggle="collapse"
+              data-target="#navbarCollapse"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse justify-content-between"
+              id="navbarCollapse"
+            >
+              <div
+                class="collapse navbar-collapse justify-content-between"
+                id="navbarCollapse"
+              >
+                <div class="navbar-nav mr-auto py-0">
+                  <a href="index.html" class="nav-item nav-link">Home</a>
+                  <a href="shop.html" class="nav-item nav-link active">Shop</a>
+                  <a href="aboutus.html" class="nav-item nav-link"
+                    >About us</a
+                  >
+                </div>
+                <div class="navbar-nav ml-auto py-0">
+                  <div class="navbar-nav ml-auto py-0">
+                    <a
+                      href="login.html"
+                      class="nav-item nav-link"
+                      id="logintext"
+                      >Login</a
+                    >
+                    <a
+                      href="register.html"
+                      class="nav-item nav-link"
+                      id="registertext"
+                      >Register</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+      <div
+        class="d-flex flex-column align-items-center justify-content-center"
+        style="min-height: 150px"
+      >
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
+        <div class="d-inline-flex">
+          <p class="m-0"><a href="index.html">Home</a></p>
+          <p class="m-0 px-2">-</p>
+          <p class="m-0">Shop</p>
+        </div>
+      </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Shop Start -->
+    <div class="container-fluid pt-5">
+      <div class="row px-xl-5">
+        <!-- Shop Sidebar Start -->
+        <div class="col-lg-3 col-md-12">
+          <!-- Price Start -->
+          <div class="border-bottom mb-4 pb-4">
+            <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+              <input
+                onchange="filter_price('price-0')"
+                type="checkbox"
+                class="custom-control-input"
+                checked
+                id="price-0"
+              />
+              <label class="custom-control-label" for="price-0"
+                >All Price</label
+              >
+
+            </div>
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+              <input
+                onchange="filter_price('price-1')"
+                type="checkbox"
+                class="custom-control-input"
+                id="price-1"
+              />
+              <label class="custom-control-label" for="price-1">$0 - $10</label>
+
+            </div>
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+              <input
+                onchange="filter_price('price-2')"
+                type="checkbox"
+                class="custom-control-input"
+                id="price-2"
+              />
+              <label class="custom-control-label" for="price-2"
+                >$10 - $20</label
+              >
+
+            </div>
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+              <input
+                onchange="filter_price('price-3')"
+                type="checkbox"
+                class="custom-control-input"
+                id="price-3"
+              />
+              <label class="custom-control-label" for="price-3"
+                >$20 - $30</label
+              >
+
+            </div>
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
+            >
+              <input
+                onchange="filter_price('price-4')"
+                type="checkbox"
+                class="custom-control-input"
+                id="price-4"
+              />
+              <label class="custom-control-label" for="price-4"
+                >$30 - $40</label
+              >
+
+            </div>
+            <div
+              class="custom-control custom-checkbox d-flex align-items-center justify-content-between"
+            >
+              <input
+                onchange="filter_price('price-5')"
+                type="checkbox"
+                class="custom-control-input"
+                id="price-5"
+              />
+              <label class="custom-control-label" for="price-5"
+                >$40 - $50</label
+              >
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Sidebar End -->
+
+        <!-- Shop Product Start -->
+        <div class="col-lg-9 col-md-12">
+          <div class="row pb-3">
+            <div class="col-12 pb-1">
+              <div
+                class="d-flex align-items-center justify-content-between mb-4"
+              >
+                <div class="input-group">
+                  <input
+                    oninput="show_prod()"
+                    id="filter_byname"
+                    type="text"
+                    class="form-control"
+                    placeholder="Search by name"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary">
+                      <i class="fa fa-search"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-container row">
+              <!-- JavaScript will populate this with product cards -->
+            </div>
+
+            <style>
+              .product-card {
+                max-width: 100%;
+                height: 100%; /* Set a fixed height for all cards */
+              }
+
+              .product-img {
+                height: 350px; /* Adjust the height as needed */
+                overflow: hidden;
+              }
+
+              .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+                z-index: 999;
+              }
+            </style>
+
+            <div class="popup" id="popup">Product added to the cart!</div>
+
+            <script>
+              let info;
+              fetch("http://localhost:5000/get_products")
+                .then((response) => response.json())
+                .then((data) => {
+                  const productContainer =
+                    document.querySelector(".product-container");
+                  info = data;
+                  data.forEach((product) => {
+                    const productCard = document.createElement("div");
+                    productCard.className = "col-lg-4 col-md-6 col-sm-12 pb-1";
+
+                    // Check if the product is out of stock
+                    const isOutOfStock = product.stock === 0;
+
+                    // Define the CSS classes for out of stock and in stock products
+                    const productCardClass = isOutOfStock
+                      ? "card product-item border-0 mb-4 out-of-stock"
+                      : "card product-item border-0 mb-4";
+
+                    productCard.innerHTML = `
+                          <div class="${productCardClass}" id="${product.name}">
+                              <div class="card-header product-img position-relative bg-transparent border p-0">
+                                  <img class="img-fluid w-100" src="img/${
+                                    product.imglink
+                                  }" alt="${product.name}" />
+                              </div>
+                              <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                  <h6 class="text-truncate mb-3">${
+                                    product.name
+                                  }</h6>
+                                  <div class="d-flex justify-content-center">
+                                      <h6>Price: ${product.price.toFixed(
+                                        2
+                                      )}€</h6>
+                                  </div>
+                              </div>
+                              <div class="card-footer d-flex justify-content-between bg-light border">
+                                  <a href="detail.html?product=${
+                                    product.name
+                                  }" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                  ${
+                                    isOutOfStock
+                                      ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled>Out of Stock</button>'
+                                      : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" onclick = "incrementCart()">Add To Cart</button>`
+                                  }
+                              </div>
+                          </div>
+                      `;
+                    productContainer.appendChild(productCard);
+                  });
+
+                  const addToCartButtons =
+                    document.querySelectorAll(".addToCartBtn");
+                  addToCartButtons.forEach((button) => {
+                    button.addEventListener("click", (event) => {
+                      const productName =
+                        event.target.getAttribute("data-product");
+                        if(showPopup(productName)!= null){
+                          addToCart(productName);
+                        }
+
+                    });
+                  });
+                })
+                .catch((error) => console.error(error));
+
+              function show_prod() {
+                const filtername =
+                  document.getElementById("filter_byname").value;
+                console.log(filtername);
+
+                console.log(info);
+
+                if (filtername == "") {
+                  info.forEach((element) => {
+                    document.getElementById(element.name).style.display =
+                      "block";
+                  });
+                }
+
+                info.forEach((element) => {
+                  if (!element.name.startsWith(filtername)) {
+                    document.getElementById(element.name).style.display =
+                      "none";
+                  } else {
+                    document.getElementById(element.name).style.display =
+                      "block";
+                  }
+                });
+              }
+
+              function filter_price(filter) {
+                console.log(filter);
+                const price_all = document.getElementById("price-0");
+
+                for (let index = 0; index < 6; index++) {
+                  if (filter == "price-" + index) {
+                    const price = document.getElementById("price-" + index);
+                    price.checked = true;
+                  } else {
+                    const price = document.getElementById("price-" + index);
+                    price.checked = false;
+                  }
+                }
+
+                if (price_all.checked) {
+                  info.forEach((element) => {
+                    document.getElementById(element.name).style.display =
+                      "block";
+                  });
+                }
+
+                const price10 = document.getElementById("price-1");
+                console.log(price10.checked);
+                if (price10.checked) {
+                  info.forEach((element) => {
+                    if (element.price <= 10) {
+                      document.getElementById(element.name).style.display =
+                        "block";
+                    } else {
+                      document.getElementById(element.name).style.display =
+                        "none";
+                    }
+                  });
+                }
+
+                const price20 = document.getElementById("price-2");
+                console.log(price20.checked);
+                if (price20.checked) {
+                  info.forEach((element) => {
+                    console.log(element.price);
+                    if (element.price >= 10 && element.price <= 20) {
+                      console.log(element.price + " -- ");
+                      document.getElementById(element.name).style.display =
+                        "block";
+                    } else {
+                      console.log(element.price + " xx");
+                      document.getElementById(element.name).style.display =
+                        "none";
+                    }
+                  });
+                }
+
+                const price30 = document.getElementById("price-3");
+                console.log(price30.checked);
+                if (price30.checked) {
+                  info.forEach((element) => {
+                    if (20 <= element.price && element.price <= 30) {
+                      document.getElementById(element.name).style.display =
+                        "block";
+                    } else {
+                      document.getElementById(element.name).style.display =
+                        "none";
+                    }
+                  });
+                }
+
+                const price40 = document.getElementById("price-4");
+                console.log(price40.checked);
+                if (price40.checked) {
+                  info.forEach((element) => {
+                    if (30 <= element.price && element.price <= 40) {
+                      document.getElementById(element.name).style.display =
+                        "block";
+                    } else {
+                      document.getElementById(element.name).style.display =
+                        "none";
+                    }
+                  });
+                }
+                const price50 = document.getElementById("price-5");
+                console.log(price50.checked);
+                if (price50.checked) {
+                  info.forEach((element) => {
+                    if (40 <= element.price && element.price <= 50) {
+                      document.getElementById(element.name).style.display =
+                        "block";
+                    } else {
+                      document.getElementById(element.name).style.display =
+                        "none";
+                    }
+                  });
+                }
+              }
+            </script>
+
+           <!-- 
+            <div class="col-12 pb-1">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-3">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          -->
+          </div>
+        </div>
+        <!-- Shop Product End -->
+      </div>
+    </div>
+    <!-- Shop End -->
+
+<!-- Footer Start -->
+<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+  <div class="row px-xl-5 pt-5">
+      <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+          <a href="" class="text-decoration-none">
+              <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">D</span>DETI SHOP</h1>
+          </a>
+          <p>Best department store</p>
+          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA, Aveiro, Portugal</p>
+          <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt</p>
+          <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355</p>
+      </div>
+      <div class="col-lg-8 col-md-12">
+          <div class="row">
+              <div class="col-md-4 mb-5">
+                  <h5 class="font-weight-bold text-dark mb-4">Links</h5>
+                  <div class="d-flex flex-column justify-content-start">
+                      <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                      <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                      <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                      <a class="text-dark" href="aboutus.html"><i class="fa fa-angle-right mr-2"></i>About us</a>
+                  </div>
+              </div>
+              <div class="col-md-6 mb-5">
+                  <h5 class="font-weight-bold text-dark mb-4">Info</h5>
+                  <h6>
+                      Welcome to deti store, where u can buy all the merch u want from the best department store in the world. <br> <br>
+                      We have a lot of products, from clothes to mugs, so you can buy whatever you want. <br> <br>
+                      Mockup merch store made for the SIO course of the DETI-UA. <br> <br>
+                  </h6>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row border-top border-light mx-xl-5 py-4">
+      <div class="col-md-6 px-xl-0">
+          <p class="mb-md-0 text-center text-md-left text-dark">
+              &copy; <a class="text-dark font-weight-semi-bold" href="index.html">DETI SHOP</a> Designed
+              by
+              <a class="text-dark font-weight-semi-bold" href="https://github.com/detiuaveiro/1st-project-group_05">DETI Programmers</a></br>
+              <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com"> Template by HTMLCodex</a>
+          </p>
+      </div>
+  </div> 
+</div>
+<!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"
+      ><i class="fa fa-angle-double-up"></i
+    ></a>
+
+    <!-- JavaScript Libraries -->
+
+    <script src="js/userLogged.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script  src="js/cartPopup.js"></script>
+    <script  src="js/addCart.js"></script>
+
+    <script src="js/search_product.js"></script>
+    <!-- Add to cart -->
+    <!-- Template Javascript -->
+    <script src="js/logout.js"></script>
+  </body>
+</html>

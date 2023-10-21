@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Deti Shop</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+     <!-- Topbar Start -->
+
+     <div class="row align-items-center py-3 px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+          <a href="" class="text-decoration-none">
+            <h1 class="m-0 display-5 font-weight-semi-bold">
+              <span class="text-primary font-weight-bold border px-3 mr-1">D</span
+              >DETI SHOP
+            </h1>
+          </a>
+        </div>
+        <div class="col-lg-6 col-6 text-left">
+          <form action="search.html">
+            <div class="input-group">
+              <input
+                oninput="updateSuggestions()"
+                id="input_search"
+                name="product"
+                type="text"
+                class="form-control"
+                placeholder="Search for products"
+              />
+              <div class="input-group-append" id="autocomplete">
+                <span class="input-group-text bg-transparent text-primary">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+            </div>
+            <div id="suggestions" class="autocomplete-suggestions"></div>
+          </form>
+        </div>
+        <div class="col-lg-3 col-6 text-right">
+          <a href="cart.html" class="btn border">
+            <i class="fas fa-shopping-cart text-primary"></i>
+            <span class="badge" id="cartIcon">0</span>
+          </a>
+        </div>
+      </div>
+      <!-- Topbar End -->
+  
+      <!-- Navbar Start -->
+      <div class="container-fluid">
+        <div class="row border-top px-xl-5">
+          <div class="col-lg-12">
+            <nav
+              class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0"
+            >
+              <a href="" class="text-decoration-none d-block d-lg-none">
+                <h1 class="m-0 display-5 font-weight-semi-bold">
+                  <span class="text-primary font-weight-bold border px-3 mr-1"
+                    >D</span
+                  >DETI SHOP
+                </h1>
+              </a>
+              <button
+                type="button"
+                class="navbar-toggler"
+                data-toggle="collapse"
+                data-target="#navbarCollapse"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse justify-content-between"
+                id="navbarCollapse"
+              >
+                <div
+                  class="collapse navbar-collapse justify-content-between"
+                  id="navbarCollapse"
+                >
+                  <div class="navbar-nav mr-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="shop.html" class="nav-item nav-link active">Shop</a>
+                    <a href="aboutus.html" class="nav-item nav-link"
+                      >About us</a
+                    >
+                  </div>
+                  <div class="navbar-nav ml-auto py-0">
+                    <div class="navbar-nav ml-auto py-0">
+                      <a
+                        href="login.html"
+                        class="nav-item nav-link"
+                        id="logintext"
+                        >Login</a
+                      >
+                      <a
+                        href="register.html"
+                        class="nav-item nav-link"
+                        id="registertext"
+                        >Register</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Navbar End -->
+
+    <div class="container mt-4">
+        <h1>Order List</h1>
+        <div id="productCards" class="row">
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <span class="text-primary font-weight-bold px-3 mr-1">
+            <p id="product_name"></p>
+        </span>
+        <h1 id="notfound">Orders Not Found</h1> 
+        
+        
+        
+     
+        <table id="viewDetails" class="table table-striped" style="margin-top: 1cm;">
+            <thead>
+                <tr>
+                    <th scope="col">OrderID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Accordion rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+<!-- Footer Start -->
+<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+    <div class="row px-xl-5 pt-5">
+        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+            <a href="" class="text-decoration-none">
+                <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">D</span>DETI SHOP</h1>
+            </a>
+            <p>Best department store</p>
+            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA, Aveiro, Portugal</p>
+            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt</p>
+            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355</p>
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Links</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                        <a class="text-dark" href="aboutus.html"><i class="fa fa-angle-right mr-2"></i>About us</a>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <h5 class="font-weight-bold text-dark mb-4">Info</h5>
+                    <h6>
+                        Welcome to deti store, where u can buy all the merch u want from the best department store in the world. <br> <br>
+                        We have a lot of products, from clothes to mugs, so you can buy whatever you want. <br> <br>
+                        Mockup merch store made for the SIO course of the DETI-UA. <br> <br>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-top border-light mx-xl-5 py-4">
+        <div class="col-md-6 px-xl-0">
+            <p class="mb-md-0 text-center text-md-left text-dark">
+                &copy; <a class="text-dark font-weight-semi-bold" href="index.html">DETI SHOP</a> Designed
+                by
+                <a class="text-dark font-weight-semi-bold" href="https://github.com/detiuaveiro/1st-project-group_05">DETI Programmers</a></br>
+                <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com"> Template by HTMLCodex</a>
+            </p>
+        </div>
+    </div> 
+  </div>
+  <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <style>
+        .accordion {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+    </style>
+    
+    <script>
+const tableBody = document.querySelector("#viewDetails tbody");
+const notfoundElement = document.getElementById("notfound");
+
+function createAccordion(order) {
+    const row = tableBody.insertRow();
+
+    const orderIDCell = row.insertCell();
+    orderIDCell.textContent = order.ORDER_id;
+
+    const usernameCell = row.insertCell();
+    usernameCell.textContent = order.username;
+
+    const detailsCell = row.insertCell();
+    detailsCell.className = "accordion-container";
+
+    const viewDetailsButton = document.createElement("button");
+    viewDetailsButton.textContent = "View Details";
+    viewDetailsButton.className = "btn btn-primary";
+
+    const updateButton = document.createElement("button");
+    updateButton.textContent = "Update";
+    updateButton.className = "btn btn-primary mx-2";
+
+    let updateForm = createUpdateForm(order);
+    let detailsContent = createDetailsContent(order);
+
+    viewDetailsButton.addEventListener("click", () => {
+        updateForm.style.display = "none";
+        detailsContent.style.display = "block";
+    });
+
+    updateButton.addEventListener("click", () => {
+        updateForm.style.display = "block";
+        detailsContent.style.display = "none";
+    });
+
+    detailsCell.appendChild(viewDetailsButton);
+    detailsCell.appendChild(updateButton);
+    detailsCell.appendChild(updateForm);
+    detailsCell.appendChild(detailsContent);
+
+    const productCardsContainer = document.getElementById("productCards");
+
+fetch("http://localhost:5000/get_products")
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.length === 0) {
+            // Handle case when no products are available
+            productCardsContainer.innerHTML = "<p>No products available.</p>";
+        } else {
+            // Clear any existing content in the product cards container
+            productCardsContainer.innerHTML = "";
+
+            data.forEach((product) => {
+                createProductCard(product);
+            });
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching product data:", error);
+        productCardsContainer.innerHTML = "<p>Error loading products.</p>";
+    });
+
+    function createProductCard(product) {
+    const card = document.createElement("div");
+    card.classList.add("col-12", "col-md-6", "col-lg-4");
+
+    card.innerHTML = `
+        <div class="card mb-4">
+            <img src="${product.imglink}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">Price: $${product.price}</p>
+                <p class="card-text">${product.description}</p>
+                <p class="card-text">Stock: ${product.stock} units</p>
+                <button class="btn btn-primary" onclick="changeStock(${product.stock}, ${product.id})">Change Stock</button>
+            </div>
+        </div>
+    `;
+
+    productCardsContainer.appendChild(card);
+}
+
+// Function to handle the "Change Stock" button click
+function changeStock(currentStock, productId) {
+    // You can implement your stock change logic here, e.g., show a modal, open a form, etc.
+    // You can use productId to identify which product you want to update.
+    console.log(`Change stock for product ${productId}`);
+}
+}
+
+function createUpdateForm(order) {
+    const updateForm = document.createElement("form");
+    updateForm.className = "update-form";
+    updateForm.style.display = "none"; // Initially hide the update form
+    console.log(order)
+    updateForm.innerHTML = `
+    
+        <input type="text" name="firstname" value="${order.firstname}" placeholder="First Name">
+        <input type="text" name="lastname" value="${order.lastname}" placeholder="Last Name">
+        <input type="email" name="email" value="${order.email}" placeholder="Email">
+        <input type="tel" name="phonenumber" value="${order.phonenumber}" placeholder="Phone Number">
+        <input type="text" name="ship_address" value="${order.ship_address}" placeholder="Shipping Address">
+        <input type="text" name="country" value="${order.country}" placeholder="Country">
+        <input type="text" name="city" value="${order.city}" placeholder="City">
+        <input type="text" name="zip_code" value="${order.zip_code}" placeholder="Zip Code">
+        <textarea name="products_info" placeholder="Products Info">${order.products_info}</textarea>
+        <button type="submit">Update</button>
+    `;
+
+    // Add a submit event handler for the update form
+    updateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const updatedData = {
+            order_id: order.ORDER_id,
+            firstname: updateForm.elements.firstname.value,
+            lastname: updateForm.elements.lastname.value,
+            email: updateForm.elements.email.value,
+            phonenumber: updateForm.elements.phonenumber.value,
+            ship_address: updateForm.elements.ship_address.value,
+            country: updateForm.elements.country.value,
+            city: updateForm.elements.city.value,
+            zip_code: updateForm.elements.zip_code.value,
+            products_info: updateForm.elements.products_info.value,
+        };
+        
+        fetch("http://127.0.0.1:5000/change_order", {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedData),
+})
+.then((response) => {
+    if (response.ok) {
+        // Handle success
+    } else {
+        // Handle errors
+    }
+})
+.catch((error) => {
+    // Handle network errors
+});
+    });
+
+    return updateForm;
+}
+
+function createDetailsContent(order) {
+    const detailsContent = document.createElement("div");
+    detailsContent.className = "accordion-content";
+
+    detailsContent.innerHTML = `
+        <div class="order-details">
+            <p><strong>Order ID:</strong> ${order.ORDER_id}</p>
+            <p><strong>Username:</strong> ${order.username}</p>
+            <p><strong>First Name:</strong> ${order.firstname}</p>
+            <p><strong>Last Name:</strong> ${order.lastname}</p>
+            <p><strong>Email:</strong> ${order.email}</p>
+            <p><strong>Phone Number:</strong> ${order.phonenumber}</p>
+            <p><strong>Shipping Address:</strong> ${order.ship_address}</p>
+            <p><strong>Country:</strong> ${order.country}</p>
+            <p><strong>City:</strong> ${order.city}</p>
+            <p><strong>Zip Code:</strong> ${order.zip_code}</p>
+            <p><strong>Products Info:</strong> ${order.products_info}</p>
+        </div>
+    `;
+
+    detailsContent.style.display = "block"; // Initially show the details content
+    detailsContent.style.backgroundColor = "#f0f0f0";
+    detailsContent.style.border = "1px solid #ddd";
+    detailsContent.style.padding = "10px";
+    detailsContent.style.marginTop = "10px";
+
+    const orderDetails = detailsContent.querySelector(".order-details");
+    orderDetails.style.fontFamily = "Arial, sans-serif";
+    orderDetails.style.fontSize = "16px";
+    orderDetails.style.color = "#333";
+
+    return detailsContent;
+}
+
+fetch("http://localhost:5000/get_all_orders")
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+
+        if (data.length === 0) {
+            notfoundElement.style.display = "block";
+        } else {
+            notfoundElement.style.display = "none";
+
+            data.forEach((order) => {
+                createAccordion(order);
+            });
+        }
+    })
+    .catch((error) => {
+        console.error("Error fetching order data:", error);
+        notfoundElement.style.display = "block";
+    });
+
+    
+    </script>
+    
+    
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+    <script src="js/search_product.js"></script>
+    <script src="js/userLogged.js"></script>
+    <script src="js/logout.js"></script>  
+
+    
+
+
+
+</body>
+
+</html>
+
+
+<!--
+
+<div id=adsjasd" > You search for : </div>
+    <div id="product searched">
+ -> texto
+</div>
+
+-->
