@@ -15,7 +15,7 @@ app.config['JWT_SECRET_KEY'] = 'siouadeti23'
 jwt = JWTManager(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-LOGGEDOUT= set()
+LOGGEDOUT= set() # isto atribui um token novo a cada login, isto é para o logout "remover" o token em server side
 
 
 ############################ Login 

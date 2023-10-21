@@ -1,15 +1,14 @@
 function showPopup(productName) {
 
+  var token = localStorage.getItem('access_token');
 
-  //console.log(checkCookie("username"));
-  if (!checkCookie("username")) {
+  if (!token) {
     const popup = document.getElementById('popup');
     popup.style.display = 'block';
     popup.innerText = `You need to login to add products to cart`;
     setTimeout(() => {
       popup.style.display = 'none';
     }, 2000); // Hide the popup after 3 seconds (adjust as needed)
-    //console.log("no cookie")
     return null;
   }
 
@@ -25,9 +24,7 @@ function showPopup(productName) {
 
 }
 
-function incrementCart(){
-  //console.log("incrementCart() called");
-  // get value of id cartIcon and convert to int
+function incrementCart() {
   var cartIcon = document.getElementById("cartIcon").innerHTML;
   var cartIconInt = parseInt(cartIcon);
   // increment value
@@ -36,15 +33,6 @@ function incrementCart(){
   document.getElementById("cartIcon").innerHTML = cartIconInt;
 }
 
-function checkCookie(name) {
-  var cookieArr = document.cookie.split(";");
-  for(var i = 0; i < cookieArr.length; i++) {
-      var cookiePair = cookieArr[i].split("=");
-      if(name == cookiePair[0].trim()) {
-          return true;
-      }
-  }
-  return false;
-}
+
 
 

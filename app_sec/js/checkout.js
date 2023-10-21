@@ -1,10 +1,10 @@
 async function checkoutData() {
-    if (checkCookie("username")) {
-        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
-    }
-    else {
+    var token = localStorage.getItem('access_token');
+    if (!token){
         return;
     }
+    var decoded_token = parseJWT(token);
+    var username = decoded_token.sub;
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
 
     var subtotal = 0;
@@ -157,16 +157,6 @@ function checkout() {
 
 }
 
-function checkCookie(name) {
-    var cookieArr = document.cookie.split(";");
-    for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-        if (name == cookiePair[0].trim()) {
-            return true;
-        }
-    }
-    return false;
-}
 
 
 

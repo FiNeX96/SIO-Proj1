@@ -3,16 +3,12 @@
 function loadDetails() {
     var url = window.location.search;
     var id = url.split('=')[1];
-    console.log(id);
 
     var reviews = JSON.parse(localStorage.getItem("reviews_" + id));
 
     if (reviews == null) {
         return;
     }
-
-
-    console.log(reviews);
 
     var reviewContainer = document.getElementById("reviewDiv");
 
@@ -41,23 +37,20 @@ function loadDetails() {
 
 }
 
-
-
-
 function postReview() {
     // Get the value of the textarea
     var review = document.getElementById("message").value;
     var url = window.location.search;
     var produto = url.split('=')[1];
 
-    // Get the value of the cookie
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
-
-
-    if (username == null) {
+    var token = localStorage.getItem('access_token');
+    if (!token){
         alert("You must be logged in to post a review!");
         return;
     }
+
+    var decoded_token = parseJWT(token);
+    var username = decoded_token.sub;
 
     let dateObj = new Date();
     let day = dateObj.getDate();

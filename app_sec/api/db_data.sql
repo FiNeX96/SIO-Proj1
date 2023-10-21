@@ -72,12 +72,12 @@ CREATE TABLE Users(
 insert into
     Users
 values
-    ('admin', 'admin');
+    ('admin', 'pbkdf2:sha256:600000$xDuAXVM90hrwU66E$b51633c03f2f8ec0f406f481727c51fbb745fa86cfeaf6479ed0b9249c8404c4');
 
 insert into
     Users
 values
-    ('dev', '12345');
+    ('dev', 'pbkdf2:sha256:600000$We0wHkqarD3rm8d7$941bd2fc805b104dcbe2bfec232168ce7d94a0798d790cf1f134d9b12bd67b1e');
 
 Create table Orders(
     ORDER_id TEXT PRIMARY KEY,

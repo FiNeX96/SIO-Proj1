@@ -4,13 +4,11 @@ function userLogged() {
     if (checkCookie("username")) {
         var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     }
+    else{
+        return;
+    }
 
-    //console.log(cookie)
-    // get "username " from the cookie
-
-    console.log(username)
-
-    if (username.trim() == "admin"){
+    if (username == "admin"){
         $("#logintext").html( "Admin Panel" );
         $("#logintext").attr("href", "admin.html");
     }
@@ -38,6 +36,9 @@ window.addEventListener("load", userLogged);
 
 
 function checkCookie(name) {
+    if (document.cookie == "") {
+        return false;
+    }
     var cookieArr = document.cookie.split(";");
     for(var i = 0; i < cookieArr.length; i++) {
         var cookiePair = cookieArr[i].split("=");
@@ -45,5 +46,6 @@ function checkCookie(name) {
             return true;
         }
     }
+    console.log("huh??")
     return false;
 }

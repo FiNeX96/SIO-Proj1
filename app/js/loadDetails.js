@@ -3,7 +3,7 @@
 function loadDetails() {
     var url = window.location.search;
     var id = url.split('=')[1];
-    console.log(id);
+    console.log("URL" , id);
 
     var reviews = JSON.parse(localStorage.getItem("reviews_" + id));
 
@@ -48,6 +48,7 @@ function postReview() {
     // Get the value of the textarea
     var review = document.getElementById("message").value;
     var url = window.location.search;
+    console.log("URL = " ,url)
     var produto = url.split('=')[1];
 
     // Get the value of the cookie

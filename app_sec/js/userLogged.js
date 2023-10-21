@@ -4,6 +4,14 @@ function userLogged() {
         return;
     }
 
+    var decoded_token = parseJWT(token);
+    var current_time = Date.now().valueOf() / 1000;
+  
+    if (decoded_token.exp < current_time) { // token expired
+        localStorage.removeItem('access_token');
+        return;
+    }
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://localhost:5000/verify', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -39,5 +47,7 @@ function userLogged() {
     xhr.send();
 }
 window.addEventListener("load", userLogged);
+
+
 
 

@@ -1,6 +1,7 @@
 function logout() {
     // erase JWT token
     var token = localStorage.getItem('access_token');
+
     if (!token) {
         return;
     }
