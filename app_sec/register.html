@@ -245,47 +245,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
 
-    <script>
-      function doRegister() {
-        event.preventDefault();
-        const username = $("#username").val();
-        const password = $("#password").val();
-
-        const data = {
-          username,
-          password,
-        };
-
-        const url = "http://localhost:5000/register";
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              $("#register-success").html(
-                "Successfully registered . Make sure to login now"
-              );
-              
-                setTimeout(function () {
-                    window.location.href = "index.html";
-                }, 2000);
-                
-            } else {
-              $("#register-success").html("Error trying to register");
-            }
-          }
-        };
-        xhr.send(JSON.stringify(data));
-
-        // clear the password and username fields
-        $("#username").val("");
-        $("#password").val("");
-      }
-    </script>
+    <script src="js/register.js"></script>
     <script src ="js/parseJWT.js"></script>
     <script src="js/userLogged.js" > </script>
     <script>

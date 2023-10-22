@@ -15,7 +15,7 @@ class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header(
     "Content-Security-Policy",
     "default-src 'none';"
-    "script-src 'self' cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com 'unsafe-inline' ;" # unsafe-inline is not that good but we need inline scripts e.e
+    "script-src 'self' cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com  ;" # unsafe-inline is not that good but we need inline scripts e.e
     "connect-src 'self' http://localhost:5000;"
     "img-src 'self' cdn.7tv.app data:;"
     "style-src 'self' cdn.jsdelivr.net 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com;"
