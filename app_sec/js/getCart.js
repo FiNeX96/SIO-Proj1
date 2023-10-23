@@ -79,9 +79,10 @@ async function fetchData(cart) {
         </button>
         </td>
     `;
+    window.onload = function() {
     document.getElementById(`removeCartButton_${product_name}`).addEventListener("click", function() {
         removeCart(product_name);
-    });
+    })};
         productContainer.appendChild(productCard);
         subtotal += product_quantity * data.price;
     }

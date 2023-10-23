@@ -21,9 +21,9 @@ function userLogged() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
             var username = response.logged_in_as;
-
-            if (username.trim() == "admin"){
-                $("#logintext").textContent = "Admin Panel" ;
+            //console.log(username)
+            if (username === "admin"){
+                document.getElementById("logintext").textContent = "Admin Panel";
                 $("#logintext").attr("href", "admin.html");
             }
             else{

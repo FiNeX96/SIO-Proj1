@@ -38,6 +38,7 @@ function createAccordion(order) {
     detailsCell.appendChild(updateButton);
     detailsCell.appendChild(updateForm);
     detailsCell.appendChild(detailsContent);
+}
 
     const productCardsContainer = document.getElementById("productCards");
 
@@ -67,7 +68,7 @@ fetch("http://localhost:5000/get_products")
 
     card.innerHTML = `
         <div class="card mb-4">
-            <img src="${product.imglink}" class="card-img-top" alt="${product.name}">
+            <img src="img/${product.imglink}" class="card-img-top" style="max-width: 200px; max-height: 200px;" alt="${product.name}">
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text">Price: $${product.price}</p>
@@ -77,10 +78,10 @@ fetch("http://localhost:5000/get_products")
             </div>
         </div>
     `;
-
+    window.onload = function() {
     document.getElementById(product.id).addEventListener("click", function() {
         changeStock(product.stock, product.id);
-    });
+    })};
 
     productCardsContainer.appendChild(card);
 }
@@ -91,7 +92,7 @@ function changeStock(currentStock, productId) {
     // You can use productId to identify which product you want to update.
     console.log(`Change stock for product ${productId}`);
 }
-}
+
 
 function createUpdateForm(order) {
     const updateForm = document.createElement("form");

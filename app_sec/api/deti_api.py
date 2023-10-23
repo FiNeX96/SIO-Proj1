@@ -7,7 +7,7 @@ import time
 
 from flask import Flask, Response, jsonify, make_response, request
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -38,7 +38,10 @@ def login():
 
         if user and check_password_hash(user[1], password): # check the password
             print("User found")
-            access_token = create_access_token(identity=username)
+            if user == "admin":
+                access_token = create_access_token(identity=username, additional_claims={"role": "admin"})
+            else:
+                access_token = create_access_token(identity=username, additional_claims={"role": "user"})
             return jsonify(access_token=access_token), 200
         else:
             print("User not found")
@@ -251,9 +254,18 @@ def get_product(product_name):
             "imglink": product[3],
         }
         return jsonify(product_dict)
+    
 
 @app.route("/get_all_orders", methods=["GET"])
 def get_all_orders():
+    
+    claims = verify_jwt_in_request()
+
+    if 'roles' in claims and 'admin' in claims['roles']:
+         pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+        
     conn = sqlite3.connect("LojaDeti.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Orders")

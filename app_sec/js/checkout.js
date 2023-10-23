@@ -12,7 +12,13 @@ async function checkoutData() {
     for (let cart_item in cart) {
         let product_name = cart[cart_item].product;
         let product_quantity = cart[cart_item].quantity;
-        let response = await fetch("http://localhost:5000/getinfo/" + product_name);
+        let response = await fetch("http://localhost:5000/getinfo/" + product_name,{
+            'method': 'GET',
+            'headers':{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
         let data = await response.json();
         let product_price = data.price;
         subtotal += product_price * product_quantity;
