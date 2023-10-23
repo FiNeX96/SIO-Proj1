@@ -7,13 +7,13 @@ function getCart() {
     var token = localStorage.getItem('access_token');
 
     if (!token){
-        document.querySelector(".cart-container").innerHTML = '<h2 style="text-align:center" >No products in cart</h1>';
-        document.getElementById("shipping").innerHTML = "0€";
-        document.getElementById("subtotal").innerHTML = "0€";
-        document.getElementById("total").innerHTML = "0€";
+        document.querySelector(".cart-container").textContent = '<h2 style="text-align:center" >No products in cart</h1>';
+        document.getElementById("shipping").textContent = "0€";
+        document.getElementById("subtotal").textContent = "0€";
+        document.getElementById("total").textContent = "0€";
         $("#checkoutbutton").prop("disabled", true);
         $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").innerHTML = "Cart is empty"
+        $("#checkoutbutton").textContent = "Cart is empty"
         return 1;
     }
     var decoded_token = parseJWT(token);
@@ -25,19 +25,20 @@ function getCart() {
 
     if (cart == null || cart.length == 0 || cart == []) {
         document.querySelector(".cart-container").innerHTML = '<h2 style="text-align:center"> No products in cart </h2>';
-        document.getElementById("shipping").innerHTML = "0€";
-        document.getElementById("subtotal").innerHTML = "0€";
-        document.getElementById("total").innerHTML = "0€";
+        document.getElementById("shipping").textContent;
+        document.getElementById("subtotal").textContent = "0€";
+        document.getElementById("total").textContent = "0€";
         $("#checkoutbutton").prop("disabled", true);
 
         // Optionally, you can also change its appearance to make it appear "greyed out"
         $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").innerHTML = "Cart is empty"
+        $("#checkoutbutton").textContent = "Cart is empty"
 
         return 1;
     }
     fetchData(cart);
 }
+
 
 
 async function fetchData(cart) {

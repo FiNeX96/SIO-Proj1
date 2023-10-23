@@ -13,15 +13,14 @@ class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type" "Authorization")
         self.send_header("Cache-Control", "no-store")
         self.send_header(
-    "Content-Security-Policy",
-    "default-src 'none';"
-    "script-src 'self' cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com  ;" # unsafe-inline is not that good but we need inline scripts e.e
-    "connect-src 'self' http://localhost:5000;"
-    "img-src 'self' cdn.7tv.app data:;"
-    "style-src 'self' cdn.jsdelivr.net 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com;"
-    "font-src 'self' cdn.jsdelivr.net fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com;"
-    )
-
+            "Content-Security-Policy",
+            "default-src 'none';"
+            "script-src 'self' cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com 'nonce-searchnonce' 'nonce-getcartnonce' 'nonce-checkoutdatanonce' 'nonce-detailinfononce' 'nonce-userloggednonce' 'nonce-loginuserlogged' 'nonce-registeruserlogged'  ;"
+            "connect-src 'self' http://localhost:5000;"
+            "img-src 'self' data:;"
+            "style-src 'self' cdn.jsdelivr.net 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com;"
+            "font-src 'self' cdn.jsdelivr.net fonts.gstatic.com fonts.googleapis.com cdnjs.cloudflare.com;",
+        )
 
         super().end_headers()
 

@@ -44,7 +44,6 @@
         <form action="search.html">
           <div class="input-group">
             <input
-              oninput="updateSuggestions()"
               id="input_search"
               name="product"
               type="text"
@@ -250,6 +249,10 @@
     <script src="js/search.js"></script>
 
     <script src="js/search_product.js"></script>
+
+    <script nonce="searchnonce">
+      document.getElementById("input_search").addEventListener("oninput",updateSuggestions)
+    </script>
     <script src ="js/parseJWT.js"></script>
     <script src="js/userLogged.js" > </script>
     <script src="js/logout.js"></script>

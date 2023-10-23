@@ -1,4 +1,5 @@
 async function checkoutData() {
+
     var token = localStorage.getItem('access_token');
     if (!token){
         return;
@@ -26,9 +27,9 @@ async function checkoutData() {
         productcard.appendChild(div);
 
     }
-    $("#subtotal").html(subtotal.toFixed(2) + "€");
-    $("#shipping").html("10€");
-    $("#total").html((subtotal + 10).toFixed(2) + "€");
+    $("#subtotal").textContent = subtotal.toFixed(2) + "€";
+    $("#shipping").textContent = "10€";
+    $("#total").textContent = (subtotal + 10).toFixed(2) + "€";
 
 }
 
@@ -59,7 +60,7 @@ function checkout() {
 
     // Validation for First Name and Last Name - Ensure they are not empty
     if (!firstname.trim() || !lastname.trim()) {
-        popup.innerText = "First Name and Last Name are required.";
+        popup.textContent = "First Name and Last Name are required.";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -70,7 +71,7 @@ function checkout() {
     // Validation for Email - Ensure it's a valid email address
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!email.match(emailPattern)) {
-        popup.innerText = "Input a valid email!";
+        popup.textContent = "Input a valid email!";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -80,7 +81,7 @@ function checkout() {
 
     // Validation for Phone Number - You can add more specific phone number validation if needed
     if (!phonenumber.trim()) {
-        popup.innerText = "Put a valid phone number!";
+        popup.textContent = "Put a valid phone number!";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -90,7 +91,7 @@ function checkout() {
 
     // Validation for Shipping Address - Ensure it's not empty
     if (!shippingaddress.trim()) {
-        popup.innerText = "Shipping address is required";
+        popup.textContent = "Shipping address is required";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -100,7 +101,7 @@ function checkout() {
 
     // Validation for City - Ensure it's not empty
     if (!city.trim()) {
-        popup.innerText = "Put a valid city!";
+        popup.textContent = "Put a valid city!";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -110,7 +111,7 @@ function checkout() {
 
     // Validation for ZIP Code - You can add more specific ZIP code validation if needed
     if (!zipcode.trim()) {
-        popup.innerText = "Put a valid zip code!";
+        popup.textContent = "Put a valid zip code!";
         document.body.appendChild(popup);
         setTimeout(function () {
             document.getElementById("popup").style.display = "none";
@@ -119,7 +120,13 @@ function checkout() {
     }
 
 
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    //var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    var token = localStorage.getItem('access_token');
+    if (!token){
+        alert("not logged in. cant checkout")
+    }
+    var decoded_token = parseJWT(token);
+    var username = decoded_token.sub;
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
     var total = document.getElementById("total").innerHTML.split("€")[0];
 
@@ -145,7 +152,7 @@ function checkout() {
         if (xhr.readyState === 4) {
             var response = JSON.parse(xhr.responseText);
             // create a popup saying sucess checkout
-            popup.innerText = response.message;
+            popup.textContent = response.message;
             document.body.appendChild(popup);
 
             setTimeout(function () {

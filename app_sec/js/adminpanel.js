@@ -46,10 +46,10 @@ fetch("http://localhost:5000/get_products")
     .then((data) => {
         if (data.length === 0) {
             // Handle case when no products are available
-            productCardsContainer.innerHTML = "<p>No products available.</p>";
+            productCardsContainer.textContent = "<p>No products available.</p>";
         } else {
             // Clear any existing content in the product cards container
-            productCardsContainer.innerHTML = "";
+            productCardsContainer.textContent = "";
 
             data.forEach((product) => {
                 createProductCard(product);

@@ -23,7 +23,7 @@ function userLogged() {
             var username = response.logged_in_as;
 
             if (username.trim() == "admin"){
-                $("#logintext").html( "Admin Panel" );
+                $("#logintext").textContent = "Admin Panel" ;
                 $("#logintext").attr("href", "admin.html");
             }
             else{

@@ -1,7 +1,7 @@
 function addToCartQuantity() {
 
     var quantity = parseInt(document.getElementById("quantity").value);
-    var productName = document.getElementById("nome_produto").innerHTML;
+    var productName = document.getElementById("nome_produto").textContent;
 
     // Retrieve the username from the document's cookies
     var token = localStorage.getItem('access_token');
@@ -56,10 +56,10 @@ function incrementCart() {
     //console.log("incrementCart() called");
     // get value of id cartIcon and convert to int
     var quantity = parseInt(document.getElementById("quantity").value);
-    var cartIcon = document.getElementById("cartIcon").innerHTML;
+    var cartIcon = document.getElementById("cartIcon").textContent;
     var cartIconInt = parseInt(cartIcon);
     // increment value
     cartIconInt += quantity;
     // update value
-    document.getElementById("cartIcon").innerHTML = cartIconInt;
+    document.getElementById("cartIcon").textContent = cartIconInt;
 }
