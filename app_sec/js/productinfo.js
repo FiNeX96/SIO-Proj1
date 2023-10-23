@@ -22,9 +22,9 @@ function getProductFromURL() {
       if (this.readyState == 4 && this.status == 200) {
         var produto = JSON.parse(this.responseText);
         //console.log(produto.imglink)
-        document.getElementById("price_produto").innerHTML =
+        document.getElementById("price_produto").textContent =
           produto.price + "€";
-        document.getElementById("descrição_produto").innerHTML =
+        document.getElementById("descrição_produto").textContent =
           produto.description;
         document.getElementById("imagem_produto").src =
           "img/" + produto.imglink;

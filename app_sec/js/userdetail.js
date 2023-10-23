@@ -1,4 +1,6 @@
-var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+var token = localStorage.getItem('access_token');
+var decoded_token = parseJWT(token);
+var username = decoded_token.sub;
       var user_div = document.getElementById("user");
       user_div.innerHTML = "User: " + username;
       function toggleElements(){
@@ -32,7 +34,13 @@ var username = document.cookie.split('; ').find(row => row.startsWith('username=
       function resetPassword() {
           // Generate a random password
           var randomPassword = generateRandomPassword();
-          var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+          var token = localStorage.getItem('access_token');
+          if (!token) {
+              return;
+          }
+      
+          var decoded_token = parseJWT(token);
+          var username = decoded_token.sub;
           var data = {
               username: username,
               newPassword: randomPassword // Assuming "newPassword" is the field for the new password
@@ -82,7 +90,13 @@ var username = document.cookie.split('; ').find(row => row.startsWith('username=
 
           if (newPassword !== "" && confirmPassword !== "" && newPassword === confirmPassword) {
               // Passwords match; proceed to update password
-              var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+              var token = localStorage.getItem('access_token');
+              if (!token) {
+                  return;
+              }
+          
+              var decoded_token = parseJWT(token);
+              var username = decoded_token.sub;
               
               var data = {
                   username: username,
@@ -126,7 +140,12 @@ var username = document.cookie.split('; ').find(row => row.startsWith('username=
           }
       }
 
-      fetch("http://localhost:5000/get_all_orders")
+      fetch("http://localhost:5000/get_all_orders", {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+            },
+      })
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -232,3 +251,10 @@ var username = document.cookie.split('; ').find(row => row.startsWith('username=
           }
       });
         
+
+// <script> , onclick , onchange ,       
+// <button onclick="funçao()"> </button>
+
+
+// button id = "button"
+// button.addEventListener("click", function() {

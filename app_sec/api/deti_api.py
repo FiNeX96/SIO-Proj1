@@ -1,10 +1,6 @@
 import json
-import os
 import random
 import sqlite3
-import threading
-import time
-
 from flask import Flask, Response, jsonify, make_response, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request
@@ -19,7 +15,6 @@ LOGGEDOUT= set() # isto atribui um token novo a cada login, isto é para o logou
 
 
 ############################ Login 
-
 
 
 @app.route("/login", methods=["POST"])
@@ -151,7 +146,7 @@ def getCart(product_name):
     cursor = conn.cursor()
     # price and
     cursor.execute(
-        "SELECT price,imglink FROM Products WHERE name = '" + product_name + "'"
+        "SELECT price,imglink FROM Products WHERE name = ? ;", (product_name,)
     )
     product = cursor.fetchone()
     conn.close()
@@ -165,10 +160,7 @@ def getCart(product_name):
 def search(product_name):
     conn = sqlite3.connect("LojaDeti.db")
     cursor = conn.cursor()
-    
-    cursor.execute(
-    "SELECT name,price FROM Products WHERE name LIKE '%" + product_name + "%'"
-)
+    cursor.execute("Select name,price FROM Products WHERE name LIKE ?", ('%'+product_name+'%',))
     product = cursor.fetchmany(5)
     # put this in dictionary format
     product_list = []
@@ -193,7 +185,7 @@ def updatePassword():
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
-        print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
+        #print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
         try:
             cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
             conn.commit()
@@ -218,7 +210,7 @@ def resetPassword():
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
-        print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
+        #print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
         try:
             cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
             conn.commit()
@@ -261,10 +253,10 @@ def get_all_orders():
     
     claims = verify_jwt_in_request()
 
-    if 'roles' in claims and 'admin' in claims['roles']:
-         pass
-    else:
-        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+    # if 'roles' in claims and 'admin' in claims['roles']:
+    #      pass
+    # else:
+    #     return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
         
     conn = sqlite3.connect("LojaDeti.db")
     cursor = conn.cursor()
@@ -338,7 +330,7 @@ def checkout():
              conn = sqlite3.connect("LojaDeti.db")
              cursor = conn.cursor()
              cursor.execute(
-                 "SELECT stock FROM Products WHERE name = '" + product + "' ;"
+                 "SELECT stock FROM Products WHERE name = ? ;", (product,)
              )
              stock = cursor.fetchone()
              #print("wanted = ", cart_dict[product] )

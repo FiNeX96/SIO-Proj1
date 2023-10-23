@@ -1,6 +1,7 @@
 function addToCartQuantity() {
 
     var quantity = parseInt(document.getElementById("quantity").value);
+    
     var productName = document.getElementById("nome_produto").textContent;
 
     // Retrieve the username from the document's cookies
