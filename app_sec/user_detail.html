@@ -168,7 +168,7 @@
           <h6>Change password:</h6>
         </div>
       <div style="padding-left: 47.5%;">
-        <button type="button" class="btn btn-primary" id="change" onclick="toggleElements()">Change</button>  
+        <button type="button" class="btn btn-primary" id="change">Change</button>  
       </div>
       
       <div style="padding-left: 35%; width: 1200px; padding-top: 20px; ">
@@ -192,13 +192,13 @@
       />
       </div>
       <div style="padding-left: 48%; padding-top: 10px;">
-        <button style="display: none;" type="button" class="btn btn-primary" id="enter" onclick="sendNewPass()">Enter</button>  
+        <button style="display: none;" type="button" class="btn btn-primary" id="enter" >Enter</button>  
       </div>
       <div style="padding-left: 43%;">
         <h6 id="resetText">Reset password to a random one:</h6>
       </div>
     <div style="padding-left: 48%;">
-      <button type="button" class="btn btn-primary" id="reset" onclick="resetPassword()">Reset</button>  
+      <button type="button" class="btn btn-primary" id="reset" >Reset</button>  
     </div>
     <div style="padding-left: 43%; padding-top: 20px; ">
       <h6 id="new_random" style="display: none;"></h6>
@@ -298,5 +298,10 @@
     <script src="js/logout.js"></script>
 
     <script src="js/userLogged.js" > </script>
+    <script nonce="userdetailnonce">
+      document.getElementById("change").addEventListener("click", toggleElements);
+      document.getElementById("enter").addEventListener("click", sendNewPass);
+      document.getElementById("reset").addEventListener("click", resetPassword);
+    </script>
   </body>
 </html>
