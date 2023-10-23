@@ -170,7 +170,16 @@
       <div style="padding-left: 47.5%;">
         <button type="button" class="btn btn-primary" id="change">Change</button>  
       </div>
-      
+      <div style="padding-left: 35%; width: 1200px; padding-top: 20px; ">
+        <input style="display: none;"
+        type="password"
+        class="form-control"
+        id="atual_password"
+        placeholder="Actual Password"
+        required="required"
+        data-validation-required-message="Actual Password"
+      />
+      </div>
       <div style="padding-left: 35%; width: 1200px; padding-top: 20px; ">
         <input style="display: none;"
         type="password"
@@ -199,6 +208,18 @@
       </div>
     <div style="padding-left: 48%;">
       <button type="button" class="btn btn-primary" id="reset" >Reset</button>  
+    </div>
+    <div style="padding-left: 35%; width: 1200px; padding-top: 20px; ">
+      <input style="display: none;"
+      type="password"
+      class="form-control"
+      id="atual_password2"
+      placeholder="Actual Password"
+      required="required"
+      data-validation-required-message="Actual Password"
+    />
+    <div style="padding-left: 48%; padding-top: 10px;">
+      <button style="display: none;" type="button" class="btn btn-primary" id="enter2" >Enter</button>  
     </div>
     <div style="padding-left: 43%; padding-top: 20px; ">
       <h6 id="new_random" style="display: none;"></h6>
@@ -299,9 +320,10 @@
 
     <script src="js/userLogged.js" > </script>
     <script nonce="userdetailnonce">
+      document.getElementById("enter2").addEventListener("click", resetPassword);
       document.getElementById("change").addEventListener("click", toggleElements);
       document.getElementById("enter").addEventListener("click", sendNewPass);
-      document.getElementById("reset").addEventListener("click", resetPassword);
+      document.getElementById("reset").addEventListener("click", toggleElements2);
     </script>
   </body>
 </html>

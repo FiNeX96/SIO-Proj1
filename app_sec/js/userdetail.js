@@ -1,9 +1,11 @@
 var token = localStorage.getItem('access_token');
 var decoded_token = parseJWT(token);
 var username = decoded_token.sub;
-      var user_div = document.getElementById("user");
-      user_div.innerHTML = "User: " + username;
-      function toggleElements(){
+var user_div = document.getElementById("user");
+user_div.innerHTML = "User: " + username;
+
+function toggleElements(){
+    var atualPassword = document.getElementById("atual_password");
     var newPasswordInputs = document.getElementById("new_password");
     var newPasswordConfirmInputs = document.getElementById("new_password_confirm");
     var enterButton = document.getElementById("enter");
@@ -22,17 +24,43 @@ var username = decoded_token.sub;
         newPasswordConfirmInputs.style.display = "block";
     }
 
+    if (atualPassword.style.display === "block") {
+        atualPassword.style.display = "none";
+    } else {
+        atualPassword.style.display = "block";}
+
     if (enterButton.style.display === "block") {
         enterButton.style.display = "none";
     } else {
         enterButton.style.display = "block";
     }
+}
 
+function toggleElements2(){
+    var atualPassword = document.getElementById("atual_password2");
+    var enterButton = document.getElementById("enter2");
 
+    if (atualPassword.style.display === "block") {
+        atualPassword.style.display = "none";
+    }else{
+        atualPassword.style.display = "block";
+    }
+    if (enterButton.style.display === "block") {
+        enterButton.style.display = "none";
+    }else{
+        enterButton.style.display = "block";
+    }
 }
        
       function resetPassword() {
           // Generate a random password
+          var atualPassword = document.getElementById("atual_password2");
+          var enterButton = document.getElementById("enter2");
+          atualPassword.style.display = "none";
+          enterButton.style.display = "none";
+            
+
+
           var randomPassword = generateRandomPassword();
           var token = localStorage.getItem('access_token');
           if (!token) {
@@ -42,8 +70,9 @@ var username = decoded_token.sub;
           var decoded_token = parseJWT(token);
           var username = decoded_token.sub;
           var data = {
+            password : atualPassword,
               username: username,
-              newPassword: randomPassword // Assuming "newPassword" is the field for the new password
+              newPassword: randomPassword 
           };
           var xhr = new XMLHttpRequest();
           var url = "http://localhost:5000/resetPassword"; 
@@ -87,6 +116,7 @@ var username = decoded_token.sub;
       function sendNewPass() {
           var newPassword = document.getElementById("new_password").value.trim();
           var confirmPassword = document.getElementById("new_password_confirm").value.trim();
+          var atualPassword = document.getElementById("atual_password").value.trim();
 
           if (newPassword !== "" && confirmPassword !== "" && newPassword === confirmPassword) {
               // Passwords match; proceed to update password
@@ -99,6 +129,7 @@ var username = decoded_token.sub;
               var username = decoded_token.sub;
               
               var data = {
+                atualPassword: atualPassword,
                   username: username,
                   newPassword: newPassword // Assuming "newPassword" is the field for the new password
               };
@@ -113,6 +144,7 @@ var username = decoded_token.sub;
                   if (xhr.readyState === 4) {
                       if (xhr.status === 200) {
                           alert("Password Updated!");
+                          var atualPassword = document.getElementById("atual_password");
                           var newPasswordInputs = document.getElementById("new_password");
                           var newPasswordConfirmInputs = document.getElementById("new_password_confirm");
                           var enterButton = document.getElementById("enter");
@@ -120,10 +152,12 @@ var username = decoded_token.sub;
                           enterButton.style.display = "none";
                           newPasswordInputs.style.display = "none";
                           newPasswordConfirmInputs.style.display = "none";
+                            atualPassword.style.display = "none";
                           var resetText = document.getElementById("resetText").style.display = "block";
                           var resetButton = document.getElementById("reset").style.display = "block";
                       } else {
-                          alert("Error updating password. Please try again.");
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        alert(errorResponse.error);
                       }
                   }
               };

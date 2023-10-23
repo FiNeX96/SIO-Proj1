@@ -181,22 +181,27 @@ def updatePassword():
     try:
         data = request.get_json()
         username = data["username"]
-        new_password = data["newPassword"]  # Assuming a field called "newPassword" for the new password
-
+        new_password = data["newPassword"]
+        atual_password = data["atualPassword"]
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
-        #print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
-        try:
-            cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
-            conn.commit()
-            conn.close()
-            return jsonify({"message": "Password updated successfully"})
-        except sqlite3.IntegrityError as e:
-            print(e)
-            return Response(status=409, response=json.dumps({"error": str(e)}))
-        except Exception as e:
-            print(e)
-            return jsonify({"error": str(e)})
+        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
+        password = cursor.fetchone()
+        if check_password_hash(password[0], atual_password):
+            try:
+                new_password = generate_password_hash(new_password, method="pbkdf2:sha256")
+                cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
+                conn.commit()
+                conn.close()
+                return jsonify({"message": "Password updated successfully"})
+            except sqlite3.IntegrityError as e:
+                print(e)
+                return Response(status=409, response=json.dumps({"error": str(e)}))
+            except Exception as e:
+                print(e)
+                return jsonify({"error": str(e)})
+        else:
+            return Response(status=404, response=json.dumps({"error": "Wrong actual password"}))
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)})
@@ -207,24 +212,34 @@ def resetPassword():
         data = request.get_json()
         username = data["username"]
         new_password = data["newPassword"]  # Assuming a field called "newPassword" for the new password
+        atual_password = data["atualPassword"]
 
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
-        #print("UPDATE Users SET password = " + new_password + " WHERE username = " + username)
-        try:
-            cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
-            conn.commit()
-            conn.close()
-            return jsonify({"message": "Password updated successfully"})
-        except sqlite3.IntegrityError as e:
-            print(e)
-            return Response(status=409, response=json.dumps({"error": str(e)}))
-        except Exception as e:
-            print(e)
-            return jsonify({"error": str(e)})
+        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
+        password = cursor.fetchone()
+        print(password)
+        print(atual_password)
+        print(check_password_hash(password[0], atual_password))
+        if check_password_hash(password[0], atual_password):
+            try:
+                new_password = generate_password_hash(new_password, method="pbkdf2:sha256")
+                cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
+                conn.commit()
+                conn.close()
+                return jsonify({"message": "Password updated successfully"})
+            except sqlite3.IntegrityError as e:
+                print(e)
+                return Response(status=409, response=json.dumps({"error": str(e)}))
+            except Exception as e:
+                print(e)
+                return jsonify({"error": str(e)})
+        else:
+            return Response(status=404, response=json.dumps({"error": "Wrong actual password"}))
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)})
+    
 
 
 
