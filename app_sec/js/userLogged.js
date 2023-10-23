@@ -27,9 +27,10 @@ function userLogged() {
                 $("#logintext").attr("href", "admin.html");
             }
             else{
-                $("#logintext").replaceWith('<a href="user_detail.html" class="nav-item nav-link"> ' + username + '</a>');
+                $("#logintext").replaceWith('<a href="user_detail.html" id="logintext" class="nav-item nav-link"> ' + username + '</a>');
             }
-            $("#registertext").replaceWith('<a href="#" class="nav-item nav-link" onclick="logout()" >Logout</a>');
+            $("#registertext").replaceWith('<a href="#" id="registertext" class="nav-item nav-link" >Logout</a>');
+            document.getElementById("registertext").addEventListener("click", logout);
 
             // get cart for this user
             var cart = JSON.parse(localStorage.getItem("cart_" + username));

@@ -5,7 +5,6 @@
     <title>DETI Shop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -97,9 +96,7 @@
                 <div class="navbar-nav mr-auto py-0">
                   <a href="index.html" class="nav-item nav-link">Home</a>
                   <a href="shop.html" class="nav-item nav-link active">Shop</a>
-                  <a href="aboutus.html" class="nav-item nav-link"
-                    >About us</a
-                  >
+                  <a href="aboutus.html" class="nav-item nav-link">About us</a>
                 </div>
                 <div class="navbar-nav ml-auto py-0">
                   <div class="navbar-nav ml-auto py-0">
@@ -154,7 +151,6 @@
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
             >
               <input
-                onchange="filter_price('price-0')"
                 type="checkbox"
                 class="custom-control-input"
                 checked
@@ -163,25 +159,21 @@
               <label class="custom-control-label" for="price-0"
                 >All Price</label
               >
-
             </div>
             <div
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
             >
               <input
-                onchange="filter_price('price-1')"
                 type="checkbox"
                 class="custom-control-input"
                 id="price-1"
               />
               <label class="custom-control-label" for="price-1">$0 - $10</label>
-
             </div>
             <div
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
             >
               <input
-                onchange="filter_price('price-2')"
                 type="checkbox"
                 class="custom-control-input"
                 id="price-2"
@@ -189,13 +181,11 @@
               <label class="custom-control-label" for="price-2"
                 >$10 - $20</label
               >
-
             </div>
             <div
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
             >
               <input
-                onchange="filter_price('price-3')"
                 type="checkbox"
                 class="custom-control-input"
                 id="price-3"
@@ -203,13 +193,11 @@
               <label class="custom-control-label" for="price-3"
                 >$20 - $30</label
               >
-
             </div>
             <div
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
             >
               <input
-                onchange="filter_price('price-4')"
                 type="checkbox"
                 class="custom-control-input"
                 id="price-4"
@@ -217,13 +205,11 @@
               <label class="custom-control-label" for="price-4"
                 >$30 - $40</label
               >
-
             </div>
             <div
               class="custom-control custom-checkbox d-flex align-items-center justify-content-between"
             >
               <input
-                onchange="filter_price('price-5')"
                 type="checkbox"
                 class="custom-control-input"
                 id="price-5"
@@ -231,7 +217,6 @@
               <label class="custom-control-label" for="price-5"
                 >$40 - $50</label
               >
-
             </div>
           </div>
         </div>
@@ -293,7 +278,6 @@
             <div class="popup" id="popup">Product added to the cart!</div>
 
             <script src="js/shop.js"></script>
-              
           </div>
         </div>
         <!-- Shop Product End -->
@@ -301,52 +285,90 @@
     </div>
     <!-- Shop End -->
 
-<!-- Footer Start -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-  <div class="row px-xl-5 pt-5">
-      <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+      <div class="row px-xl-5 pt-5">
+        <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
           <a href="" class="text-decoration-none">
-              <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">D</span>DETI SHOP</h1>
+            <h1 class="mb-4 display-5 font-weight-semi-bold">
+              <span
+                class="text-primary font-weight-bold border border-white px-3 mr-1"
+                >D</span
+              >DETI SHOP
+            </h1>
           </a>
           <p>Best department store</p>
-          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA, Aveiro, Portugal</p>
-          <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt</p>
-          <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355</p>
-      </div>
-      <div class="col-lg-8 col-md-12">
-          <div class="row">
-              <div class="col-md-4 mb-5">
-                  <h5 class="font-weight-bold text-dark mb-4">Links</h5>
-                  <div class="d-flex flex-column justify-content-start">
-                      <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                      <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                      <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                      <a class="text-dark" href="aboutus.html"><i class="fa fa-angle-right mr-2"></i>About us</a>
-                  </div>
-              </div>
-              <div class="col-md-6 mb-5">
-                  <h5 class="font-weight-bold text-dark mb-4">Info</h5>
-                  <h6>
-                      Welcome to deti store, where u can buy all the merch u want from the best department store in the world. <br> <br>
-                      We have a lot of products, from clothes to mugs, so you can buy whatever you want. <br> <br>
-                      Mockup merch store made for the SIO course of the DETI-UA. <br> <br>
-                  </h6>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="row border-top border-light mx-xl-5 py-4">
-      <div class="col-md-6 px-xl-0">
-          <p class="mb-md-0 text-center text-md-left text-dark">
-              &copy; <a class="text-dark font-weight-semi-bold" href="index.html">DETI SHOP</a> Designed
-              by
-              <a class="text-dark font-weight-semi-bold" href="https://github.com/detiuaveiro/1st-project-group_05">DETI Programmers</a></br>
-              <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com"> Template by HTMLCodex</a>
+          <p class="mb-2">
+            <i class="fa fa-map-marker-alt text-primary mr-3"></i>3810-193 UA,
+            Aveiro, Portugal
           </p>
+          <p class="mb-2">
+            <i class="fa fa-envelope text-primary mr-3"></i>sec@det.ua.pt
+          </p>
+          <p class="mb-0">
+            <i class="fa fa-phone-alt text-primary mr-3"></i>+351 234 370 355
+          </p>
+        </div>
+        <div class="col-lg-8 col-md-12">
+          <div class="row">
+            <div class="col-md-4 mb-5">
+              <h5 class="font-weight-bold text-dark mb-4">Links</h5>
+              <div class="d-flex flex-column justify-content-start">
+                <a class="text-dark mb-2" href="index.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Home</a
+                >
+                <a class="text-dark mb-2" href="shop.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Our Shop</a
+                >
+                <a class="text-dark mb-2" href="cart.html"
+                  ><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a
+                >
+                <a class="text-dark" href="aboutus.html"
+                  ><i class="fa fa-angle-right mr-2"></i>About us</a
+                >
+              </div>
+            </div>
+            <div class="col-md-6 mb-5">
+              <h5 class="font-weight-bold text-dark mb-4">Info</h5>
+              <h6>
+                Welcome to deti store, where u can buy all the merch u want from
+                the best department store in the world. <br />
+                <br />
+                We have a lot of products, from clothes to mugs, so you can buy
+                whatever you want. <br />
+                <br />
+                Mockup merch store made for the SIO course of the DETI-UA.
+                <br />
+                <br />
+              </h6>
+            </div>
+          </div>
+        </div>
       </div>
-  </div> 
-</div>
-<!-- Footer End -->
+      <div class="row border-top border-light mx-xl-5 py-4">
+        <div class="col-md-6 px-xl-0">
+          <p class="mb-md-0 text-center text-md-left text-dark">
+            &copy;
+            <a class="text-dark font-weight-semi-bold" href="index.html"
+              >DETI SHOP</a
+            >
+            Designed by
+            <a
+              class="text-dark font-weight-semi-bold"
+              href="https://github.com/detiuaveiro/1st-project-group_05"
+              >DETI Programmers</a
+            ><br />
+            <a
+              class="text-dark font-weight-semi-bold"
+              href="https://htmlcodex.com"
+            >
+              Template by HTMLCodex</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"
@@ -355,13 +377,45 @@
 
     <!-- JavaScript Libraries -->
 
-    <script src ="js/parseJWT.js"></script>
-    <script src="js/userLogged.js" > </script>
+    <script src="js/parseJWT.js"></script>
+    <script src="js/userLogged.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="js/cartPopup.js"></script>
     <script src="js/addCart.js"></script>
     <script src="js/search_product.js"></script>
     <script src="js/logout.js"></script>
+    <script nonce="filter-nonce">
+      document
+        .getElementById("price-0")
+        .addEventListener("onchange", function () {
+          filter_price("price-0");
+        });
+      document
+        .getElementById("price-1")
+        .addEventListener("onchange", function () {
+          filter_price("price-1");
+        });
+      document
+        .getElementById("price-2")
+        .addEventListener("onchange", function () {
+          filter_price("price-2");
+        });
+      document
+        .getElementById("price-3")
+        .addEventListener("onchange", function () {
+          filter_price("price-3");
+        });
+      document
+        .getElementById("price-4")
+        .addEventListener("onchange", function () {
+          filter_price("price-4");
+        });
+      document
+        .getElementById("price-5")
+        .addEventListener("onchange", function () {
+          filter_price("price-5");
+        });
+    </script>
   </body>
 </html>

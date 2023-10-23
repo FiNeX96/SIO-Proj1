@@ -18,31 +18,31 @@ fetch("http://localhost:5000/get_products")
                 : "card product-item border-0 mb-4";
 
             productCard.innerHTML = `
-                          <div class="${productCardClass}" id="${product.name}">
-                              <div class="card-header product-img position-relative bg-transparent border p-0">
-                                  <img class="img-fluid w-100" src="img/${product.imglink
-                }" alt="${product.name}" />
-                              </div>
-                              <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                  <h6 class="text-truncate mb-3">${product.name
-                }</h6>
-                                  <div class="d-flex justify-content-center">
-                                      <h6>Price: ${product.price.toFixed(
-                    2
-                )}€</h6>
-                                  </div>
-                              </div>
-                              <div class="card-footer d-flex justify-content-between bg-light border">
-                                  <a href="detail.html?product=${product.name
-                }" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                  ${isOutOfStock
+                <div class="${productCardClass}" id="${product.name}">
+                    <div class="card-header product-img position-relative bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="img/${product.imglink}" alt="${product.name}" />
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">${product.name}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>Price: ${product.price.toFixed(2)}€</h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="detail.html?product=${product.name}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                        ${isOutOfStock
                     ? '<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" disabled>Out of Stock</button>'
-                    : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" onclick = "incrementCart()">Add To Cart</button>`
+                    : `<button class="btn btn-sm text-dark p-0 addToCartBtn" data-product="${product.name}" id="addToCartBtn_${product.name}">Add To Cart</button>`
                 }
-                              </div>
-                          </div>
-                      `;
+                    </div>
+                </div>
+            `;
             productContainer.appendChild(productCard);
+            window.onload = function() {
+                document.getElementById(`addToCartBtn_${product.name}`).addEventListener("click", function() {
+                    incrementCart();
+                });
+            };
         });
 
         const addToCartButtons =

@@ -3,7 +3,7 @@ import socketserver
 import socket
 import webbrowser
 
-PORT = 8000
+PORT = 9000
 
 
 class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -15,7 +15,7 @@ class CORSRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header(
             "Content-Security-Policy",
             "default-src 'none';"
-            "script-src 'self' cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com 'nonce-searchnonce' 'nonce-getcartnonce' 'nonce-checkoutdatanonce' 'nonce-detailinfononce' 'nonce-userloggednonce' 'nonce-loginuserlogged' 'nonce-registeruserlogged'  ;"
+            "script-src 'self'  cdn.jsdelivr.net code.jquery.com stackpath.bootstrapcdn.com 'nonce-filter-nonce' 'nonce-searchnonce' 'nonce-getcartnonce' 'nonce-checkoutdatanonce' 'nonce-detailinfononce' 'nonce-userloggednonce' 'nonce-loginuserlogged' 'nonce-registeruserlogged'  ;"
             "connect-src 'self' http://localhost:5000;"
             "img-src 'self' data:;"
             "style-src 'self' cdn.jsdelivr.net 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com;"

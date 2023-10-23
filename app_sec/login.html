@@ -155,8 +155,8 @@
         >
           <div class="contact-form" style="padding-top: 200px">
             <form
+              id="loginForm"
               class="control-group"
-              onsubmit="event.preventDefault(); doLogin()"
             >
               <input
                 type="text"
@@ -259,14 +259,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
     <script src = "js/login.js"></script>
     <script src ="js/parseJWT.js"></script>
     <script src="js/userLogged.js" > </script>
     <script nonce="loginuserlogged">
       window.addEventListener("load", userLogged);
+      document.getElementById("loginForm").addEventListener("submit", doLogin);
     </script>
   </body>
 </html>

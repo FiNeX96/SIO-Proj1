@@ -51,34 +51,37 @@ async function fetchData(cart) {
         const productContainer = document.querySelector(".cart-container");
         const productCard = document.createElement("tr");
         productCard.innerHTML = `
-            <td class="align-middle"><img src="img/${data.imglink}" alt="" style="width: 50px;"> ${product_name}</td>
-            <td class="align-middle">${data.price}€</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <!--
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                        -->
-                    </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${product_quantity}">
-                    <div class="input-group-btn">
-                        <!--
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                        -->
-                    </div>
+        <td class="align-middle"><img src="img/${data.imglink}" alt="" style="width: 50px;"> ${product_name}</td>
+        <td class="align-middle">${data.price}€</td>
+        <td class="align-middle">
+            <div class="input-group quantity mx-auto" style="width: 100px;">
+                <div class="input-group-btn">
+                    <!--
+                    <button class="btn btn-sm btn-primary btn-minus" >
+                    <i class="fa fa-minus"></i>
+                    </button>
+                    -->
                 </div>
-            </td>
-            <td class="align-middle">${product_quantity * data.price}€</td>
-            <td class="align-middle">
-            <button class="btn btn-sm btn-primary" onclick="(() => removeCart('${product_name}'))()">
-            <i class="fa fa-times"></i>
-            </button>
-            </td>
-        `;
+                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${product_quantity}">
+                <div class="input-group-btn">
+                    <!--
+                    <button class="btn btn-sm btn-primary btn-plus">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    -->
+                </div>
+            </div>
+        </td>
+        <td class="align-middle">${product_quantity * data.price}€</td>
+        <td class="align-middle">
+        <button class="btn btn-sm btn-primary" id="removeCartButton_${product_name}">
+        <i class="fa fa-times"></i>
+        </button>
+        </td>
+    `;
+    document.getElementById(`removeCartButton_${product_name}`).addEventListener("click", function() {
+        removeCart(product_name);
+    });
         productContainer.appendChild(productCard);
         subtotal += product_quantity * data.price;
     }

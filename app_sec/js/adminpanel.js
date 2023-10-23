@@ -73,10 +73,14 @@ fetch("http://localhost:5000/get_products")
                 <p class="card-text">Price: $${product.price}</p>
                 <p class="card-text">${product.description}</p>
                 <p class="card-text">Stock: ${product.stock} units</p>
-                <button class="btn btn-primary" onclick="changeStock(${product.stock}, ${product.id})">Change Stock</button>
+                <button class="btn btn-primary" id=${product.id}">Change Stock</button>
             </div>
         </div>
     `;
+
+    document.getElementById(product.id).addEventListener("click", function() {
+        changeStock(product.stock, product.id);
+    });
 
     productCardsContainer.appendChild(card);
 }

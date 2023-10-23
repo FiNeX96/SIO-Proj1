@@ -31,7 +31,6 @@ function loadDetails() {
         reviewCard.appendChild(p);
 
         $(reviewContainer).append(reviewCard);
-        $(reviewContainer).append(reviewCard);
     }
 
     $("#product_name").replaceWith('<h3 class="mb-4" id = "product_name" >' + review_count + ' reviews for ' + id + '</h3>')
@@ -81,14 +80,7 @@ function postReview() {
     // Store the updated array of reviews in localStorage
     localStorage.setItem("reviews_" + produto, JSON.stringify(reviews));
 
-    // Save the current scroll position
-    var scrollPosition = window.scrollY;
-
     // Reload the page
-    location.reload();
-    var tab = document.getElementById("tabs");
-    tab.href = "#tab-pane-3";
+    location.href = location.href;
 
-    // After the page has been reloaded, restore the scroll position
-    window.scrollTo(0, scrollPosition);
 }
