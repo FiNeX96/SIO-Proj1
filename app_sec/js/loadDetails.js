@@ -20,16 +20,17 @@ function loadDetails() {
     for (var i = 0; i < reviews.length; i++) {
         var review = reviews[i]
         //review = review.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        var reviewCard = `
-            <div>
-                <h5>
-                    ${review.user}<small> - <i>${review.date}</i></small>
-                </h5>
-                <p >
-                    ${review.review}
-                </p>
-            </div>
-        `;
+        var reviewCard = document.createElement('div');
+
+        var h5 = document.createElement('h5');
+        h5.textContent = review.user + ' - ' + review.date ;
+        reviewCard.appendChild(h5);
+
+        var p = document.createElement('p');
+        p.textContent = review.review;
+        reviewCard.appendChild(p);
+
+        $(reviewContainer).append(reviewCard);
         $(reviewContainer).append(reviewCard);
     }
 
@@ -44,7 +45,7 @@ function postReview() {
     var produto = url.split('=')[1];
 
     var token = localStorage.getItem('access_token');
-    if (!token){
+    if (!token) {
         alert("You must be logged in to post a review!");
         return;
     }
