@@ -32,7 +32,6 @@ def get_products():
             "imglink": product[3],
             "stock": product[4],
         }
-        # print("imglink -> " + product[3])
 
         product_list.append(product_dict)
 
@@ -155,6 +154,29 @@ def resetPassword():
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)})
+
+@app.route('/update_stock/<product_name>', methods=['PUT'])
+def update_stock(product_name):
+    try:
+        data = request.get_json()
+        new_stock = data.get("newStock")
+        print(data)
+
+        if new_stock is None:
+            return jsonify({"error": "Invalid data. 'newStock' field is missing."}), 400
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+
+        cursor.execute("UPDATE Products SET stock = ? WHERE name = ?", (new_stock, product_name))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Stock updated successfully"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}, 404)
+
 
 @app.route("/login", methods=["POST"])
 def login():
