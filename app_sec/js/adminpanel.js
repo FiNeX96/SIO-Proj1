@@ -42,7 +42,13 @@ function createAccordion(order) {
 
     const productCardsContainer = document.getElementById("productCards");
 
-fetch("http://localhost:5000/get_products")
+fetch("http://localhost:5000/get_products",{
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+    }
+})
     .then((response) => response.json())
     .then((data) => {
         if (data.length === 0) {
@@ -134,6 +140,7 @@ function createUpdateForm(order) {
     method: "PUT",
     headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
     },
     body: JSON.stringify(updatedData),
 })
@@ -186,7 +193,13 @@ function createDetailsContent(order) {
     return detailsContent;
 }
 
-fetch("http://localhost:5000/get_all_orders")
+fetch("http://localhost:5000/get_all_orders",{
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+    }
+})
     .then((response) => response.json())
     .then((data) => {
         console.log(data);

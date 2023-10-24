@@ -153,6 +153,7 @@ function checkout() {
     xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:5000/checkout", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
     xhr.send(JSON.stringify(data));
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {

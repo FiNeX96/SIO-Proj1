@@ -3,7 +3,13 @@
         const suggestions = document.getElementById("suggestions");
         suggestions.style.display = "block";
         if( inputSearch != "" ){
-        fetch("http://localhost:5000/get_products")
+        fetch("http://localhost:5000/get_products",{
+            method: "GET",
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            }
+        })
             .then((response) => response.json())
             .then((data) => {
                 

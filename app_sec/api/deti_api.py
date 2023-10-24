@@ -3,18 +3,27 @@ import random
 import sqlite3
 from flask import Flask, Response, jsonify, make_response, request
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request
+from flask_jwt_extended import (
+    JWTManager,
+    create_access_token,
+    jwt_required,
+    get_jwt_identity,
+    get_jwt,
+    verify_jwt_in_request,
+)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'siouadeti23'
+app.config["JWT_SECRET_KEY"] = "siouadeti23"
 jwt = JWTManager(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-LOGGEDOUT= set() # isto atribui um token novo a cada login, isto é para o logout "remover" o token em server side
+LOGGEDOUT = (
+    set()
+)  # isto atribui um token novo a cada login, isto é para o logout "remover" o token em server side
 
 
-############################ Login 
+############################ Login
 
 
 @app.route("/login", methods=["POST"])
@@ -31,12 +40,16 @@ def login():
         user = cursor.fetchone()
         conn.close()
 
-        if user and check_password_hash(user[1], password): # check the password
+        if user and check_password_hash(user[1], password):  # check the password
             print("User found")
             if user == "admin":
-                access_token = create_access_token(identity=username, additional_claims={"role": "admin"})
+                access_token = create_access_token(
+                    identity=username, additional_claims={"role": "admin"}
+                )
             else:
-                access_token = create_access_token(identity=username, additional_claims={"role": "user"})
+                access_token = create_access_token(
+                    identity=username, additional_claims={"role": "user"}
+                )
             return jsonify(access_token=access_token), 200
         else:
             print("User not found")
@@ -49,9 +62,9 @@ def login():
         return Response(status=404, response=json.dumps({"error": str(e)}))
 
 
-@app.route('/verify', methods=['GET'])
+@app.route("/verify", methods=["GET"])
 @jwt_required()
-def verify(): # verify that the user is logged in
+def verify():  # verify that the user is logged in
     try:
         current_user = get_jwt_identity()
         return jsonify(logged_in_as=current_user), 200
@@ -63,6 +76,7 @@ def verify(): # verify that the user is logged in
 ############################ End Login
 
 ############################ Register
+
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -76,7 +90,9 @@ def register():
         cursor = conn.cursor()
 
         try:
-            cursor.execute("INSERT INTO Users VALUES (?, ?)", (username, hashed_password))
+            cursor.execute(
+                "INSERT INTO Users VALUES (?, ?)", (username, hashed_password)
+            )
             conn.commit()
             conn.close()
             return jsonify({"message": "User registered successfully"})
@@ -86,7 +102,8 @@ def register():
     except Exception as e:
         print(e)
         return jsonify({"error": str(e)})
-    
+
+
 ############################ End Register
 
 ############################ Logout
@@ -97,7 +114,8 @@ def check_if_token_in_blocklist(jwt_header, jwt_payload):
     jti = jwt_payload["jti"]
     return jti in LOGGEDOUT
 
-@app.route('/logout', methods=['POST'])
+
+@app.route("/logout", methods=["POST"])
 @jwt_required()
 def logout():
     jti = get_jwt()["jti"]
@@ -105,9 +123,10 @@ def logout():
     return jsonify({"message": "Successfully logged out"}), 200
 
 
-
 ############################ End logout
 
+
+############################ Products
 
 
 @app.route("/get_products", methods=["GET"])
@@ -130,14 +149,10 @@ def get_products():
             "imglink": product[3],
             "stock": product[4],
         }
-        # print("imglink -> " + product[3])
 
         product_list.append(product_dict)
 
     return jsonify(product_list)
-
-
-
 
 
 @app.route("/getinfo/<product_name>", methods=["GET"])
@@ -155,93 +170,6 @@ def getCart(product_name):
     return Response(
         status=200, response=json.dumps({"price": product[0], "imglink": product[1]})
     )
-    
-@app.route("/search/<product_name>", methods=["GET"])
-def search(product_name):
-    conn = sqlite3.connect("LojaDeti.db")
-    cursor = conn.cursor()
-    cursor.execute("Select name,price FROM Products WHERE name LIKE ?", ('%'+product_name+'%',))
-    product = cursor.fetchmany(5)
-    # put this in dictionary format
-    product_list = []
-    for i in product:
-        product_list.append({"name": i[0], "price": i[1]})     
-    conn.close()
-    if product is None:
-        return Response(status=404, response=json.dumps({"error": "Product not found"}))
-    return Response(
-        status=200, response=json.dumps(product_list)
-    )
-
-
-
-
-@app.route("/updatePassword", methods=["PUT"])
-def updatePassword():
-    try:
-        data = request.get_json()
-        username = data["username"]
-        new_password = data["newPassword"]
-        atual_password = data["atualPassword"]
-        conn = sqlite3.connect("LojaDeti.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
-        password = cursor.fetchone()
-        if check_password_hash(password[0], atual_password):
-            try:
-                new_password = generate_password_hash(new_password, method="pbkdf2:sha256")
-                cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
-                conn.commit()
-                conn.close()
-                return jsonify({"message": "Password updated successfully"})
-            except sqlite3.IntegrityError as e:
-                print(e)
-                return Response(status=409, response=json.dumps({"error": str(e)}))
-            except Exception as e:
-                print(e)
-                return jsonify({"error": str(e)})
-        else:
-            return Response(status=404, response=json.dumps({"error": "Wrong actual password"}))
-    except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)})
-    
-@app.route("/resetPassword", methods=["PUT"])
-def resetPassword():
-    try:
-        data = request.get_json()
-        username = data["username"]
-        new_password = data["newPassword"]  # Assuming a field called "newPassword" for the new password
-        atual_password = data["atualPassword"]
-
-        conn = sqlite3.connect("LojaDeti.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
-        password = cursor.fetchone()
-        print(password)
-        print(atual_password)
-        print(check_password_hash(password[0], atual_password))
-        if check_password_hash(password[0], atual_password):
-            try:
-                new_password = generate_password_hash(new_password, method="pbkdf2:sha256")
-                cursor.execute("UPDATE Users SET pass =  ?  WHERE username = ?", (new_password, username))
-                conn.commit()
-                conn.close()
-                return jsonify({"message": "Password updated successfully"})
-            except sqlite3.IntegrityError as e:
-                print(e)
-                return Response(status=409, response=json.dumps({"error": str(e)}))
-            except Exception as e:
-                print(e)
-                return jsonify({"error": str(e)})
-        else:
-            return Response(status=404, response=json.dumps({"error": "Wrong actual password"}))
-    except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)})
-    
-
-
 
 
 @app.route("/get_product/<product_name>", methods=["GET"])
@@ -261,75 +189,43 @@ def get_product(product_name):
             "imglink": product[3],
         }
         return jsonify(product_dict)
-    
 
-@app.route("/get_all_orders", methods=["GET"])
-def get_all_orders():
-    
-    claims = verify_jwt_in_request()
 
-    # if 'roles' in claims and 'admin' in claims['roles']:
-    #      pass
-    # else:
-    #     return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
-        
+@app.route("/search/<product_name>", methods=["GET"])
+def search(product_name):
     conn = sqlite3.connect("LojaDeti.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Orders")
-    orders = cursor.fetchall()
+    cursor.execute(
+        "Select name,price FROM Products WHERE name LIKE ?", ("%" + product_name + "%",)
+    )
+    product = cursor.fetchmany(5)
+    # put this in dictionary format
+    product_list = []
+    for i in product:
+        product_list.append({"name": i[0], "price": i[1]})
     conn.close()
-    
-    order_list = []
-    for order in orders:
-        order_dict = {
-            "ORDER_id": order[0],
-            "firstname": order[1],
-            "lastname": order[2],
-            "email": order[3],
-            "phonenumber": order[4],
-            "ship_address": order[5],
-            "country": order[6],
-            "city": order[7],
-            "zip_code": order[8],
-            "username": order[9],
-            "products_info": order[10],
-            "total_price": order[11],
-        }
-        order_list.append(order_dict)
-    
-    return jsonify(order_list)
+    if product is None:
+        return Response(status=404, response=json.dumps({"error": "Product not found"}))
+    return Response(status=200, response=json.dumps(product_list))
 
 
-@app.route('/change_order', methods=['PUT'])
-def change_order():
-    data = request.get_json()
-    conn = sqlite3.connect("LojaDeti.db")
-    cursor = conn.cursor()
+############################ End Products
 
-    print(data)
-    order_id = data['order_id']
-    firstname = data['firstname']
-    lastname = data['lastname']
-    email = data['email']
-    phonenumber = data['phonenumber']
-    ship_address = data['ship_address']
-    country = data['country']
-    city = data['city']
-    zip_code = data['zip_code']
-    products_info = data['products_info']
 
-    cursor.execute("UPDATE Orders SET firstname=?, lastname=?, email=?, phonenumber=?, ship_address=?, country=?, city=?, zipcode=?, products_info=? WHERE ORDER_id=?", (firstname, lastname, email, phonenumber, ship_address, country, city, zip_code, products_info, order_id))
+############################ User Actions ( token needed )
 
-    conn.commit()
-    conn.close()
 
-    return jsonify({"message": "Order updated successfully"})
-
+@jwt_required()
 @app.route("/checkout", methods=["POST"])
 def checkout():
+    claims = verify_jwt_in_request()
     try:
         data = request.get_json()
         username = data["username"]
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
+            pass
+        else:
+            return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
         firstname = data["firstname"]
         lastname = data["lastname"]
         email = data["email"]
@@ -340,33 +236,31 @@ def checkout():
         zipcode = data["zipcode"]
         cart = json.dumps(data["cart"])
         cart_dict = json.loads(cart)
-        cart_dict_single = {product['product']: product for product in cart_dict}
+        cart_dict_single = {product["product"]: product for product in cart_dict}
         for product in cart_dict_single:
-             conn = sqlite3.connect("LojaDeti.db")
-             cursor = conn.cursor()
-             cursor.execute(
-                 "SELECT stock FROM Products WHERE name = ? ;", (product,)
-             )
-             stock = cursor.fetchone()
-             #print("wanted = ", cart_dict[product] )
-             if stock[0] < cart_dict_single[product]['quantity']:
-                 return Response(
-                     status=409,
-                     response=json.dumps(
-                         {
-                             "message": "Not enough stock for product "
+            conn = sqlite3.connect("LojaDeti.db")
+            cursor = conn.cursor()
+            cursor.execute("SELECT stock FROM Products WHERE name = ? ;", (product,))
+            stock = cursor.fetchone()
+            # print("wanted = ", cart_dict[product] )
+            if stock[0] < cart_dict_single[product]["quantity"]:
+                return Response(
+                    status=409,
+                    response=json.dumps(
+                        {
+                            "message": "Not enough stock for product "
                             + product
                             + " to fullfill this order!"
-                         }
-                     ),
-                 )
+                        }
+                    ),
+                )
         for product in cart_dict_single:
             # remove stock from db
             conn = sqlite3.connect("LojaDeti.db")
             cursor = conn.cursor()
             cursor.execute(
                 "UPDATE Products SET stock = stock - ? WHERE name = ? ;",
-                (cart_dict_single[product]['quantity'], product),
+                (cart_dict_single[product]["quantity"], product),
             )
             conn.commit()
             conn.close()
@@ -398,8 +292,234 @@ def checkout():
         )
 
     except Exception as e:
-        print (e)
+        print(e)
         return Response(status=404, response=json.dumps({"error": str(e)}))
+
+
+@jwt_required()
+@app.route("/updatePassword", methods=["PUT"])
+def updatePassword():
+    claims = verify_jwt_in_request()
+    try:
+        data = request.get_json()
+        username = data["username"]
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
+            pass
+        else:
+            return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+        new_password = data["newPassword"]
+        atual_password = data["atualPassword"]
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
+        password = cursor.fetchone()
+        if check_password_hash(password[0], atual_password):
+            try:
+                new_password = generate_password_hash(
+                    new_password, method="pbkdf2:sha256"
+                )
+                cursor.execute(
+                    "UPDATE Users SET pass =  ?  WHERE username = ?",
+                    (new_password, username),
+                )
+                conn.commit()
+                conn.close()
+                return jsonify({"message": "Password updated successfully"})
+            except sqlite3.IntegrityError as e:
+                print(e)
+                return Response(status=409, response=json.dumps({"error": str(e)}))
+            except Exception as e:
+                print(e)
+                return jsonify({"error": str(e)})
+        else:
+            return Response(
+                status=404, response=json.dumps({"error": "Wrong actual password"})
+            )
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)})
+
+
+@jwt_required()
+@app.route("/resetPassword", methods=["PUT"])
+def resetPassword():
+    try:
+        data = request.get_json()
+        username = data["username"]
+        
+        claims = verify_jwt_in_request()
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
+            pass
+        else:
+            return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+        new_password = data[
+            "newPassword"
+        ]  # Assuming a field called "newPassword" for the new password
+        atual_password = data["atualPassword"]
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
+        password = cursor.fetchone()
+        print(password)
+        print(atual_password)
+        print(check_password_hash(password[0], atual_password))
+        if check_password_hash(password[0], atual_password):
+            try:
+                new_password = generate_password_hash(
+                    new_password, method="pbkdf2:sha256"
+                )
+                cursor.execute(
+                    "UPDATE Users SET pass =  ?  WHERE username = ?",
+                    (new_password, username),
+                )
+                conn.commit()
+                conn.close()
+                return jsonify({"message": "Password updated successfully"})
+            except sqlite3.IntegrityError as e:
+                print(e)
+                return Response(status=409, response=json.dumps({"error": str(e)}))
+            except Exception as e:
+                print(e)
+                return jsonify({"error": str(e)})
+        else:
+            return Response(
+                status=404, response=json.dumps({"error": "Wrong actual password"})
+            )
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)})
+
+
+@jwt_required()
+@app.route("/get_orders/<username>", methods=["GET"])
+def get_orders(username):
+    claims = verify_jwt_in_request()
+
+    # only the user can access this endpoint
+
+    if ("role" in claims[1] and "user" in claims[1]["role"]) and claims[1]['sub'] == username:
+        pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Orders WHERE username = ?", (username,))
+    orders = cursor.fetchall()
+    conn.close()
+    if orders is None:
+        return Response(status=404, response=json.dumps({"error": "Orders not found"}))
+    else:
+        order_list = []
+        for order in orders:
+            order_dict = {
+                "ORDER_id": order[0],
+                "firstname": order[1],
+                "lastname": order[2],
+                "email": order[3],
+                "phonenumber": order[4],
+                "ship_address": order[5],
+                "country": order[6],
+                "city": order[7],
+                "zip_code": order[8],
+                "username": order[9],
+                "products_info": order[10],
+                "total_price": order[11],
+            }
+            order_list.append(order_dict)
+        return jsonify(order_list), 200
+
+
+############################ End User Actions
+
+############################ Admin endpoints
+
+
+@jwt_required()
+@app.route("/get_all_orders", methods=["GET"])
+def get_all_orders():
+    claims = verify_jwt_in_request()
+
+    # only admin can access this endpoint
+    if "role" in claims and "admin" in claims["role"]:
+        pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Orders")
+    orders = cursor.fetchall()
+    conn.close()
+
+    order_list = []
+    for order in orders:
+        order_dict = {
+            "ORDER_id": order[0],
+            "firstname": order[1],
+            "lastname": order[2],
+            "email": order[3],
+            "phonenumber": order[4],
+            "ship_address": order[5],
+            "country": order[6],
+            "city": order[7],
+            "zip_code": order[8],
+            "username": order[9],
+            "products_info": order[10],
+            "total_price": order[11],
+        }
+        order_list.append(order_dict)
+
+    return jsonify(order_list)
+
+
+@jwt_required()
+@app.route("/change_order", methods=["PUT"])
+def change_order():
+    claims = verify_jwt_in_request()
+    if "role" in claims and "admin" in claims["role"]:
+        pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+    data = request.get_json()
+    conn = sqlite3.connect("LojaDeti.db")
+    cursor = conn.cursor()
+
+    order_id = data["order_id"]
+    firstname = data["firstname"]
+    lastname = data["lastname"]
+    email = data["email"]
+    phonenumber = data["phonenumber"]
+    ship_address = data["ship_address"]
+    country = data["country"]
+    city = data["city"]
+    zip_code = data["zip_code"]
+    products_info = data["products_info"]
+
+    cursor.execute(
+        "UPDATE Orders SET firstname=?, lastname=?, email=?, phonenumber=?, ship_address=?, country=?, city=?, zipcode=?, products_info=? WHERE ORDER_id=?",
+        (
+            firstname,
+            lastname,
+            email,
+            phonenumber,
+            ship_address,
+            country,
+            city,
+            zip_code,
+            products_info,
+            order_id,
+        ),
+    )
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Order updated successfully"})
+
+
+############################ End Admin Endpoints
 
 
 if __name__ == "__main__":

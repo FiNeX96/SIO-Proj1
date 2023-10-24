@@ -1,5 +1,11 @@
 let info;
-fetch("http://localhost:5000/get_products")
+fetch("http://localhost:5000/get_products", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+    }
+})
     .then((response) => response.json())
     .then((data) => {
         const productContainer =
@@ -38,8 +44,8 @@ fetch("http://localhost:5000/get_products")
                 </div>
             `;
             productContainer.appendChild(productCard);
-            window.onload = function() {
-                document.getElementById(`addToCartBtn_${product.name}`).addEventListener("click", function() {
+            window.onload = function () {
+                document.getElementById(`addToCartBtn_${product.name}`).addEventListener("click", function () {
                     incrementCart();
                 });
             };

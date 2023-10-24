@@ -6,8 +6,8 @@ function getCart() {
 
     var token = localStorage.getItem('access_token');
 
-    if (!token){
-        document.querySelector(".cart-container").textContent = '<h2 style="text-align:center" >No products in cart</h1>';
+    if (!token) {
+        document.querySelector(".cart-container").innerHTML = '<h2 style="text-align:center"> No products in cart </h2>';
         document.getElementById("shipping").textContent = "0€";
         document.getElementById("subtotal").textContent = "0€";
         document.getElementById("total").textContent = "0€";
@@ -46,7 +46,15 @@ async function fetchData(cart) {
     for (let cart_item in cart) {
         let product_name = cart[cart_item].product;
         let product_quantity = cart[cart_item].quantity;
-        let response = await fetch("http://localhost:5000/getinfo/" + product_name);
+        let response = await fetch("http://localhost:5000/getinfo/" + product_name, {
+            method: "GET",
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token"),
+            }
+
+        });
         let data = await response.json();
         const productContainer = document.querySelector(".cart-container");
         const productCard = document.createElement("tr");
@@ -79,10 +87,11 @@ async function fetchData(cart) {
         </button>
         </td>
     `;
-    window.onload = function() {
-    document.getElementById(`removeCartButton_${product_name}`).addEventListener("click", function() {
-        removeCart(product_name);
-    })};
+        window.onload = function () {
+            document.getElementById(`removeCartButton_${product_name}`).addEventListener("click", function () {
+                removeCart(product_name);
+            })
+        };
         productContainer.appendChild(productCard);
         subtotal += product_quantity * data.price;
     }
@@ -99,7 +108,7 @@ fetchData().catch((error) => console.error(error));
 function removeCart(productName) {
 
     var token = localStorage.getItem('access_token');
-    if (!token){
+    if (!token) {
         return;
     }
     var decoded_token = parseJWT(token);

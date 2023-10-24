@@ -17,7 +17,8 @@ function getProductFromURL() {
     var url = "http://localhost:5000/get_product/" + product_name;
     var xhttp = new XMLHttpRequest();
     //document.getElementById("nome_produto").innerHTML = product_name;
-    $("#nome_produto").html(product_name)
+    $("#nome_produto").textContent = product_name;
+
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var produto = JSON.parse(this.responseText);
@@ -31,6 +32,11 @@ function getProductFromURL() {
       }
     };
     xhttp.open("GET", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader(
+      "Authorization",
+      "Bearer " + localStorage.getItem("token")
+    );
     xhttp.send();
   }
 

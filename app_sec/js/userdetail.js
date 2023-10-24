@@ -78,6 +78,7 @@ function toggleElements2(){
           var url = "http://localhost:5000/resetPassword"; 
           xhr.open("PUT", url, true);
           xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
           xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -139,6 +140,7 @@ function toggleElements2(){
 
               xhr.open("PUT", url, true);
               xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("token"));
 
               xhr.onreadystatechange = function () {
                   if (xhr.readyState === 4) {
@@ -174,7 +176,9 @@ function toggleElements2(){
           }
       }
 
-      fetch("http://localhost:5000/get_all_orders", {
+      console.log("ROLE = " + decoded_token.role)
+
+      fetch("http://localhost:5000/get_orders/"+username , {
         headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
@@ -182,7 +186,7 @@ function toggleElements2(){
       })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            console.log(data.length);
             if (data.length > 0) {
               const tableBody = document.getElementById("table_body");
 
@@ -238,7 +242,8 @@ function toggleElements2(){
                   tableBody.appendChild(row);
               });
           } else {
-              console.error("No data to display in the table.");
+              document.getElementById("viewOrder").style.display = "none";
+              document.getElementById("orders").textContent = "No orders to display.";
           }
         })
         .catch((error) => {
