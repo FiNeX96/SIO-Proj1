@@ -3,7 +3,7 @@ fetch("http://localhost:5000/get_products", {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token"),
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
     }
 })
     .then((response) => response.json())
