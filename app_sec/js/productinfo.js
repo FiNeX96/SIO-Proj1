@@ -35,7 +35,7 @@ function getProductFromURL() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.setRequestHeader(
       "Authorization",
-      "Bearer " + localStorage.getItem("token")
+      "Bearer " + + localStorage.getItem("access_token")
     );
     xhttp.send();
   }

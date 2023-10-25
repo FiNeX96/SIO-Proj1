@@ -57,12 +57,12 @@ function reduceQuantity() {
 function incrementCart() {
 
     var token = localStorage.getItem('access_token');
+    
     if (!token) {
         alert("You need to be logged in to add products to the cart")
         return;
     }
-    //console.log("incrementCart() called");
-    // get value of id cartIcon and convert to int
+
     var quantity = parseInt(document.getElementById("quantity").value);
     var cartIcon = document.getElementById("cartIcon").textContent;
     var cartIconInt = parseInt(cartIcon);

@@ -222,7 +222,7 @@ def checkout():
     try:
         data = request.get_json()
         username = data["username"]
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -298,19 +298,21 @@ def checkout():
 
 @jwt_required()
 @app.route("/updatePassword", methods=["PUT"])
-def updatePassword():
+def updatePassword():   
     claims = verify_jwt_in_request()
     try:
         data = request.get_json()
         username = data["username"]
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
-            pass
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+             pass
         else:
-            return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
         new_password = data["newPassword"]
         atual_password = data["atualPassword"]
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
+        print(new_password)
+        print(atual_password)
         cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
         password = cursor.fetchone()
         if check_password_hash(password[0], atual_password):
@@ -348,7 +350,7 @@ def resetPassword():
         username = data["username"]
         
         claims = verify_jwt_in_request()
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == username:
+        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -398,7 +400,7 @@ def get_orders(username):
 
     # only the user can access this endpoint
 
-    if ("role" in claims[1] and "user" in claims[1]["role"]) and claims[1]['sub'] == username:
+    if ("role" in claims[1] and "user" in claims[1]["role"]) and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -408,7 +410,7 @@ def get_orders(username):
     cursor.execute("SELECT * FROM Orders WHERE username = ?", (username,))
     orders = cursor.fetchall()
     conn.close()
-    if orders is None:
+    if orders is None or orders == []:
         return Response(status=404, response=json.dumps({"error": "Orders not found"}))
     else:
         order_list = []
@@ -442,7 +444,7 @@ def get_all_orders():
     claims = verify_jwt_in_request()
 
     # only admin can access this endpoint
-    if "role" in claims and "admin" in claims["role"]:
+    if "role" in claims and "admin" in claims["role"] and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -478,7 +480,7 @@ def get_all_orders():
 @app.route("/change_order", methods=["PUT"])
 def change_order():
     claims = verify_jwt_in_request()
-    if "role" in claims and "admin" in claims["role"]:
+    if "role" in claims and "admin" in claims["role"] and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
