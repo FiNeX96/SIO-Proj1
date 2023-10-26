@@ -176,6 +176,28 @@ def update_stock(product_name):
 
     except Exception as e:
         return jsonify({"error": str(e)}, 404)
+    
+@app.route('/update_price/<product_name>', methods=['PUT'])
+def update_price(product_name):
+    try:
+        data = request.get_json()
+        new_price = data.get("newPrice")
+        print(data)
+
+        if new_price is None:
+            return jsonify({"error": "Invalid data. 'newPrice' field is missing."}), 400
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+
+        cursor.execute("UPDATE Products SET price = ? WHERE name = ?", (new_price, product_name))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Stock updated successfully"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}, 404)
 
 
 @app.route("/login", methods=["POST"])
