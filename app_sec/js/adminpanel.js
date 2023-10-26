@@ -77,7 +77,7 @@ function createProductCard(product) {
             <img src="img/${product.imglink}" class="card-img-top" style="max-width: 200px; max-height: 200px;" alt="${product.name}">
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
-                <p class="card-text price">Price: $${product.price}</p>
+                <p class="card-text price">Price: ${product.price}€</p>
                 <p class="card-text">${product.description}</p>
                 <p class="card-text stock" id="stock-${product.name}">Stock: ${product.stock} units</p>
                 <button class="btn btn-primary change-stock-button" data-product="${product.name}">Change Stock</button>

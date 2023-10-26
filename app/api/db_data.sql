@@ -19,10 +19,10 @@ insert into
     Products
 values
     (
-        'camisola',
+        'Caneca do Deti',
         15,
-        'Camisola bue fixe do deti, até manda rateres oh filho',
-        'camisola.jpg',
+        'Ganda caneca para representar o departamento de informática ( e do resto ) e pa beber café no aquário',
+        'caneca_deti.jpg',
         36
     );
 
@@ -30,21 +30,21 @@ insert into
     Products
 values
     (
-        'caneca',
-        10,
-        'Ganda caneca pra beberes café oh guedes',
-        'caneca.jpg',
-        6
+        'Pin do Deti',
+        5,
+        'Ganda pin para representar o departamento de informática ( e do resto ) e pa meter na mochila',
+        'brooch_deti.jpg',
+        60
     );
 
 insert into
     Products
 values
     (
-        't-shirt',
+        'T-shirt do Deti',
         20,
         'T-shirt bue fixe do deti, até manda rateres oh filho',
-        'tshirt.jpg',
+        'tshirt_deti1.jpg',
         53
     );
 
@@ -52,17 +52,23 @@ Insert into
     Products
 values
     (
-        'hoodie',
-        30,
-        'Hoodie bue fixe do deti, até manda rateres oh filho',
-        'hoodie.jpg',
-        0
+        'Chapéu do Deti',
+        10,
+        'Chapéu bue cool nice para derramar azeite',
+        'cap_deti.jpg',
+        86
     );
+
 
 Insert into
     Products
 values
-    ('cringe', 0, 'DiesOfCringe', 'homem.jpg', 99);
+    ('Sweat do Deti', 25, 'Descrição bue fixe', 'sweat_deti1.jpg', 45);
+
+    Insert into
+    Products
+values
+    ('Capa pro Telemobil do Deti', 25, 'Ganda capa bue cool nice fixe swag', 'capa_deti.jpg', 69);
 
 CREATE TABLE Users(
     username TEXT PRIMARY KEY,

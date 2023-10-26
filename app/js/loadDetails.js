@@ -36,7 +36,6 @@ function loadDetails() {
         `;
         $(reviewContainer).append(reviewCard);
     }
-
     $("#product_name").replaceWith('<h3 class="mb-4" id = "product_name" >' + review_count + ' reviews for ' + id + '</h3>')
 
 }

@@ -1,6 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
 const productName = urlParams.get("product");
-console.log(productName);
 document.getElementById("product_name").textContent = productName;
 
 fetch("http://localhost:5000/search/" + productName,
