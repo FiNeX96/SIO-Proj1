@@ -48,6 +48,17 @@ CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/defini
     - Open your browser and go to http://localhost:9000/ ( if it doesnt automatically open )
     - docker-compose down to stop the container
 
+### Description
+
+    Este é um projeto de desenvolvimento de uma loja do DETI da Universidade de Aveiro. A nossa principal missão neste projeto foi uma loja online funcional que oferece produtos relacionados com o Departamento de Eletrónica, Telecomunicações e Informática (DETI). No entanto, o que torna este projeto único é a introdução controlada de vulnerabilidades de segurança, que não são imediatamente evidentes para o utilizador comum.
+
+    Os nossos objetivos incluem:
+
+- Desenvolver uma versão da loja online com falhas e outra versão corrigida.
+- Documentar minuciosamente as vulnerabilidades introduzidas, explorar como podem ser usadas e analisar o seu impacto.
+- Concentrar-nos na compreensão e correção de vulnerabilidades comuns, como Cross-Site Scripting e Injeção SQL.
+- Abordar a importância da segurança em aplicações de software.
+
 ## Authors
 
 - Rodrigo Aguiar nmec 108969
