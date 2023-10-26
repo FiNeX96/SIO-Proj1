@@ -530,11 +530,13 @@ if __name__ == "__main__":
     cursor = conn.cursor()
 
     # load database
-    with open("api/db_data.sql", "r") as sql_file:
-        sql_commands = sql_file.read().split(";")
+    # with open("api/db_data.sql", "r") as sql_file:
+    #     sql_commands = sql_file.read().split(";")
 
-        for command in sql_commands:
-            cursor.execute(command)
+    #     for command in sql_commands:
+    #         cursor.execute(command)
+    
+    cursor.executescript(open('api/db_data.sql', 'r').read())
 
     conn.commit()
     conn.close()
