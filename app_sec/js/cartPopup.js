@@ -25,7 +25,7 @@ function showPopup(productName) {
 }
 
 function incrementCart() {
-  var cartIcon = document.getElementById("cartIcon").textContent;
+  var cartIcon = document.getElementById("cartIcon").innerHTML;
   var cartIconInt = parseInt(cartIcon);
   // increment value
   cartIconInt++;

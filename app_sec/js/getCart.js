@@ -16,6 +16,7 @@ function getCart() {
         $("#checkoutbutton").textContent = "Cart is empty"
         return 1;
     }
+
     var decoded_token = parseJWT(token);
     var username = decoded_token.sub;
 
@@ -64,11 +65,6 @@ async function fetchData(cart) {
         <td class="align-middle">
             <div class="input-group quantity mx-auto" style="width: 100px;">
                 <div class="input-group-btn">
-                    <!--
-                    <button class="btn btn-sm btn-primary btn-minus" >
-                    <i class="fa fa-minus"></i>
-                    </button>
-                    -->
                 </div>
                 <input type="text" class="form-control form-control-sm bg-secondary text-center" value="${product_quantity}">
                 <div class="input-group-btn">
@@ -87,11 +83,6 @@ async function fetchData(cart) {
         </button>
         </td>
     `;
-        window.onload = function () {
-            document.getElementById(`removeCartButton_${product_name}`).addEventListener("click", function () {
-                removeCart(product_name);
-            })
-        };
         productContainer.appendChild(productCard);
         subtotal += product_quantity * data.price;
     }
@@ -100,6 +91,19 @@ async function fetchData(cart) {
     let total = subtotal + 10;
     $("#subtotal").replaceWith('<h6 class="font-weight-medium" id = "subtotal">' + subtotal + '€</h6>')
     $("#total").replaceWith('<h5 class="font-weight-bold" id = "total" >' + total + '€</h5>')
+
+    addEventListeners();
+
+}
+
+function addEventListeners(){
+    var buttons = document.querySelectorAll('[id^="removeCartButton_"]');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+            var product_name = this.id.split("_")[1];
+            removeCart(product_name);
+        });
+    }
 }
 
 fetchData().catch((error) => console.error(error));

@@ -283,6 +283,7 @@ def get_all_orders():
             "username": order[9],
             "products_info": order[10],
             "total_price": order[11],
+            "payment_type": order[12],
         }
         order_list.append(order_dict)
     
@@ -359,12 +360,13 @@ def checkout():
             )
             conn.commit()
             conn.close()
+        payment_type = data["payment_type"]
         total = data["total"]
         order_id = "".join(random.choice("0123456789ABCDEF") for i in range(16))
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO Orders (username,ORDER_id,firstname,lastname,email,phonenumber,ship_address,country,city,zipcode,products_info,total_price) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO Orders (username,ORDER_id,firstname,lastname,email,phonenumber,ship_address,country,city,zipcode,products_info,total_price,payment_type) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (
                 username,
                 order_id,
@@ -378,6 +380,7 @@ def checkout():
                 zipcode,
                 cart,
                 total,
+                payment_type
             ),
         )
         conn.commit()

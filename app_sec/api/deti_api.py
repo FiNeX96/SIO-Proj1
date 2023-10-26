@@ -13,6 +13,7 @@ from flask_jwt_extended import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
@@ -49,14 +50,17 @@ def login():
         if user and check_password_hash(user[1], password):  # check the password
             if user[0] == "admin":
                 access_token = create_access_token(
-                    identity=username, additional_claims={"role": "admin"}
+                    identity=username,
+                    additional_claims={"role": "admin"},
+                    expires_delta=timedelta(minutes=30)
                 )
-                print("Admin logged in")
+                # print("Admin logged in")
             else:
                 access_token = create_access_token(
-                    identity=username, additional_claims={"role": "user"}
+                    identity=username, additional_claims={"role": "user"},
+                    expires_delta=timedelta(minutes=30)
                 )
-                print("User " + username + " logged in")
+                # print("User " + username + " logged in")
             return jsonify(access_token=access_token), 200
         else:
             print("User not found")
@@ -229,7 +233,7 @@ def checkout():
     try:
         data = request.get_json()
         username = data["username"]
-        if "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+        if "user" in claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -241,6 +245,7 @@ def checkout():
         country = data["country"]
         city = data["city"]
         zipcode = data["zipcode"]
+        payment_type = data["payment_type"]
         cart = json.dumps(data["cart"])
         cart_dict = json.loads(cart)
         cart_dict_single = {product["product"]: product for product in cart_dict}
@@ -276,7 +281,7 @@ def checkout():
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO Orders (username,ORDER_id,firstname,lastname,email,phonenumber,ship_address,country,city,zipcode,products_info,total_price) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO Orders (username,ORDER_id,firstname,lastname,email,phonenumber,ship_address,country,city,zipcode,products_info,total_price,payment_type) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (
                 username,
                 order_id,
@@ -290,6 +295,7 @@ def checkout():
                 zipcode,
                 cart,
                 total,
+                payment_type
             ),
         )
         conn.commit()
@@ -305,15 +311,15 @@ def checkout():
 
 @jwt_required()
 @app.route("/updatePassword", methods=["PUT"])
-def updatePassword():   
+def updatePassword():
     claims = verify_jwt_in_request()
     try:
         data = request.get_json()
         username = data["username"]
-        if   "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
-             pass
+        if "user" in claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
+            pass
         else:
-             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+            return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
         new_password = data["newPassword"]
         atual_password = data["atualPassword"]
         conn = sqlite3.connect("LojaDeti.db")
@@ -355,9 +361,9 @@ def resetPassword():
     try:
         data = request.get_json()
         username = data["username"]
-        
+
         claims = verify_jwt_in_request()
-        if  "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+        if "user" in claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -407,7 +413,7 @@ def get_orders(username):
 
     # only the user can access this endpoint
 
-    if "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+    if "user" in claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -435,6 +441,7 @@ def get_orders(username):
                 "username": order[9],
                 "products_info": order[10],
                 "total_price": order[11],
+                "payment_type": order[12],
             }
             order_list.append(order_dict)
         return jsonify(order_list), 200
@@ -451,7 +458,7 @@ def get_all_orders():
     claims = verify_jwt_in_request()
 
     # only admin can access this endpoint
-    if "admin" == claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+    if "admin" == claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -477,17 +484,75 @@ def get_all_orders():
             "username": order[9],
             "products_info": order[10],
             "total_price": order[11],
+            "payment_type": order[12],
         }
         order_list.append(order_dict)
 
     return jsonify(order_list)
 
+@jwt_required()
+@app.route('/update_stock/<product_name>', methods=['PUT'])
+def update_stock(product_name):
+    # only admin can access this endpoint
+    claims = verify_jwt_in_request()
+    if "admin" == claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
+        pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+    try:
+        data = request.get_json()
+        new_stock = data.get("newStock")
+        #print(data)
 
+        if new_stock is None:
+            return jsonify({"error": "Invalid data. 'newStock' field is missing."}), 400
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+
+        cursor.execute("UPDATE Products SET stock = ? WHERE name = ?", (new_stock, product_name))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Stock updated successfully"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}, 404)
+    
+@jwt_required()    
+@app.route('/update_price/<product_name>', methods=['PUT'])
+def update_price(product_name):
+    claims = verify_jwt_in_request()
+    if "admin" == claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
+        pass
+    else:
+        return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
+    try:
+        data = request.get_json()
+        new_price = data.get("newPrice")
+        print(data)
+
+        if new_price is None:
+            return jsonify({"error": "Invalid data. 'newPrice' field is missing."}), 400
+
+        conn = sqlite3.connect("LojaDeti.db")
+        cursor = conn.cursor()
+
+        cursor.execute("UPDATE Products SET price = ? WHERE name = ?", (new_price, product_name))
+        conn.commit()
+        conn.close()
+
+        return jsonify({"message": "Stock updated successfully"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}, 404)
+    
+    
 @jwt_required()
 @app.route("/change_order", methods=["PUT"])
 def change_order():
     claims = verify_jwt_in_request()
-    if "admin" == claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+    if "admin" == claims[1]["role"] and claims[1]["sub"] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -541,9 +606,9 @@ if __name__ == "__main__":
 
     #     for command in sql_commands:
     #         cursor.execute(command)
-    
-    cursor.executescript(open('api/db_data.sql', 'r').read())
+
+    cursor.executescript(open("api/db_data.sql", "r").read())
 
     conn.commit()
     conn.close()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)

@@ -44,12 +44,22 @@ fetch("http://localhost:5000/get_products", {
                 </div>
             `;
             productContainer.appendChild(productCard);
-            window.onload = function () {
-                document.getElementById(`addToCartBtn_${product.name}`).addEventListener("click", function () {
-                    incrementCart();
-                });
-            };
+            
         });
+
+addEventListeners();
+
+function addEventListeners()
+{
+
+    var buttons = document.querySelectorAll('[id^="addToCartBtn_"]');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+            incrementCart();
+        });
+    }
+
+}
 
         const addToCartButtons =
             document.querySelectorAll(".addToCartBtn");
@@ -69,9 +79,9 @@ fetch("http://localhost:5000/get_products", {
 function show_prod() {
     const filtername =
         document.getElementById("filter_byname").value;
-    console.log(filtername);
 
-    console.log(info);
+
+
 
     if (filtername == "") {
         info.forEach((element) => {
@@ -92,7 +102,7 @@ function show_prod() {
 }
 
 function filter_price(filter) {
-    console.log(filter);
+
     const price_all = document.getElementById("price-0");
 
     for (let index = 0; index < 6; index++) {
@@ -113,7 +123,7 @@ function filter_price(filter) {
     }
 
     const price10 = document.getElementById("price-1");
-    console.log(price10.checked);
+
     if (price10.checked) {
         info.forEach((element) => {
             if (element.price <= 10) {
@@ -127,16 +137,16 @@ function filter_price(filter) {
     }
 
     const price20 = document.getElementById("price-2");
-    console.log(price20.checked);
+
     if (price20.checked) {
         info.forEach((element) => {
-            console.log(element.price);
+
             if (element.price >= 10 && element.price <= 20) {
-                console.log(element.price + " -- ");
+
                 document.getElementById(element.name).style.display =
                     "block";
             } else {
-                console.log(element.price + " xx");
+
                 document.getElementById(element.name).style.display =
                     "none";
             }
@@ -144,7 +154,7 @@ function filter_price(filter) {
     }
 
     const price30 = document.getElementById("price-3");
-    console.log(price30.checked);
+
     if (price30.checked) {
         info.forEach((element) => {
             if (20 <= element.price && element.price <= 30) {
@@ -158,7 +168,7 @@ function filter_price(filter) {
     }
 
     const price40 = document.getElementById("price-4");
-    console.log(price40.checked);
+
     if (price40.checked) {
         info.forEach((element) => {
             if (30 <= element.price && element.price <= 40) {
@@ -171,7 +181,7 @@ function filter_price(filter) {
         });
     }
     const price50 = document.getElementById("price-5");
-    console.log(price50.checked);
+
     if (price50.checked) {
         info.forEach((element) => {
             if (40 <= element.price && element.price <= 50) {

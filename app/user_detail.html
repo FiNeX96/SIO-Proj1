@@ -229,6 +229,7 @@
           <th scope="col">Username</th>
           <th scope="col">Products Info</th>
           <th scope="col">Total Price</th>
+          <th scope="col">Payment Method</th>
         </tr>
       </thead>
       <tbody id="table_body">
@@ -291,6 +292,13 @@
       ><i class="fa fa-angle-double-up"></i
     ></a>
 
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="js/logout.js"></script>
+    <script src ="js/userLogged.js"></script>
     <script>
       var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
       var user_div = document.getElementById("user");
@@ -392,7 +400,7 @@
               xhr.onreadystatechange = function () {
                   if (xhr.readyState === 4) {
                       if (xhr.status === 200) {
-                          alert("Password Updated!");
+                          alert("Password Updated! Logging out in 5 seconds");
                           var newPasswordInputs = document.getElementById("new_password");
                           var newPasswordConfirmInputs = document.getElementById("new_password_confirm");
                           var enterButton = document.getElementById("enter");
@@ -409,6 +417,11 @@
               };
 
               xhr.send(JSON.stringify(data));
+              setTimeout(function () {
+            window.location.href = "index.html";
+            logout();
+        }, 5000);
+              
           } else {
               if (newPassword === "") {
                   alert("New Password cannot be empty.");
@@ -476,6 +489,10 @@
                   tdTotalPrice.textContent = order.total_price +"€";
                   row.appendChild(tdTotalPrice);
 
+                  const tdPaymentMethod = document.createElement("td");
+                  tdPaymentMethod.textContent = order.payment_type ;
+                  row.appendChild(tdPaymentMethod);
+
                   tableBody.appendChild(row);
               });
           } else {
@@ -527,11 +544,5 @@
       });
         
     </script>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="js/logout.js"></script>
-    <script src ="js/userLogged.js"></script>
   </body>
 </html>

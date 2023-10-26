@@ -216,7 +216,8 @@
         }
     </style>
     
-    <script>const tableBody = document.querySelector("#viewDetails tbody");
+    <script>
+    const tableBody = document.querySelector("#viewDetails tbody");
       const notfoundElement = document.getElementById("notfound");
       
       function createAccordion(order) {
@@ -341,6 +342,7 @@ function changeStock(productName) {
         .then(response => {
             if (response.ok) {
                 stockElement.textContent = `Stock: ${parsedStockValue} units`;
+                location.reload();
             } else {
                 alert('Failed to update stock. Please try again.');
             }
@@ -378,6 +380,7 @@ function changePrice(productName) {
 })
         .then(response => {
             if (response.ok) {
+                location.reload();
             } else {
                 alert('Failed to update stock. Please try again.');
             }

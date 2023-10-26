@@ -56,6 +56,26 @@ function checkout() {
     var city = document.getElementById("city").value;
     var zipcode = document.getElementById("zipcode").value;
 
+        // Get all radio buttons
+        var payment_type = null;
+
+        if (document.querySelector('input[type="radio"][name="payment"][id="paypal"]:checked')) {
+            payment_type = "paypal";
+        } else if (document.querySelector('input[type="radio"][name="payment"][id="creditcard"]:checked')) {
+            payment_type = "creditcard";
+        }
+        console.log(payment_type)
+    
+        // Validation for Payment Type - Ensure it's not empty
+        if (!payment_type) {
+            popup.textContent = "Payment type is required";
+            document.body.appendChild(popup);
+            setTimeout(function () {
+                document.getElementById("popup").style.display = "none";
+            }, 2000)
+            return;
+        }
+
 
     // Validation for First Name and Last Name - Ensure they are not empty
     if (!firstname.trim() || !lastname.trim()) {
@@ -134,7 +154,8 @@ function checkout() {
         zipcode: zipcode,
         cart: cart,
         total: total,
-        username: username
+        username: username,
+        payment_type: payment_type
     };
 
     xhr = new XMLHttpRequest();
@@ -147,9 +168,11 @@ function checkout() {
             // create a popup saying sucess checkout
             popup.innerText = response.message;
             document.body.appendChild(popup);
+            document.getElementById("checkoutbutton").disabled = true;
 
             setTimeout(function () {
                 document.getElementById("popup").style.display = "none";
+                window.location.href = "index.html";
             }, 2000)
         }
     };

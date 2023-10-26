@@ -131,7 +131,6 @@ function sendNewPass() {
         alert("Passwords do not match. Please try again.")
     }
     else {
-        //if (newPassword !== "" && confirmPassword !== "" && newPassword === confirmPassword) {
         // Passwords match; proceed to update password
         var token = localStorage.getItem('access_token');
         if (!token) {
@@ -186,10 +185,11 @@ function sendNewPass() {
 
 
 fetch("http://localhost:5000/get_orders/" + username, {
+    method: "GET",
     headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-    },
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+    }
 })
     .then((response) => response.json())
     .then((data) => {
@@ -213,9 +213,7 @@ fetch("http://localhost:5000/get_orders/" + username, {
                 tdEmail.textContent = order.email;
                 row.appendChild(tdEmail);
 
-                const tdShipAddress = document.createElement("td");
-                tdShipAddress.textContent = order.ship_address;
-                row.appendChild(tdShipAddress);
+
 
                 const tdCountry = document.createElement("td");
                 tdCountry.textContent = order.country;
@@ -225,13 +223,7 @@ fetch("http://localhost:5000/get_orders/" + username, {
                 tdCity.textContent = order.city;
                 row.appendChild(tdCity);
 
-                const tdZipCode = document.createElement("td");
-                tdZipCode.textContent = order.zip_code;
-                row.appendChild(tdZipCode);
 
-                const tdUsername = document.createElement("td");
-                tdUsername.textContent = username;
-                row.appendChild(tdUsername);
 
                 const tdProductsInfo = document.createElement("td");
                 const viewDetailsButton = document.createElement("button");
@@ -245,6 +237,10 @@ fetch("http://localhost:5000/get_orders/" + username, {
                 const tdTotalPrice = document.createElement("td");
                 tdTotalPrice.textContent = order.total_price + "€";
                 row.appendChild(tdTotalPrice);
+
+                const paymentMethod = document.createElement("td");
+                paymentMethod.textContent = order.payment_type ;
+                row.appendChild(paymentMethod);
 
                 tableBody.appendChild(row);
             });

@@ -38,7 +38,6 @@
         <form action="search.html">
           <div class="input-group">
             <input
-              oninput="updateSuggestions()"
               id="input_search"
               name="product"
               type="text"
@@ -232,7 +231,6 @@
               >
                 <div class="input-group">
                   <input
-                    oninput="show_prod()"
                     id="filter_byname"
                     type="text"
                     class="form-control"
@@ -386,36 +384,43 @@
     <script src="js/search_product.js"></script>
     <script src="js/logout.js"></script>
     <script nonce="filter-nonce">
+      document.getElementById("input_search").addEventListener("input", function () {
+        updateSuggestions();
+      });
+      document.getElementById("filter_byname").addEventListener("input", function () {
+        show_prod();
+      });
       document
         .getElementById("price-0")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-0");
         });
       document
         .getElementById("price-1")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-1");
         });
       document
         .getElementById("price-2")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-2");
         });
       document
         .getElementById("price-3")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-3");
         });
       document
         .getElementById("price-4")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-4");
         });
       document
         .getElementById("price-5")
-        .addEventListener("onchange", function () {
+        .addEventListener("change", function () {
           filter_price("price-5");
         });
+
     </script>
   </body>
 </html>

@@ -38,11 +38,9 @@ function doRegister() {
           $("#register-success").html(
             "Successfully registered . Make sure to login now"
           );
-          
             setTimeout(function () {
                 window.location.href = "index.html";
-            }, 2000);
-            
+            }, 2000);        
         } else {
           $("#register-success").html("Error trying to register");
         }

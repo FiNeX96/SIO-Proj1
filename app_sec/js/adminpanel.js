@@ -40,9 +40,9 @@ function createAccordion(order) {
     detailsCell.appendChild(detailsContent);
 }
 
-    const productCardsContainer = document.getElementById("productCards");
+const productCardsContainer = document.getElementById("productCards");
 
-fetch("http://localhost:5000/get_products",{
+fetch("http://localhost:5000/get_products", {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ fetch("http://localhost:5000/get_products",{
         productCardsContainer.innerHTML = "<p>Error loading products.</p>";
     });
 
-    function createProductCard(product) {
+function createProductCard(product) {
     const card = document.createElement("div");
     card.classList.add("col-12", "col-md-6", "col-lg-4");
 
@@ -77,26 +77,105 @@ fetch("http://localhost:5000/get_products",{
             <img src="img/${product.imglink}" class="card-img-top" style="max-width: 200px; max-height: 200px;" alt="${product.name}">
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
-                <p class="card-text">Price: $${product.price}</p>
+                <p class="card-text price">Price: $${product.price}</p>
                 <p class="card-text">${product.description}</p>
-                <p class="card-text">Stock: ${product.stock} units</p>
-                <button class="btn btn-primary" id=${product.id}">Change Stock</button>
+                <p class="card-text stock" id="stock-${product.name}">Stock: ${product.stock} units</p>
+                <button class="btn btn-primary change-stock-button" data-product="${product.name}">Change Stock</button>
+                <button class="btn btn-primary change-price-button" data-product="${product.name}">Change Price</button>
             </div>
         </div>
     `;
-    window.onload = function() {
-    document.getElementById(product.id).addEventListener("click", function() {
-        changeStock(product.stock, product.id);
-    })};
+
+    const changeStockButton = card.querySelector(".change-stock-button");
+
+    changeStockButton.addEventListener("click", function () {
+        const productName = changeStockButton.getAttribute("data-product");
+        changeStock(productName);
+    });
+
+    const changePriceButton = card.querySelector(".change-price-button");
+
+    changePriceButton.addEventListener("click", function () {
+        const productName = changeStockButton.getAttribute("data-product");
+        changePrice(productName);
+    });
 
     productCardsContainer.appendChild(card);
 }
 
-// Function to handle the "Change Stock" button click
-function changeStock(currentStock, productId) {
-    // You can implement your stock change logic here, e.g., show a modal, open a form, etc.
-    // You can use productId to identify which product you want to update.
-    console.log(`Change stock for product ${productId}`);
+function changeStock(productName) {
+    const stockElement = document.getElementById(`stock-${productName}`);
+    const newStockValue = prompt(`Enter new stock value for ${productName}:`);
+
+    if (newStockValue === null) {
+        return; // User canceled the input
+    }
+
+    const parsedStockValue = parseInt(newStockValue);
+
+    if (isNaN(parsedStockValue) || parsedStockValue < 0) {
+        alert("Please enter a valid stock value.");
+        return;
+    }
+
+    // Send an API request to update the stock value
+    fetch(`http://localhost:5000/update_stock/${productName}`, {
+    method: 'PUT',
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+    },
+    body: JSON.stringify({ newStock: parsedStockValue }),
+})
+        .then(response => {
+            if (response.ok) {
+                stockElement.textContent = `Stock: ${parsedStockValue} units`;
+                location.reload();
+            } else {
+                alert('Failed to update stock. Please try again.');
+            }
+        })
+        .catch(error => {
+            alert('An error occurred. Please try again.');
+        });
+}
+
+
+
+function changePrice(productName) {
+    const priceElement = document.getElementById(`price-${productName}`);
+    const newPriceValue = prompt(`Enter new stock value for ${productName}:`);
+
+    if (newPriceValue === null) {
+        return; // User canceled the input
+    }
+
+    const parsedPriceValue = parseInt(newPriceValue);
+
+    if (isNaN(parsedPriceValue) || parsedPriceValue < 0) {
+        alert("Please enter a valid price value.");
+        return;
+    }
+
+    // Send an API request to update the stock value
+    fetch(`http://localhost:5000/update_price/${productName}`, {
+    method: 'PUT',
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+    },
+    body: JSON.stringify({ newPrice: parsedPriceValue }),
+})
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Failed to update stock. Please try again.');
+            }
+        })
+        .catch(error => {
+            alert('An error occurred. Please try again.');
+        });
 }
 
 
@@ -136,14 +215,13 @@ function createUpdateForm(order) {
             products_info: updateForm.elements.products_info.value,
         };
         
-        fetch("http://127.0.0.1:5000/change_order", {
-    method: "PUT",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-    },
-    body: JSON.stringify(updatedData),
-})
+        fetch("http://localhost/change_order", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("access_token"),
+            }
+        })
 .then((response) => {
     if (response.ok) {
         // Handle success
@@ -217,4 +295,4 @@ fetch("http://localhost:5000/get_all_orders",{
     .catch((error) => {
         console.error("Error fetching order data:", error);
         notfoundElement.style.display = "block";
-    });
+    }); 

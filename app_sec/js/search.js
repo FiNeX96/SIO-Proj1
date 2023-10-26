@@ -8,7 +8,7 @@ fetch("http://localhost:5000/search/" + productName,
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + + localStorage.getItem("access_token"),
+      "Authorization": "Bearer " +  localStorage.getItem("access_token"),
     }
   }
 )
@@ -30,7 +30,7 @@ fetch("http://localhost:5000/search/" + productName,
       var td = document.createElement("td");
       td.textContent = element.name;
       var td2 = document.createElement("td");
-      td2.textContent = element.price;
+      td2.textContent = element.price+"€";
       var td3 = document.createElement("td");
       var button = document.createElement("button");
       button.className = "btn btn-primary";

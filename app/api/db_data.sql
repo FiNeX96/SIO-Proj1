@@ -92,14 +92,9 @@ Create table Orders(
     username TEXT NOT NULL,
     products_info TEXT NOT NULL, -- cart json
     total_price INTEGER NOT NULL,
+    payment_type TEXT NOT NULL,
     FOREIGN KEY (username) REFERENCES Users(username)
     
 );
 
-Create table Payments(
-    ORDER_id INTEGER PRIMARY KEY,
-    payment_method TEXT NOT NULL,
-    payment_amount INTEGER NOT NULL,
-    FOREIGN KEY (ORDER_id) REFERENCES Orders(ORDER_id)
-);
 
