@@ -147,7 +147,7 @@
         <div class="col-lg-4 mb-5"></div>
         <div class="col-lg-4 mb-5">
           <div class="contact-form">
-            <form class="control-group" onsubmit="doRegister()">
+            <form class="control-group" id = "registerform">
               <input
                 type="text"
                 class="form-control"
@@ -250,6 +250,12 @@
     <script src="js/userLogged.js" > </script>
     <script nonce="registeruserlogged">
         window.addEventListener("load", userLogged);
+        var form = document.getElementById("registerform");
+        form.addEventListener("submit", function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+        });
+        document.getElementById("registerform").addEventListener("submit", doRegister);
     </script>
   </body>
 </html>

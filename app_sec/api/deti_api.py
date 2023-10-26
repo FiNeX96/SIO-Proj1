@@ -41,15 +41,16 @@ def login():
         conn.close()
 
         if user and check_password_hash(user[1], password):  # check the password
-            print("User found")
-            if user == "admin":
+            if user[0] == "admin":
                 access_token = create_access_token(
                     identity=username, additional_claims={"role": "admin"}
                 )
+                print("Admin logged in")
             else:
                 access_token = create_access_token(
                     identity=username, additional_claims={"role": "user"}
                 )
+                print("User " + username + " logged in")
             return jsonify(access_token=access_token), 200
         else:
             print("User not found")
@@ -222,7 +223,7 @@ def checkout():
     try:
         data = request.get_json()
         username = data["username"]
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+        if "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -303,7 +304,7 @@ def updatePassword():
     try:
         data = request.get_json()
         username = data["username"]
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+        if   "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
              pass
         else:
              return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -350,7 +351,7 @@ def resetPassword():
         username = data["username"]
         
         claims = verify_jwt_in_request()
-        if "role" in claims[1] and "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
+        if  "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
             pass
         else:
             return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -400,7 +401,7 @@ def get_orders(username):
 
     # only the user can access this endpoint
 
-    if ("role" in claims[1] and "user" in claims[1]["role"]) and claims[1]['sub'] == get_jwt_identity():
+    if "user" in claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
@@ -444,7 +445,7 @@ def get_all_orders():
     claims = verify_jwt_in_request()
 
     # only admin can access this endpoint
-    if "role" in claims and "admin" in claims["role"] and claims[1]['sub'] == get_jwt_identity():
+    if "admin" == claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))
