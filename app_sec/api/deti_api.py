@@ -481,7 +481,7 @@ def get_all_orders():
 @app.route("/change_order", methods=["PUT"])
 def change_order():
     claims = verify_jwt_in_request()
-    if "role" in claims and "admin" in claims["role"] and claims[1]['sub'] == get_jwt_identity():
+    if "admin" == claims[1]["role"] and claims[1]['sub'] == get_jwt_identity():
         pass
     else:
         return Response(status=401, response=json.dumps({"error": "Unauthorized"}))

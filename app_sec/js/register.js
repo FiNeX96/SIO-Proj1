@@ -2,6 +2,19 @@ function doRegister() {
     const username = $("#username").val();
     const password = $("#password").val();
 
+    if (username.length < 6){
+      alert("Username must be at least 6 characters long")
+      return;
+    }
+
+    // check if password is atleast 6 characters long, contains a upper case letter and a specialChar
+
+    if (password.length < 8 || password.search(/[A-Z]/) < 0 || password.search(/[0-9]/) < 0 || password.search(/[!@#$%^&*]/) < 0){
+
+      alert("Password must be at least 8 characters long, contain a uppercase letter and a special character")
+      return;
+    }
+
     const data = {
       username,
       password,
