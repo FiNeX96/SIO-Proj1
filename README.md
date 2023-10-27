@@ -1,4 +1,26 @@
-README.md: contains the project description, authors, identifies vulnerabilities implemented;
+## Project Description
+
+    This is a project for developing an online store for DETI at the University of Aveiro. 
+    Our primary mission in this project was to create a functional online store offering 
+    products related to the Department of Electronics, Telecommunications, and Informatics (DETI). 
+    However, what makes this project unique is the controlled introduction of 
+    security vulnerabilities that are not immediately apparent to the average user.
+
+    Our objectives include:
+
+    - Developing both a flawed and a corrected version of the online store.
+    - Thoroughly documenting the introduced vulnerabilities, exploring how they can be exploited, and analyzing their impact.
+    - Focusing on understanding and correcting common vulnerabilities, such as Cross-Site Scripting and SQL Injection.
+    - Addressing the importance of security in software applications.
+
+## Implementation
+
+    This project was developed with :
+
+    - Flask for the API/backend
+    - HTML, CSS, JS for the frontend
+    - Sqlite3 for the database
+    - Docker for containerization
 
 ## Vulnerabilities 
 
@@ -45,20 +67,6 @@ CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/defini
     - Open your browser and go to http://localhost:9000/ ( if it doesnt automatically open )
     - docker-compose down to stop the container
 
-### Project Description
-
-    This is a project for developing an online store for DETI at the University of Aveiro. 
-    Our primary mission in this project was to create a functional online store offering 
-    products related to the Department of Electronics, Telecommunications, and Informatics (DETI). 
-    However, what makes this project unique is the controlled introduction of 
-    security vulnerabilities that are not immediately apparent to the average user.
-
-    Our objectives include:
-
-    - Developing both a flawed and a corrected version of the online store.
-    - Thoroughly documenting the introduced vulnerabilities, exploring how they can be exploited, and analyzing their impact.
-    - Focusing on understanding and correcting common vulnerabilities, such as Cross-Site Scripting and SQL Injection.
-    - Addressing the importance of security in software applications.
 
 ## Authors
 
