@@ -7,6 +7,10 @@ function addToCartQuantity() {
     if (checkCookie("username")) {
         var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     }
+    else{
+        alert("You must be logged in to add items to cart!");
+        return;
+    }
     // Check if the cart for the user already exists in the local storage
     let cart = JSON.parse(localStorage.getItem("cart_"+username));
 
@@ -33,6 +37,7 @@ function addToCartQuantity() {
 
 function increaseQuantity(){
 
+
     var quantity = document.getElementById("quantity").value;
     quantity++;
     document.getElementById("quantity").value = quantity;
@@ -49,9 +54,17 @@ function reduceQuantity(){
 
 }
 
-function incrementCart(){
-    //console.log("incrementCart() called");
-    // get value of id cartIcon and convert to int
+function incrementCart()
+{
+
+    try{
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
+    catch
+    {
+        return;
+    }
+
     var quantity = parseInt(document.getElementById("quantity").value);
     var cartIcon = document.getElementById("cartIcon").innerHTML;
     var cartIconInt = parseInt(cartIcon);

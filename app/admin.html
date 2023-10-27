@@ -369,7 +369,6 @@ function changePrice(productName) {
         return;
     }
 
-    // Send an API request to update the stock value
     console.log(`http://127.0.0.1:5000/update_price/${productName}`)
     fetch(`http://127.0.0.1:5000/update_price/${productName}`, {
     method: 'PUT',

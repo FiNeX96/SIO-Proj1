@@ -34,6 +34,14 @@ async function checkoutData() {
 
 function checkout() {
 
+    try{
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
+    catch{
+        alert("You must be logged in to checkout!");
+        return;
+    }
+
     const popup = document.createElement("div");
     popup.id = "popup";
     popup.style.position = "fixed";
@@ -137,9 +145,6 @@ function checkout() {
         }, 2000)
         return;
     }
-
-
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
     var cart = JSON.parse(localStorage.getItem("cart_" + username));
     var total = document.getElementById("total").innerHTML.split("€")[0];
 

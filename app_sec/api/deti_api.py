@@ -63,14 +63,12 @@ def login():
                 # print("User " + username + " logged in")
             return jsonify(access_token=access_token), 200
         else:
-            print("User not found")
             return Response(
                 status=404, response=json.dumps({"error": "Invalid credentials"})
             )
 
     except Exception as e:
-        print(e)
-        return Response(status=404, response=json.dumps({"error": str(e)}))
+        return Response(status=404, response=json.dumps({"error": "Error while logging in. Please try later."}))
 
 
 @app.route("/verify", methods=["GET"])
@@ -80,8 +78,7 @@ def verify():  # verify that the user is logged in
         current_user = get_jwt_identity()
         return jsonify(logged_in_as=current_user), 200
     except Exception as e:
-        print(e)
-        return Response(status=404, response=json.dumps({"error": str(e)}))
+        return Response(status=404, response=json.dumps({"error": "Error while verifying user. Please try later."}))
 
 
 ############################ End Login
@@ -108,11 +105,10 @@ def register():
             conn.close()
             return jsonify({"message": "User registered successfully"})
         except sqlite3.IntegrityError as e:
-            print(e)
-            return Response(status=409, response=json.dumps({"error": str(e)}))
+            return Response(status=409, response=json.dumps({"error": "Error while registering. Please try again"}))
     except Exception as e:
         print(e)
-        return jsonify({"error": str(e)})
+        return jsonify({"error": "Error while registering. Please try again"})
 
 
 ############################ End Register
@@ -305,8 +301,7 @@ def checkout():
         )
 
     except Exception as e:
-        print(e)
-        return Response(status=404, response=json.dumps({"error": str(e)}))
+        return Response(status=404, response=json.dumps({"error": "Error while checking out. Please try later."}))
 
 
 @jwt_required()
@@ -324,8 +319,8 @@ def updatePassword():
         atual_password = data["atualPassword"]
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
-        print(new_password)
-        print(atual_password)
+        #print(new_password)
+        #print(atual_password)
         cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
         password = cursor.fetchone()
         if check_password_hash(password[0], atual_password):
@@ -341,18 +336,15 @@ def updatePassword():
                 conn.close()
                 return jsonify({"message": "Password updated successfully"})
             except sqlite3.IntegrityError as e:
-                print(e)
-                return Response(status=409, response=json.dumps({"error": str(e)}))
+                return Response(status=409, response=json.dumps({"error": "Error while updating password. Please try again"}))
             except Exception as e:
-                print(e)
-                return jsonify({"error": str(e)})
+                return jsonify({"error": "Error while updating password. Please try again"}),500
         else:
             return Response(
                 status=404, response=json.dumps({"error": "Wrong actual password"})
             )
     except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)})
+        return jsonify({"error": "Error while updating password. Please try again"}),500
 
 
 @jwt_required()
@@ -376,9 +368,9 @@ def resetPassword():
         cursor = conn.cursor()
         cursor.execute("SELECT pass FROM Users WHERE username = ?", (username,))
         password = cursor.fetchone()
-        print(password)
-        print(atual_password)
-        print(check_password_hash(password[0], atual_password))
+        #print(password)
+        #print(atual_password)
+        #print(check_password_hash(password[0], atual_password))
         if check_password_hash(password[0], atual_password):
             try:
                 new_password = generate_password_hash(
@@ -396,14 +388,13 @@ def resetPassword():
                 return Response(status=409, response=json.dumps({"error": str(e)}))
             except Exception as e:
                 print(e)
-                return jsonify({"error": str(e)})
+                return jsonify({"error": "Error while reseting password. Please try again"}),500
         else:
             return Response(
                 status=404, response=json.dumps({"error": "Wrong actual password"})
             )
     except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)})
+        return jsonify({"error": "Error while reseting password. Please try again"}),500
 
 
 @jwt_required()
@@ -517,7 +508,7 @@ def update_stock(product_name):
         return jsonify({"message": "Stock updated successfully"})
 
     except Exception as e:
-        return jsonify({"error": str(e)}, 404)
+        return jsonify({"error": "Error updating stock"}, 404)
     
 @jwt_required()    
 @app.route('/update_price/<product_name>', methods=['PUT'])
@@ -542,10 +533,10 @@ def update_price(product_name):
         conn.commit()
         conn.close()
 
-        return jsonify({"message": "Stock updated successfully"})
+        return jsonify({"message": "Price updated successfully"})
 
     except Exception as e:
-        return jsonify({"error": str(e)}, 404)
+        return jsonify({"error": "Error updating price"}, 404)
     
     
 @jwt_required()
@@ -600,12 +591,6 @@ if __name__ == "__main__":
     conn = sqlite3.connect("LojaDeti.db")
     cursor = conn.cursor()
 
-    # load database
-    # with open("api/db_data.sql", "r") as sql_file:
-    #     sql_commands = sql_file.read().split(";")
-
-    #     for command in sql_commands:
-    #         cursor.execute(command)
 
     cursor.executescript(open("api/db_data.sql", "r").read())
 

@@ -12,9 +12,10 @@ function getCart() {
         document.getElementById("shipping").innerHTML = "0€";
         document.getElementById("subtotal").innerHTML = "0€";
         document.getElementById("total").innerHTML = "0€";
-        $("#checkoutbutton").prop("disabled", true);
-        $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").innerHTML = "Cart is empty"
+        document.getElementById("checkoutbutton").addEventListener("click", function(event){
+            event.preventDefault();
+            alert("Need to be logged in to checkout!")
+        });
         return 1;
     }
 
@@ -29,11 +30,12 @@ function getCart() {
         document.getElementById("shipping").innerHTML = "0€";
         document.getElementById("subtotal").innerHTML = "0€";
         document.getElementById("total").innerHTML = "0€";
-        $("#checkoutbutton").prop("disabled", true);
 
-        // Optionally, you can also change its appearance to make it appear "greyed out"
-        $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").innerHTML = "Cart is empty"
+        document.getElementById("checkoutbutton").addEventListener("click", function(event){
+            event.preventDefault();
+            alert("Cant checkout with a empty cart!")
+        });
+
 
         return 1;
     }
@@ -94,7 +96,13 @@ fetchData().catch((error) => console.error(error));
 
 function removeCart(productName) {
 
-    var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    try{
+        var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];
+    }
+    catch{
+        alert("Cant remove items from cart if you are not logged in!");
+        return;
+    }
 
     //console.log(localStorage.getItem(username));
 

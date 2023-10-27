@@ -59,7 +59,6 @@ function incrementCart() {
     var token = localStorage.getItem('access_token');
     
     if (!token) {
-        alert("You need to be logged in to add products to the cart")
         return;
     }
 

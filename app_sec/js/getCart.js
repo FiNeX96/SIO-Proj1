@@ -11,9 +11,10 @@ function getCart() {
         document.getElementById("shipping").textContent = "0€";
         document.getElementById("subtotal").textContent = "0€";
         document.getElementById("total").textContent = "0€";
-        $("#checkoutbutton").prop("disabled", true);
-        $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").textContent = "Cart is empty"
+        document.getElementById("checkoutbutton").addEventListener("click", function(event){
+            event.preventDefault();
+            alert("Need to be logged in to checkout!")
+        });
         return 1;
     }
 
@@ -29,11 +30,10 @@ function getCart() {
         document.getElementById("shipping").textContent;
         document.getElementById("subtotal").textContent = "0€";
         document.getElementById("total").textContent = "0€";
-        $("#checkoutbutton").prop("disabled", true);
-
-        // Optionally, you can also change its appearance to make it appear "greyed out"
-        $("#checkoutbutton").addClass("disabled-button");
-        $("#checkoutbutton").textContent = "Cart is empty"
+        document.getElementById("checkoutbutton").addEventListener("click", function(event){
+            event.preventDefault();
+            alert("Cant checkout with a empty cart!")
+        });
 
         return 1;
     }

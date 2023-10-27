@@ -194,7 +194,7 @@ def update_price(product_name):
         conn.commit()
         conn.close()
 
-        return jsonify({"message": "Stock updated successfully"})
+        return jsonify({"message": "Price updated successfully"})
 
     except Exception as e:
         return jsonify({"error": str(e)}, 404)
