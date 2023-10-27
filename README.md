@@ -1,8 +1,5 @@
 README.md: contains the project description, authors, identifies vulnerabilities implemented;
 
-## Project Description
-
-
 ## Vulnerabilities 
 
 
@@ -31,7 +28,7 @@ CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/defini
 
 ### Install Docker
 
-    Install docker on your computer, refer to https://docs.docker.com/engine/install/ubuntu/
+    Install docker on your computer, refer to https://docs.docker.com/engine/install/
 
 ### Insecure app 
 
@@ -48,19 +45,20 @@ CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/defini
     - Open your browser and go to http://localhost:9000/ ( if it doesnt automatically open )
     - docker-compose down to stop the container
 
-### Description
+### Project Description
 
-    Este é um projeto de desenvolvimento de uma loja do DETI da Universidade de Aveiro. 
-    A nossa principal missão neste projeto foi uma loja online funcional que oferece 
-    produtos relacionados com o Departamento de Eletrónica, Telecomunicações e Informática (DETI). 
-    No entanto, o que torna este projeto único é a introdução controlada de vulnerabilidades de segurança, que não são imediatamente evidentes para o utilizador comum.
+    This is a project for developing an online store for DETI at the University of Aveiro. 
+    Our primary mission in this project was to create a functional online store offering 
+    products related to the Department of Electronics, Telecommunications, and Informatics (DETI). 
+    However, what makes this project unique is the controlled introduction of 
+    security vulnerabilities that are not immediately apparent to the average user.
 
-    Os nossos objetivos incluem:
+    Our objectives include:
 
-    - Desenvolver uma versão da loja online com falhas e outra versão corrigida.
-    - Documentar minuciosamente as vulnerabilidades introduzidas, explorar como podem ser usadas e analisar o seu impacto.
-    - Concentrar-nos na compreensão e correção de vulnerabilidades comuns, como Cross-Site Scripting e Injeção SQL.
-    - Abordar a importância da segurança em aplicações de software.
+    - Developing both a flawed and a corrected version of the online store.
+    - Thoroughly documenting the introduced vulnerabilities, exploring how they can be exploited, and analyzing their impact.
+    - Focusing on understanding and correcting common vulnerabilities, such as Cross-Site Scripting and SQL Injection.
+    - Addressing the importance of security in software applications.
 
 ## Authors
 
