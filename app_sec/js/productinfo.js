@@ -17,7 +17,7 @@ function getProductFromURL() {
     var url = "http://localhost:5000/get_product/" + product_name;
     var xhttp = new XMLHttpRequest();
     //document.getElementById("nome_produto").innerHTML = product_name;
-    $("#nome_produto").textContent = product_name;
+    document.getElementById("nome_produto").textContent = product_name;
 
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
