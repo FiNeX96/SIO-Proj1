@@ -83,7 +83,7 @@ def search(product_name):
     cursor.execute(
     "SELECT name,price FROM Products WHERE name LIKE '%" + product_name + "%'"
 )
-    product = cursor.fetchmany(5)
+    product = cursor.fetchmany(10)
     # put this in dictionary format
     product_list = []
     for i in product:

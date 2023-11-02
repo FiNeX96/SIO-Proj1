@@ -45,6 +45,8 @@ CWE-200: Exposure of Sensitive Information to an Unauthorized Actor (https://cwe
 
 CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/definitions/522.html)
 
+CWE-620 : Unverified Password Change (https://cwe.mitre.org/data/definitions/620.html)
+
 
 ## How to Run 
 
