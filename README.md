@@ -54,6 +54,8 @@ CWE-256 : Plaintext storage of a Password (https://cwe.mitre.org/data/definition
 
 CWE-829: Inclusion of Functionality from Untrusted Control Sphere (https://cwe.mitre.org/data/definitions/829.html)
 
+CWE-209: Generation of Error Message Containing Sensitive Information (https://cwe.mitre.org/data/definitions/209.html)
+
 
 ## How to Run 
 
