@@ -37,15 +37,16 @@ CWE-287: Improper Authentication (https://cwe.mitre.org/data/definitions/287.htm
 
 CWE-798: Use of Hard-coded Credentials (https://cwe.mitre.org/data/definitions/798.html)
 
-CWE-306: Missing Authentication for Critical Function (https://cwe.mitre.org/data/definitions/306.html)
+CWE-311 : Missing Encryption of Sensitive Data (https://cwe.mitre.org/data/definitions/311.html)
 
-CWE-276: Incorrect Default Permissions (https://cwe.mitre.org/data/definitions/276.html)
+CWE-306: Missing Authentication for Critical Function (https://cwe.mitre.org/data/definitions/306.html)
 
 CWE-200: Exposure of Sensitive Information to an Unauthorized Actor (https://cwe.mitre.org/data/definitions/200.html)
 
 CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/definitions/522.html)
 
 CWE-620 : Unverified Password Change (https://cwe.mitre.org/data/definitions/620.html)
+
 
 
 ## How to Run 
