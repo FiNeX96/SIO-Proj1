@@ -51,6 +51,8 @@ CWE-1391 : Use of Weak Credentials (https://cwe.mitre.org/data/definitions/1391.
 
 CWE-52 : Weak Password Requirements (https://cwe.mitre.org/data/definitions/521.html)
 
+CWE-256 : Plaintext storage of a Password (https://cwe.mitre.org/data/definitions/256.html)
+
 
 
 ## How to Run 

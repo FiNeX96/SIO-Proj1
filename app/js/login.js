@@ -2,11 +2,6 @@ function doLogin() {
     const username = $("#username").val();
     const password = $("#password").val();
 
-    if (username.length < 4 || password.length < 4) {
-      $("#login-success").html("Username and password must be at least 4 characters long");
-      return;
-    }
-
     const data = {
       username,
       password,
