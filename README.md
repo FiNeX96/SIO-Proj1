@@ -47,6 +47,10 @@ CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/defini
 
 CWE-620 : Unverified Password Change (https://cwe.mitre.org/data/definitions/620.html)
 
+CWE-1391 : Use of Weak Credentials (https://cwe.mitre.org/data/definitions/1391.html)
+
+CWE-52 : Weak Password Requirements (https://cwe.mitre.org/data/definitions/521.html)
+
 
 
 ## How to Run 
