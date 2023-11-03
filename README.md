@@ -48,7 +48,7 @@ CWE-620 : Unverified Password Change (https://cwe.mitre.org/data/definitions/620
 
 CWE-1391 : Use of Weak Credentials (https://cwe.mitre.org/data/definitions/1391.html)
 
-CWE-52 : Weak Password Requirements (https://cwe.mitre.org/data/definitions/521.html)
+CWE-521 : Weak Password Requirements (https://cwe.mitre.org/data/definitions/521.html)
 
 CWE-256 : Plaintext storage of a Password (https://cwe.mitre.org/data/definitions/256.html)
 
