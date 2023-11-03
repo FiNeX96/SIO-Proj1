@@ -24,7 +24,6 @@
 
 ## Vulnerabilities 
 
-
 CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') (https://cwe.mitre.org/data/definitions/79.html)
 
 CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') (https://cwe.mitre.org/data/definitions/89.html)
@@ -53,6 +52,7 @@ CWE-52 : Weak Password Requirements (https://cwe.mitre.org/data/definitions/521.
 
 CWE-256 : Plaintext storage of a Password (https://cwe.mitre.org/data/definitions/256.html)
 
+CWE-829: Inclusion of Functionality from Untrusted Control Sphere (https://cwe.mitre.org/data/definitions/829.html)
 
 
 ## How to Run 
