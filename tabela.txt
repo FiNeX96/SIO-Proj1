@@ -1,7 +1,0 @@
-Atribuir um numero ao CVE
-Description (Escrever parágrafo a descrever o erro e onde acontece)
-Calcular CVSS
-Colocar o respetivo vetor do CVSS
-CWE-related (Procurar no site a CWE relacionada com o nosso CVE)
-Correction (Parágrafo de como foi corrigido e mostrar como foi corrigido)
-

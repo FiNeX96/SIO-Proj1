@@ -105,9 +105,8 @@ def register():
             conn.close()
             return jsonify({"message": "User registered successfully"})
         except sqlite3.IntegrityError as e:
-            return Response(status=409, response=json.dumps({"error": "Error while registering. Please try again"}))
+            return Response(status=409, response=json.dumps({"error": "This username already exists. Try using a different one"}))
     except Exception as e:
-        print(e)
         return jsonify({"error": "Error while registering. Please try again"})
 
 
@@ -383,9 +382,6 @@ def resetPassword():
                 conn.commit()
                 conn.close()
                 return jsonify({"message": "Password updated successfully"})
-            except sqlite3.IntegrityError as e:
-                print(e)
-                return Response(status=409, response=json.dumps({"error": str(e)}))
             except Exception as e:
                 print(e)
                 return jsonify({"error": "Error while reseting password. Please try again"}),500
