@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
 if app.config["JWT_SECRET_KEY"] is None:
     print("Set the JWT_SECRET_KEY environment variable")
-    print("Copiem isto pra bash -> export JWT_SECRET_KEY='siouadeti23' ")
+    print("Bash -> export JWT_SECRET_KEY='siouadeti23' ")
     print("Para remover -> unset JWT_SECRET_KEY ")
     exit(0)
 jwt = JWTManager(app)
