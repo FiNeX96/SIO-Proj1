@@ -42,8 +42,6 @@ CWE-306: Missing Authentication for Critical Function (https://cwe.mitre.org/dat
 
 CWE-200: Exposure of Sensitive Information to an Unauthorized Actor (https://cwe.mitre.org/data/definitions/200.html)
 
-CWE-522: Insufficiently Protected Credentials (https://cwe.mitre.org/data/definitions/522.html)
-
 CWE-620 : Unverified Password Change (https://cwe.mitre.org/data/definitions/620.html)
 
 CWE-1391 : Use of Weak Credentials (https://cwe.mitre.org/data/definitions/1391.html)

@@ -382,6 +382,10 @@
           var newPassword = document.getElementById("new_password").value.trim();
           var confirmPassword = document.getElementById("new_password_confirm").value.trim();
 
+          if (newPassword.length < 3 ) {
+              alert("Password must be at least 4 characters long.");
+              return;
+          } 
           if (newPassword !== "" && confirmPassword !== "" && newPassword === confirmPassword) {
               // Passwords match; proceed to update password
               var username = document.cookie.split('; ').find(row => row.startsWith('username=')).split('=')[1];

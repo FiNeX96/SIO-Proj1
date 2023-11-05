@@ -210,8 +210,6 @@ def login():
         conn = sqlite3.connect("LojaDeti.db")
         cursor = conn.cursor()
 
-        # Debugging: Print the SQL query and its parameters
-        # print("SELECT * FROM Users WHERE username = " + username  "AND pass = " + password)
         query = (
             "SELECT * FROM Users WHERE username ='"
             + username
@@ -219,7 +217,6 @@ def login():
             + password
             + "'"
         )
-        print(query)
 
         cursor.execute(query)
         # execute so deixa executar 1, é seguro contra sql injection

@@ -124,9 +124,9 @@ function sendNewPass() {
     if (newPassword == "" || confirmPassword == "" || atualPassword == "") {
         alert("Fill all the fields to change password")
     }
-    else if( newPassword.length < 8 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0 || newPassword.search(/[!@#$%^&*]/) < 0){
+    else if( newPassword.length < 10 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0 || newPassword.search(/[!@#$%^&*]/) < 0){
 
-        alert(" New Password must be at least 8 characters long, contain a uppercase letter and a special character")
+        alert(" New Password must be at least 11 characters long, contain a uppercase letter and a special character")
         $("#username").val("");
         $("#password").val("");
         return;
